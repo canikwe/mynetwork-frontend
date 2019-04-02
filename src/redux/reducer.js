@@ -4,6 +4,8 @@ const updateUser = (state={}, action) => {
   switch(action.type){
     case "TESTING_REDUCER":
       return state
+    case "FETCHED_USER":
+      return action.user
     default:
       return state
   }
