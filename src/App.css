@@ -32,12 +32,22 @@
   }
 }
 
-img {
-  width: 70%;
-  height: 300px
+.img-feature {
+  width: 65%;
+  height: 300px;
+  margin-left: 5px;
+  float: left;
 }
 
-.reminder-box {
+.reminder-feature {
+  width: 30%;
+  height: 300px;
+  border-style: double;
+  background-color: pink;
+  float: right
+}
+
+.reminder-card {
   border-color: black;
   border-style: solid;
   background-color: aquamarine;
@@ -45,3 +55,10 @@ img {
   width: 300px;
   float: left;
 }
+
+.new-reminder {
+  border-style: dashed;
+  background-color: aquamarine;
+  width: 500px
+}
+

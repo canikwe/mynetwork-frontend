@@ -10,10 +10,10 @@ const ContactCardContainer = props => {
         {/* may need to update with backend refactor */}
         {props.user.contacts.map(c => {
           return (
-            <div className='reminder-box' key={c.id}>
+            <div className='reminder-card' key={c.id}>
               Contact Card For: {c.name}
               <ul>
-                {c.reminders.map(r => <li key={r.id}>{r.msg}</li>)}
+                {props.reminders.filter(r => r.contact_id === c.id).map(r => <li key={r.id}>{r.msg}</li>)}
               </ul>
             </div>
           )
@@ -25,7 +25,8 @@ const ContactCardContainer = props => {
 const mapStateToProps = state => {
   return {
     user: state.user,
-    loading: state.loading
+    loading: state.loading,
+    reminders: state.reminders
   }
 }
 

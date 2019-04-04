@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import './App.css';
 import { connect } from 'react-redux'
 import { testAction, fetchingUser } from './redux/actions'
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch, Redirect } from 'react-router-dom'
 import Homepage from './containers/Homepage'
 import Login from './components/Login'
+import ReminderForm from './components/ReminderForm';
+
 
 
 class App extends Component {
@@ -21,6 +23,9 @@ class App extends Component {
         <Switch>
           <Route exact path='/login' component={Login} />
           <Route exact path='/' component={Homepage} />
+          <Route exact path='/reminders/new' component={ReminderForm} />
+          <Redirect from='*' to='/' />
+
         </Switch>
       </div>
     );

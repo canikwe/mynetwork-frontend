@@ -2,15 +2,17 @@ import React from 'react'
 import { connect } from 'react-redux'
 import Feature from '../components/Feature'
 import ContactCardContainer from './ContactCardContainer'
+import { Link } from 'react-router-dom'
 
 const week = () => ({
+  '0': 'Sunday',
   '1': 'Monday',
   '2': 'Tuesday',
   '3': 'Wednesday',
   '4': 'Thursday',
   '5': 'Friday',
-  '6': 'Saturday',
-  '7': 'Sunday'
+  '6': 'Saturday'
+
 })
 
 // Date.prototype.getWeek = function() {
@@ -30,9 +32,9 @@ const alerts = reminder => {
   else if (reminder.day < today && reminder.day !== (today - 1)){
     console.log(`${reminder.msg} next ${week()[reminder.day]}`)
   }
-  else {
-    console.log(`Remember to ${reminder.msg} on ${week()[reminder.day]}`)
-  }
+  // else {
+  //   console.log(`Remember to ${reminder.msg} on ${week()[reminder.day]}`)
+  // }
 }
 
 const Homepage =  props => {
@@ -42,18 +44,21 @@ const Homepage =  props => {
   } else {
     return (
      <div>
-       <h1>Homepage</h1>
-       <Feature />
+       <h1>My Awesome Homepage</h1>
+       <Link to='/reminders/new' >New Reminder</Link>
+       <Feature alert={alerts}/>
        <ContactCardContainer />
-       {props.user.contacts.forEach(c => c.reminders.forEach(r => alerts(r)))}
+       {props.reminders.map(r => console.log(alerts(r)))}
      </div>
    )
   }
 }
+
 const mapStateToProps = state => {
   return {
     loading: state.loading,
-    user: state.user
+    user: state.user,
+    reminders: state.reminders
   }
 }
 

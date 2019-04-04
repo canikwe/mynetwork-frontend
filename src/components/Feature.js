@@ -4,18 +4,23 @@ import '../App.css'
 
 class Feature extends React.Component {
   render(){
-    console.log(this.props)
     // debugger
       return (<div>
         <h3>Welcome, {this.props.user.name}</h3>
         <div>
-          <img src="https://images.unsplash.com/photo-1554004389-abf213c41d0d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1491&q=80" alt="feature" />
           <div>
-            But before that, an alert box!
+            <img className='img-feature' src="https://images.unsplash.com/photo-1554004389-abf213c41d0d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1491&q=80" alt="feature" />
+            <div className='reminder-feature'>
+              I am a container of reminders: Change to Upcoming reminders only
+              <ul>
+                {this.props.reminders.filter(r => r.day > (new Date()).getDay() - 1).map(r => <li key={r.id}>{r.msg}</li>)}
+              </ul>
+            </div>
           </div>
-          
           <div>
-            <h4>One day, I shall be a filter</h4>
+            <h4>One day, I shall be a FUNCTIONING filter</h4>
+            <label htmlFor='filter'>Filter: </label>
+            <input type='text' name='filter'></input>
           </div>
         </div>
       </div>)
@@ -25,7 +30,7 @@ class Feature extends React.Component {
 const mapStateToProps = state => {
   return {
     user: state.user,
-    loading: state.loading
+    reminders: state.reminders
   }
 }
 
