@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import './App.css';
 import { connect } from 'react-redux'
-import {fetchingUser} from './redux/actions'
-import { Route, Switch, withRouter } from 'react-router-dom'
-import Homepage from './components/Homepage'
+import { testAction, fetchingUser } from './redux/actions'
+import { Route, Switch } from 'react-router-dom'
+import Homepage from './containers/Homepage'
 import Login from './components/Login'
 
 
 class App extends Component {
   componentDidMount(){
-    this.props.fetchingUser()
+    this.props.testAction()
+    this.props.fetchingUser(19)
   }
 
   render() {
@@ -32,7 +33,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchingUser: () => dispatch(fetchingUser())
+    testAction: () => dispatch(testAction()),
+    fetchingUser: (id) => dispatch(fetchingUser(id))
   }
 }
 
