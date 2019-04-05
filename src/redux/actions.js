@@ -1,5 +1,5 @@
 import {
-  TESTING_REDUCER, FETCHED_USER, LOADING_USER, ADD_REMINDER
+  TESTING_REDUCER, FETCHED_USER, LOADING_USER, ADD_REMINDER, ADD_CONTACT
 } from './types'
 
 const URL = () =>{
@@ -41,12 +41,27 @@ function addingReminder(newReminderData) {
 }
 
 const addReminder = (newReminderObj) => {
-  
   return {type: ADD_REMINDER, reminder: newReminderObj}
+}
+
+const addingContact = (contact) => {
+  return (dispatch) => {
+    fetch(`${URL()}/users`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(contact)
+    })
+    .then(res => res.json())
+    .then(newContactObj => dispatch(addContact(newContactObj)))
+  }
+}
+
+const addContact = (newContactObj) => {
+  return {type: ADD_CONTACT, contact: newContactObj}
 }
 
 function testAction(){
   return {type: TESTING_REDUCER}
 }
 
-export { testAction, fetchingUser, addingReminder }
+export { testAction, fetchingUser, addingReminder, addingContact }

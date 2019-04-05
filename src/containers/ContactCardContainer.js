@@ -8,7 +8,7 @@ const ContactCardContainer = props => {
     <div>
       <h1> I am a card container </h1>
         {/* may need to update with backend refactor */}
-        {props.user.contacts.map(c => {
+        {props.contacts.map(c => {
           return (
             <div className='reminder-card' key={c.id}>
               Contact Card For: {c.name}
@@ -26,7 +26,8 @@ const mapStateToProps = state => {
   return {
     user: state.user,
     loading: state.loading,
-    reminders: state.reminders
+    reminders: state.reminders,
+    contacts: state.contacts
   }
 }
 

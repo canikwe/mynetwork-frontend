@@ -44,11 +44,13 @@ const Homepage =  props => {
   } else {
     return (
      <div>
-       <h1>My Awesome Homepage</h1>
-       <Link to='/reminders/new' >New Reminder</Link>
-       <Feature alert={alerts}/>
-       <ContactCardContainer />
-       {props.reminders.map(r => console.log(alerts(r)))}
+      <h1>My Awesome Homepage</h1>
+      <Link to='/reminders/new'> New Reminder</Link><br />
+      <Link to='/contacts/new'> New Contact</Link>
+
+      <Feature alert={alerts}/>
+      <ContactCardContainer />
+      {props.reminders.map(r => console.log(alerts(r)))}
      </div>
    )
   }

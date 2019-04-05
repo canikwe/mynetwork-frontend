@@ -3,7 +3,8 @@ import {
   TESTING_REDUCER,
   FETCHED_USER,
   LOADING_USER,
-  ADD_REMINDER
+  ADD_REMINDER,
+  ADD_CONTACT
 } from './types'
 
 const reduxConnection = (state='connected', action) => {
@@ -25,12 +26,22 @@ const updateUser = (state={}, action) => {
 }
 
 const updateReminders = (state=[], action) => {
-  
   switch(action.type){
     case FETCHED_USER:
       return action.user.reminders
     case ADD_REMINDER:
       return [...state, action.reminder]
+    default:
+      return state
+  }
+}
+
+const updateContacts = (state=[], action) => {
+  switch(action.type){
+    case FETCHED_USER:
+      return action.user.contacts
+    case ADD_CONTACT:
+      return [...state, action.contact]
     default:
       return state
   }
@@ -50,6 +61,7 @@ const loadingReducer = (state = true, action) => {
 const rootReducer = combineReducers({
   reduxConnection: reduxConnection,
   user: updateUser,
+  contacts: updateContacts,
   reminders: updateReminders,
   loading: loadingReducer
 })
