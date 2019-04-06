@@ -6,6 +6,7 @@ import { Route, Switch, Redirect } from 'react-router-dom'
 import Homepage from './containers/Homepage'
 import Login from './components/Login'
 import ContactForm from './components/ContactForm'
+import SignUpForm from './components/SignUpForm'
 
 
 
@@ -16,7 +17,6 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.props)
     return (
       <div className="App">
         <div>Nav Bar Goes Here!</div>
@@ -24,6 +24,7 @@ class App extends Component {
           <Route exact path='/login' component={Login} />
           <Route exact path='/' component={Homepage} />
           <Route exact path='/contacts/new' component={ContactForm} />
+          <Route exact path='/signup' component={SignUpForm} />
           <Redirect from='*' to='/' />
 
         </Switch>

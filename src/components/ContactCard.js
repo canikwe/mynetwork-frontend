@@ -24,17 +24,14 @@ class ContactCard extends React.Component {
 
   toggleNewReminderForm = () => {
     this.setState({createReminderToggle: !this.state.createReminderToggle, featuredReminder: {}, updateReminderToggle: false})
-      console.log(this.state)
 
   }
 
   toggleUpdateReminderForm = (reminder) => {
-    console.log(reminder)
     this.setState({
       updateReminderToggle: !this.state.updateReminderToggle, 
       featuredReminder: {...reminder}, 
       createReminderToggle: false})
-    console.log(this.state)
   }
   
 
