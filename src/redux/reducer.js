@@ -45,7 +45,6 @@ const updateReminders = (state=[], action) => {
 }
 
 const updateContacts = (state=[], action) => {
-  
   switch(action.type){
     case FETCHED_USER:
       return action.user.contacts

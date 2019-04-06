@@ -59,7 +59,7 @@ const deletingContact = contact => {
     .then(res => res.json())
     .then(contactObj => {
       console.log(contactObj)
-      deleteContact(contactObj)
+      dispatch(deleteContact(contactObj))
     })
   }
 }
