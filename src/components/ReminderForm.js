@@ -95,6 +95,7 @@ class ReminderForm extends React.Component {
           </form>
 
           <Link to='/' onClick={() => this.props.deletingReminder(this.props.reminder)}>Delete Reminder</Link>
+          
         </div>
       )}
   }

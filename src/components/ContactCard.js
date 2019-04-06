@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import ReminderForm from '../components/ReminderForm';
 import '../App.css'
+import { deletingContact } from '../redux/actions'
 
 
 
@@ -41,7 +42,7 @@ class ContactCard extends React.Component {
     return (
       <div>
         <button className='menuLink' onClick={this.toggleNewReminderForm}> Create Reminder</button><br />
-        <Link to='/reminders/new'> View Reminders</Link><br />
+        <button className='menuLink' onClick={() => this.props.deletingContact(this.props.contact)}> Delete Contact</button><br />
         <Link to='/reminders/new'> Edit Contact</Link><br />
         <Link to='/reminders/new'> Archive Contact</Link>
       </div>
@@ -80,4 +81,10 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(ContactCard)
+const mapDispatchToProps = dispatch => {
+  return {
+    deletingContact: (contact) => dispatch(deletingContact(contact))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ContactCard)
