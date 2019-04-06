@@ -1,5 +1,5 @@
 import {
-  TESTING_REDUCER, FETCHED_USER, LOADING_USER, ADD_REMINDER, ADD_CONTACT
+  TESTING_REDUCER, FETCHED_USER, LOADING_USER, ADD_REMINDER, ADD_CONTACT, UPDATE_REMINDER, DELETE_REMINDER
 } from './types'
 
 const URL = () =>{
@@ -28,6 +28,7 @@ function fetchingUser(id){
 }
 
 function addingReminder(newReminderData) {
+  
   return (dispatch) => {
     
     fetch(`${URL()}/reminders`, {
@@ -44,6 +45,10 @@ const addReminder = (newReminderObj) => {
   return {type: ADD_REMINDER, reminder: newReminderObj}
 }
 
+const addContact = (newContactObj) => {
+  return {type: ADD_CONTACT, contact: newContactObj}
+}
+
 const addingContact = (contact) => {
   return (dispatch) => {
     fetch(`${URL()}/users`, {
@@ -56,12 +61,45 @@ const addingContact = (contact) => {
   }
 }
 
-const addContact = (newContactObj) => {
-  return {type: ADD_CONTACT, contact: newContactObj}
+const updateReminder = (reminderObj) => {
+  return {type: UPDATE_REMINDER, reminder: reminderObj}
+}
+
+const updatingReminder = reminder => {
+  
+  return (dispatch) => {
+    fetch(`${URL()}/reminders/${reminder.id}`, {
+      method: 'PATCH',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(reminder)
+    })
+    .then(res => res.json())
+    .then(reminderObj => {
+      console.log(reminderObj)
+      dispatch(updateReminder(reminderObj))
+    })
+  }
+}
+
+const deleteReminder = reminderObj => {
+  return {type: DELETE_REMINDER, reminder: reminderObj}
+}
+
+const deletingReminder = reminder => {
+  return (dispatch) => {
+    fetch(`${URL()}/reminders/${reminder.id}`, {
+      method: "DELETE"
+    })
+    .then(res => res.json())
+    .then(reminderObj => {
+      console.log(reminderObj)
+      dispatch(deleteReminder(reminderObj))
+    })
+  }
 }
 
 function testAction(){
   return {type: TESTING_REDUCER}
 }
 
-export { testAction, fetchingUser, addingReminder, addingContact }
+export { testAction, fetchingUser, addingReminder, addingContact, updatingReminder, deletingReminder }

@@ -20,21 +20,30 @@ const week = () => ({
 //     return Math.ceil((((this - onejan) / 86400000) + onejan.getDay()+1)/7);
 // } 
 
+const todayWeekday = () => (new Date()).getDay()
 
 const alerts = reminder => {
-  const today = (new Date()).getDay()
 
-	if (reminder.day === today){
-		console.log(`${reminder.msg} today!`)
-	} else if (reminder.day === (today - 1)){
-		console.log(`Remember to ${reminder.msg} tomorrow`)
-  }
-  else if (reminder.day < today && reminder.day !== (today - 1)){
-    console.log(`${reminder.msg} next ${week()[reminder.day]}`)
-  }
-  // else {
-  //   console.log(`Remember to ${reminder.msg} on ${week()[reminder.day]}`)
-  // }
+  reminder.day.forEach(d => {
+    if (d === todayWeekday()){
+      console.log(`${reminder.msg} today!`)
+    } else if (d === (todayWeekday() - 1)){
+      console.log(`Remember to ${reminder.msg} tomorrow`)
+    }
+    else if (d < todayWeekday() && d !== (todayWeekday() - 1)){
+      console.log(`${reminder.msg} next ${week()[d]}`)
+    }
+  })
+
+  
+}
+
+const dayAlert = day => {
+
+}
+
+const dateAlert = date => {
+  
 }
 
 const Homepage =  props => {
@@ -50,7 +59,10 @@ const Homepage =  props => {
 
       <Feature alert={alerts}/>
       <ContactCardContainer />
-      {props.reminders.map(r => console.log(alerts(r)))}
+      
+      {props.reminders.filter(r => r.day >= todayWeekday() - 1).sort((a, b) => b.day - a.day).map(r => console.log(alerts(r)))}
+
+      {props.reminders.filter(r => r.date !== null && new Date(r.date) >= new Date()).map(r => console.log(r.msg, new Date(r.date)))}
      </div>
    )
   }

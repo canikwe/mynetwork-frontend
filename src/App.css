@@ -33,18 +33,20 @@
 }
 
 .img-feature {
-  width: 65%;
+  max-width: 70%;
+  min-width: 300px;
   height: 300px;
-  margin-left: 5px;
+  margin: 10px;
   float: left;
 }
 
 .reminder-feature {
-  width: 30%;
+  max-width: 30%;
+  min-width: 300px;
   height: 300px;
   border-style: double;
   background-color: pink;
-  float: right
+  float: left
 }
 
 .reminder-card {
@@ -58,7 +60,20 @@
 
 .new-reminder {
   border-style: dashed;
-  background-color: aquamarine;
-  width: 500px
+  width: 500px;
+  float: left;
+  background-color: lemonchiffon
+}
+
+.menuLink {
+  background:none!important;
+  color:blue;
+  border:none; 
+  padding:0!important;
+  font: inherit;
+  /*border is optional*/
+  border-bottom:1px solid #444; 
+  cursor: pointer;
+
 }
 

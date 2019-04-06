@@ -4,7 +4,9 @@ import {
   FETCHED_USER,
   LOADING_USER,
   ADD_REMINDER,
-  ADD_CONTACT
+  ADD_CONTACT,
+  UPDATE_REMINDER,
+  DELETE_REMINDER
 } from './types'
 
 const reduxConnection = (state='connected', action) => {
@@ -26,17 +28,23 @@ const updateUser = (state={}, action) => {
 }
 
 const updateReminders = (state=[], action) => {
+  
   switch(action.type){
     case FETCHED_USER:
       return action.user.reminders
     case ADD_REMINDER:
       return [...state, action.reminder]
+    case UPDATE_REMINDER:
+      return state.map(r => r.id === action.reminder.id ? action.reminder : r)
+    case DELETE_REMINDER:
+      return state.filter(r => r.id !== action.reminder.id)
     default:
       return state
   }
 }
 
 const updateContacts = (state=[], action) => {
+  
   switch(action.type){
     case FETCHED_USER:
       return action.user.contacts
