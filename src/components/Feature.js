@@ -17,11 +17,7 @@ class Feature extends React.Component {
               </ul>
             </div>
           </div>
-          <div>
-            <h4>One day, I shall be a FUNCTIONING filter</h4>
-            <label htmlFor='filter'>Filter: </label>
-            <input type='text' name='filter'></input>
-          </div>
+
         </div>
       </div>)
   }

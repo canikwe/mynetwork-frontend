@@ -1,5 +1,5 @@
 import {
-  TESTING_REDUCER, FETCHED_USER, LOADING_USER, ADD_REMINDER, ADD_CONTACT, UPDATE_REMINDER, DELETE_REMINDER, DELETE_CONTACT
+  TESTING_REDUCER, FETCHED_USER, LOADING_USER, ADD_REMINDER, ADD_CONTACT, UPDATE_REMINDER, DELETE_REMINDER, DELETE_CONTACT, UPDATING_USER, UPDATE_CONTACT
 } from './types'
 
 const URL = () =>{
@@ -29,6 +29,24 @@ function fetchingUser(id){
   }
 }
 
+const updateUser = user => {
+  return {type: UPDATING_USER, user: user}
+}
+
+const updatingUser = user => {
+  return dispatch => {
+    fetch(`${URL()}/users/${user.id}`, {
+      method: 'PATCH',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(user)
+    })
+    .then(res => res.json())
+    .then(user => {
+      console.log(user)
+      dispatch(updateUser(user))
+    })
+  }
+}
 
 //Contacts Actions
 const addContact = (newContactObj) => {
@@ -44,6 +62,22 @@ const addingContact = (contact) => {
     })
     .then(res => res.json())
     .then(newContactObj => dispatch(addContact(newContactObj)))
+  }
+}
+
+const updateContact = contact => {
+  return {type: UPDATE_CONTACT, contact: contact}
+}
+
+const updatingContact = contact => {
+  return (dispatch) => {
+    fetch(`${URL()}/users/${contact.id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(contact)
+    })
+    .then(res => res.json())
+    .then(updatedContact => dispatch(updateContact(updatedContact)))
   }
 }
 
@@ -122,4 +156,4 @@ function testAction(){
   return {type: TESTING_REDUCER}
 }
 
-export { testAction, fetchingUser, addingReminder, addingContact, updatingReminder, deletingReminder, deletingContact }
+export { testAction, fetchingUser, addingReminder, addingContact, updatingReminder, deletingReminder, deletingContact, updatingUser, updatingContact }

@@ -1,14 +1,15 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { addingContact } from '../redux/actions'
+import { addingContact, updatingContact } from '../redux/actions'
 import { Link } from 'react-router-dom'
 
 class ContactForm extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      first_name: '',
-      last_name: ''
+      id: this.props.contact ? this.props.contact.friend_id : '',
+      first_name: this.props.contact ? this.props.contact.first_name : '',
+      last_name: this.props.contact ? this.props.contact.lastname : ''
     }
   }
 
@@ -22,7 +23,11 @@ class ContactForm extends React.Component {
     e.preventDefault()
     const newContact = {...this.state, requestor_id: this.props.id}
     
-    this.props.addingContact(newContact)
+    if (this.props.contact) {
+      this.props.updatingContact(newContact)
+    } else {
+      this.props.addingContact(newContact)
+    }
     this.setState({
       first_name: '',
       last_name: ''
@@ -30,7 +35,7 @@ class ContactForm extends React.Component {
   }
 
   render(){
-    console.log(this.props)
+    console.log(this.state)
     return (
       <div className='new-reminder'>
         <h3>Add a new Contact!</h3>
@@ -57,7 +62,10 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => {
-  return {addingContact: (contact) => dispatch(addingContact(contact))}
+  return {
+    addingContact: (contact) => dispatch(addingContact(contact)),
+    updatingContact: contact => dispatch(updatingContact(contact))
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContactForm)

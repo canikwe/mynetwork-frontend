@@ -7,7 +7,8 @@ import {
   ADD_CONTACT,
   UPDATE_REMINDER,
   DELETE_REMINDER,
-  DELETE_CONTACT
+  DELETE_CONTACT,
+  UPDATE_CONTACT
 } from './types'
 
 const reduxConnection = (state='connected', action) => {
@@ -50,6 +51,8 @@ const updateContacts = (state=[], action) => {
       return action.user.contacts
     case ADD_CONTACT:
       return [...state, action.contact]
+    case UPDATE_CONTACT:
+      return state.map(c => c.id === action.contact.id ? action.contact : c)
     case DELETE_CONTACT:
       return state.filter(c => c.id !== action.contact.id)
     default:

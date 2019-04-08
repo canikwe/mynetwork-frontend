@@ -1,19 +1,28 @@
 import React from 'react'
 import '../App.css'
 import { connect } from 'react-redux'
-import { addingContact } from '../redux/actions'
+import { addingContact, updatingUser } from '../redux/actions'
 
-class SignUpForm extends React.Component {
+class UserForm extends React.Component {
   constructor(){
     super()
     this.state = {
-      img: 'https://ayogo.com/wp-content/uploads/2015/06/jp-avatar-placeholder.png',
+      id: '',
+      avatar: 'https://ayogo.com/wp-content/uploads/2015/06/jp-avatar-placeholder.png',
       bio: '',
       first_name: '',
       last_name: '',
       email: '',
+      username: '',
       // password: '',
       // password_confirm: ''
+    }
+  }
+
+  componentDidMount() {
+    if (this.props.user.id) {
+      const { id, avatar, bio, first_name, last_name, email, username } = this.props.user
+      this.setState({ id, avatar, bio, first_name, last_name, email, username })
     }
   }
 
@@ -25,34 +34,33 @@ class SignUpForm extends React.Component {
 
   handleSubmit = e => {
     e.preventDefault()
-
     //check password and password_confirm are identical (else throw alert)
     console.log(this.state)
-    this.props.addingContact(this.state)
+    this.props.user.id ? this.props.updatingUser(this.state) : this.props.addingContact(this.state)
     this.resetState()
     //put a redirect here
   }
 
   resetState = () => {
     this.setState({
-      img: 'https://ayogo.com/wp-content/uploads/2015/06/jp-avatar-placeholder.png',
+      avatar: 'https://ayogo.com/wp-content/uploads/2015/06/jp-avatar-placeholder.png',
       bio: '',
       first_name: '',
       last_name: '',
       email: '',
+      username: '',
       // password: '',
       // password_confirm: ''
     })
   }
 
   render(){
-    const { img, bio, first_name, last_name, email, password, password_confirm } = this.state
+    const { avatar, bio, first_name, last_name, email, username } = this.state
     return(
       <React.Fragment>
-        <h2>Sign Up Here!</h2>
   
         <form onSubmit={this.handleSubmit}>
-          <img className='avatar' src={ img } alt='user_avatar'/><br />
+          <img className='avatar' src={ avatar } alt='user_avatar'/><br />
           <label htmlFor='avatar'>Avatar</label><br />
   
           <label htmlFor='bio'>Bio:</label><br />
@@ -64,8 +72,12 @@ class SignUpForm extends React.Component {
           <label htmlFor='last_name'>Last Name: </label>
           <input type='text' name='last_name' value={ last_name } onChange={this.handleChange}></input><br />
   
+          <label htmlFor='username'>Username: </label>
+          <input type='text' name='username' value={ username } onChange={this.handleChange}></input><br />
+          
           <label htmlFor='email'>Email: </label>
           <input type='text' name='email' value={ email } onChange={this.handleChange}></input><br />
+
   
           {/* <label htmlFor='password'>Password: </label>
           <input type='password' name='password' value={ password } onChange={this.handleChange}></input><br />
@@ -82,8 +94,15 @@ class SignUpForm extends React.Component {
 
 }
 
-const mapDispatchToProps = dispatch => {
-  return {addingContact: (contact) => dispatch(addingContact(contact))}
+const mapStateToProps = state => {
+  return {user: state.user}
 }
 
-export default connect(null, mapDispatchToProps)(SignUpForm)
+const mapDispatchToProps = dispatch => {
+  return {
+    addingContact: (contact) => dispatch(addingContact(contact)),
+    updatingUser: (user) => dispatch(updatingUser(user))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserForm)

@@ -55,13 +55,14 @@
   background-color: aquamarine;
   margin: 10px;
   width: 300px;
-  float: left;
+  height: 300px;
+  /* float: left; */
 }
 
 .new-reminder {
   border-style: dashed;
-  width: 500px;
-  float: left;
+  /* width: 500px; */
+  /* float: left; */
   background-color: lemonchiffon
 }
 

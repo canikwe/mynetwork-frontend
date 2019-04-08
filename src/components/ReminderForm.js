@@ -1,8 +1,7 @@
 import React from 'react'
 import { week } from '../Dates'
 import { connect } from 'react-redux'
-import { addingReminder, updatingReminder, deletingReminder } from '../redux/actions'
-import { Link } from 'react-router-dom'
+import { addingReminder, updatingReminder } from '../redux/actions'
 import '../App.css'
 
 class ReminderForm extends React.Component {
@@ -48,6 +47,20 @@ class ReminderForm extends React.Component {
     
   }
 
+  handleSubmit =(e) => {
+    e.preventDefault()
+    console.log(this.props)
+    
+    if (this.props.reminder) {
+      this.props.updatingReminder(this.state)
+      this.props.handleClose('editReminderModalOpen')
+    } else {
+      this.props.addingReminder(this.state)
+      this.props.handleClose('newReminderModalOpen')
+    }
+    this.resetForm()
+  }
+
   resetForm = () => {
     this.setState({
       msg: '',
@@ -58,21 +71,14 @@ class ReminderForm extends React.Component {
   }
 
   render() {
-    // debugger
+    
     if (this.props.loading) {
       return <h2>Loading...</h2>
     } else {
       return(
         <div className='new-reminder'>
           <h2>{this.props.title}</h2>
-          <form onSubmit={(e) => {
-            e.preventDefault()
-            console.log(this.props)
-            
-            this.props.reminder ? 
-            this.props.updatingReminder(this.state) : this.props.addingReminder(this.state)
-            this.resetForm()
-            }}>
+          <form onSubmit={this.handleSubmit}>
             <label htmlFor='msg'>Message: </label>
             <input type='text' name='msg' value={this.state.msg} onChange={this.handleChange}></input><br />
     
@@ -93,8 +99,6 @@ class ReminderForm extends React.Component {
             <button type='submit'>Submit</button>
     
           </form>
-
-          <Link to='/' onClick={() => this.props.deletingReminder(this.props.reminder)}>Delete Reminder</Link>
           
         </div>
       )}
@@ -111,8 +115,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     addingReminder: (reminder) => dispatch(addingReminder(reminder)),
-    updatingReminder: (reminder) => dispatch(updatingReminder(reminder)),
-    deletingReminder: (reminder) => dispatch(deletingReminder(reminder))
+    updatingReminder: (reminder) => dispatch(updatingReminder(reminder))
   }
 }
 

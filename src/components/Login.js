@@ -2,6 +2,12 @@ import React from 'react'
 // import { withRouter, Link } from 'react-router-dom'
 
 class Login extends React.Component {
+  constructor(){
+    super()
+    this.state = {
+      // username:
+    }
+  }
   handleClick = event => {
     event.preventDefault()
     console.log('attempting to log in with no credentials')

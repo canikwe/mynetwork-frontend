@@ -1,8 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Feature from '../components/Feature'
+import Filter from '../components/Filter'
 import ContactCardContainer from './ContactCardContainer'
 import { Link } from 'react-router-dom'
+import { Grid } from 'semantic-ui-react'
 
 const week = () => ({
   '0': 'Sunday',
@@ -53,11 +55,35 @@ const Homepage =  props => {
     return (
      <div>
       <h1>My Awesome Homepage</h1>
-      <Link to='/reminders/new'> New Reminder</Link><br />
-      <Link to='/contacts/new'> New Contact</Link>
+      <Grid>
+        <Grid.Row>
+          <Grid.Column width={15}>
+            <Link to='/profile/edit'> Edit Profile</Link><br />
+            <Link to='/contacts/new'> New Contact</Link>
+          </Grid.Column>
+        </Grid.Row>
 
-      <Feature alert={alerts}/>
-      <ContactCardContainer />
+        <Grid.Row>
+          <Grid.Column>
+            <Feature alert={alerts}/>
+          </Grid.Column>
+        </Grid.Row>
+
+        <Grid.Row>
+          <Grid.Column>
+            <Filter />
+          </Grid.Column>
+        </Grid.Row>
+
+        <Grid.Row>
+          <Grid.Column>
+            <ContactCardContainer />
+          </Grid.Column>
+        </Grid.Row>
+
+      </Grid>
+      {/* <Route exact path='/user/edit' component={ UserSettingsForm } /> */}
+
       
       {props.reminders.filter(r => r.day >= todayWeekday() + 1).sort((a, b) => b.day - a.day).map(r => console.log(alerts(r)))}
 
