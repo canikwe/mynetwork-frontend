@@ -15,7 +15,7 @@ import EditUserContainer from './containers/EditUserContainer'
 class App extends Component {
   componentDidMount(){
     this.props.testAction()
-    this.props.fetchingUser(1)
+    this.props.fetchingUser(19)
   }
 
   render() {

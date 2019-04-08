@@ -1,5 +1,5 @@
 import React from 'react'
-import { week } from '../Dates'
+// import { week } from '../Dates'
 import { connect } from 'react-redux'
 import { addingReminder, updatingReminder } from '../redux/actions'
 import '../App.css'
@@ -8,10 +8,13 @@ class ReminderForm extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      id: props.reminder ? props.reminder.id : '',
+      id: props.reminder ? props.reminder.id : null,
       msg: props.reminder ? props.reminder.msg : '',
-      day: props.reminder && props.reminder.day ? props.reminder.day : [],
-      date: props.reminder && props.reminder.date ? props.reminder.date : "",
+      start_date: props.reminder ? props.reminder.start_date : new Date(),
+      interval: props.reminder ? props.reminder.interval : 1,
+      period: props.reminder ? props.reminder.period : 'weekly',
+      snoozed: props.reminder ? props.reminder.snoozed : false,
+      current: props.reminder ? props.reminder.current : '',
       contact_id: props.contact.id
     }
   }
@@ -28,27 +31,27 @@ class ReminderForm extends React.Component {
   }
 
   handleChange = e => {
+    
     switch (e.target.name){
-      case 'day':
-        return this.setState({day: [parseInt(e.target.value)], date: ""})
-      case 'date':
-        return this.setState({date: e.target.value, day: []})
+      case 'snoozed':
+        return this.setState({snoozed: !this.state.snoozed})
       default:
         return this.setState({[e.target.name]: e.target.value})
     }
   }
 
-  addDay = e => {
+  // addDay = e => {
     
-    const dayEntry = parseInt(e.target.value)
-    // const dayVal = this.state.day.includes(dayEntry) ? this.state.day : [...this.state.day, dayEntry]
+  //   const dayEntry = parseInt(e.target.value)
+  //   // const dayVal = this.state.day.includes(dayEntry) ? this.state.day : [...this.state.day, dayEntry]
     
-    this.setState({day: [dayEntry]})
+  //   this.setState({day: [dayEntry]})
     
-  }
+  // }
 
   handleSubmit =(e) => {
     e.preventDefault()
+    console.log(this.state)
     console.log(this.props)
     
     if (this.props.reminder) {
@@ -82,11 +85,11 @@ class ReminderForm extends React.Component {
             <label htmlFor='msg'>Message: </label>
             <input type='text' name='msg' value={this.state.msg} onChange={this.handleChange}></input><br />
     
-            <label htmlFor='day'>Weekday: </label>
+            {/* <label htmlFor='day'>Weekday: </label>
             <select name='day' onChange={this.addDay}>
             <option value={this.state.day}>--Please Select A Day--</option>
               {week().map(day => <option key={day[0]} value={day[0]}>{day[1]}</option>)}
-            </select><br />
+            </select><br /> */}
 
             {/* <label htmlFor='contact_id'>Who Dis For?: </label>
             <select name='contact_id' onChange={this.handleChange}>
@@ -94,8 +97,30 @@ class ReminderForm extends React.Component {
               {this.props.contacts.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
             </select><br /> */}
 
-            <label htmlFor='date'>Date: </label>
-            <input type='date' name='date' value={this.state.date} onChange={this.handleChange}></input> <br />
+            <label htmlFor='start_date'>Start Date: </label>
+            <input type='date' name='start_date' value={this.state.start_date} onChange={this.handleChange}></input> <br />
+
+            <label htmlFor='interval'>Interval: </label>
+            <input type='number' name='interval' value={this.state.interval} onChange={this.handleChange}></input> <br />
+
+            <label htmlFor='period'>Period: </label>
+            <select name='period' onChange={this.handleChange}>
+              <option value='daily'>Daily</option>
+              <option value='weekly'>Weekly</option>
+              <option value='monthly'>Monthly</option>
+              <option value='yearly'>Yearly</option>
+            </select><br />
+            {/* <input type='text' name='period' value={this.state.period} onChange={this.handleChange}></input> <br /> */}
+
+
+
+            <label htmlFor='snoozed'>Snoozed ? </label>
+            <input type='checkbox' name='snoozed' value={this.state.snoozed} checked={this.state.snoozed} onChange={this.handleChange}></input> <br />
+
+            <label htmlFor='current'>Current: </label>
+            <input type='date' name='current' value={this.state.current} onChange={this.handleChange}></input> <br />
+          
+
             <button type='submit'>Submit</button>
     
           </form>

@@ -6,36 +6,37 @@ import ContactCardContainer from './ContactCardContainer'
 import { Link } from 'react-router-dom'
 import { Grid } from 'semantic-ui-react'
 
-const week = () => ({
-  '0': 'Sunday',
-  '1': 'Monday',
-  '2': 'Tuesday',
-  '3': 'Wednesday',
-  '4': 'Thursday',
-  '5': 'Friday',
-  '6': 'Saturday'
+// const week = () => ({
+//   '0': 'Sunday',
+//   '1': 'Monday',
+//   '2': 'Tuesday',
+//   '3': 'Wednesday',
+//   '4': 'Thursday',
+//   '5': 'Friday',
+//   '6': 'Saturday'
 
-})
+// })
 
 // Date.prototype.getWeek = function() {
 //     var onejan = new Date(this.getFullYear(),0,1);
 //     return Math.ceil((((this - onejan) / 86400000) + onejan.getDay()+1)/7);
 // } 
 
-const todayWeekday = () => (new Date()).getDay()
+// const todayWeekday = () => (new Date()).getDay()
 
 const alerts = reminder => {
 
-  reminder.day.forEach(d => {
-    if (d === todayWeekday()){
-      console.log(`${reminder.msg} today!`, d)
-    } else if (d === (todayWeekday() + 1)){
-      console.log(`Remember to ${reminder.msg} tomorrow`, d)
-    }
-    else if (d < todayWeekday() && d !== (todayWeekday() - 1)){
-      console.log(`${reminder.msg} next ${week()[d]}`)
-    }
-  })
+  return reminder.match ? console.log(reminder.msg) : null
+  // reminder.day.forEach(d => {
+  //   if (d === todayWeekday()){
+  //     console.log(`${reminder.msg} today!`, d)
+  //   } else if (d === (todayWeekday() + 1)){
+  //     console.log(`Remember to ${reminder.msg} tomorrow`, d)
+  //   }
+  //   else if (d < todayWeekday() && d !== (todayWeekday() - 1)){
+  //     console.log(`${reminder.msg} next ${week()[d]}`)
+  //   }
+  // })
 
   
 }
@@ -85,9 +86,9 @@ const Homepage =  props => {
       {/* <Route exact path='/user/edit' component={ UserSettingsForm } /> */}
 
       
-      {props.reminders.filter(r => r.day >= todayWeekday() + 1).sort((a, b) => b.day - a.day).map(r => console.log(alerts(r)))}
+      {props.reminders.map(r => alerts(r))}
 
-      {props.reminders.filter(r => r.date !== null && new Date(r.date) >= new Date()).map(r => console.log(r.msg, new Date(r.date)))}
+      {/* {props.reminders.filter(r => r.date !== null && new Date(r.date) >= new Date()).map(r => console.log(r.msg, new Date(r.date)))} */}
      </div>
    )
   }
