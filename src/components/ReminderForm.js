@@ -14,20 +14,14 @@ class ReminderForm extends React.Component {
       interval: props.reminder ? props.reminder.interval : 1,
       period: props.reminder ? props.reminder.period : 'weekly',
       snoozed: props.reminder ? props.reminder.snoozed : false,
-      current: props.reminder ? props.reminder.current : '',
+      current: props.reminder ? props.reminder.current : new Date(),
       contact_id: props.contact.id
     }
   }
 
   componentDidMount(){
     console.log(this.state, this.props)
-  //  const { reminder } = this.props.reminder
-  //   reminder ?
-  //   (this.setState({
-  //     msg: reminder.msg,
-  //     day: reminder.day,
-  //     date: reminder.date,
-  //   })) : null
+
   }
 
   handleChange = e => {
@@ -39,15 +33,6 @@ class ReminderForm extends React.Component {
         return this.setState({[e.target.name]: e.target.value})
     }
   }
-
-  // addDay = e => {
-    
-  //   const dayEntry = parseInt(e.target.value)
-  //   // const dayVal = this.state.day.includes(dayEntry) ? this.state.day : [...this.state.day, dayEntry]
-    
-  //   this.setState({day: [dayEntry]})
-    
-  // }
 
   handleSubmit =(e) => {
     e.preventDefault()
@@ -84,18 +69,6 @@ class ReminderForm extends React.Component {
           <form onSubmit={this.handleSubmit}>
             <label htmlFor='msg'>Message: </label>
             <input type='text' name='msg' value={this.state.msg} onChange={this.handleChange}></input><br />
-    
-            {/* <label htmlFor='day'>Weekday: </label>
-            <select name='day' onChange={this.addDay}>
-            <option value={this.state.day}>--Please Select A Day--</option>
-              {week().map(day => <option key={day[0]} value={day[0]}>{day[1]}</option>)}
-            </select><br /> */}
-
-            {/* <label htmlFor='contact_id'>Who Dis For?: </label>
-            <select name='contact_id' onChange={this.handleChange}>
-            <option>--Please Select A Contact--</option>
-              {this.props.contacts.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
-            </select><br /> */}
 
             <label htmlFor='start_date'>Start Date: </label>
             <input type='date' name='start_date' value={this.state.start_date} onChange={this.handleChange}></input> <br />
@@ -110,16 +83,13 @@ class ReminderForm extends React.Component {
               <option value='monthly'>Monthly</option>
               <option value='yearly'>Yearly</option>
             </select><br />
-            {/* <input type='text' name='period' value={this.state.period} onChange={this.handleChange}></input> <br /> */}
 
-
-
-            <label htmlFor='snoozed'>Snoozed ? </label>
+            {/* <label htmlFor='snoozed'>Snoozed ? </label>
             <input type='checkbox' name='snoozed' value={this.state.snoozed} checked={this.state.snoozed} onChange={this.handleChange}></input> <br />
 
             <label htmlFor='current'>Current: </label>
             <input type='date' name='current' value={this.state.current} onChange={this.handleChange}></input> <br />
-          
+           */}
 
             <button type='submit'>Submit</button>
     

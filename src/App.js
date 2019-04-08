@@ -1,21 +1,19 @@
 import React, { Component } from 'react';
 import './App.css';
 import { connect } from 'react-redux'
-import { testAction, fetchingUser } from './redux/actions'
+import { testAction } from './redux/actions'
 import { Route, Switch, Redirect } from 'react-router-dom'
 import Homepage from './containers/Homepage'
 import Login from './components/Login'
 import ContactForm from './components/ContactForm'
 import NewUserContainer from './containers/NewUserContainer'
 import EditUserContainer from './containers/EditUserContainer'
-
-
+// import {isEmpty} from 'lodash'
 
 
 class App extends Component {
   componentDidMount(){
     this.props.testAction()
-    this.props.fetchingUser(19)
   }
 
   render() {
@@ -43,7 +41,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     testAction: () => dispatch(testAction()),
-    fetchingUser: (id) => dispatch(fetchingUser(id))
+    // fetchingUser: (id) => dispatch(fetchingUser(id))
   }
 }
 

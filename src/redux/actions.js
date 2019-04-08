@@ -15,18 +15,38 @@ function loadingUser(){
   return {type: LOADING_USER}
 }
 
-function fetchingUser(id){
+// function fetchingUser(id){
+//   return (dispatch) => {
+//     dispatch(loadingUser)
+    
+//     fetch(`${URL()}/users/${id}`)
+//     .then(res => res.json())
+//     .then(user => {
+//       console.log(user)
+  
+//       dispatch(fetchedUser(user))
+//     })
+//   }
+// }
+
+
+const authenticatingUser = params => {
+
   return (dispatch) => {
     dispatch(loadingUser)
-    
-    fetch(`${URL()}/users/${id}`)
+
+    fetch(`http://localhost:3000/api/v1/login`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(params)
+    })
     .then(res => res.json())
-    .then(user => {
-      console.log(user)
-  
-      dispatch(fetchedUser(user))
+    .then(data => {
+      console.log(data)
+      dispatch(fetchedUser(data.user))
     })
   }
+
 }
 
 const updateUser = user => {
@@ -156,4 +176,15 @@ function testAction(){
   return {type: TESTING_REDUCER}
 }
 
-export { testAction, fetchingUser, addingReminder, addingContact, updatingReminder, deletingReminder, deletingContact, updatingUser, updatingContact }
+export {
+  testAction,
+  // fetchingUser,
+  addingReminder,
+  addingContact,
+  updatingReminder,
+  deletingReminder,
+  deletingContact,
+  updatingUser,
+  updatingContact,
+  authenticatingUser
+}

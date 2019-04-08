@@ -8,13 +8,9 @@ const ContactCardContainer = props => {
     
     <div>
       <h1> I am a card container </h1>
-        {/* <Grid stackable columns={4}>
-          <Grid.Row> */}
-          <div className='ui cards'>
-            {props.contacts.map(c => <ContactCard key={c.id} contact={c} />)}
-          </div>
-          {/* </Grid.Row>
-        </Grid> */}
+        <div className='ui cards'>
+          {props.contacts.map(c => <ContactCard key={c.id} contact={c} />)}
+        </div>
     </div>
   )
 }

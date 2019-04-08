@@ -6,24 +6,6 @@ import ContactCardContainer from './ContactCardContainer'
 import { Link } from 'react-router-dom'
 import { Grid } from 'semantic-ui-react'
 
-// const week = () => ({
-//   '0': 'Sunday',
-//   '1': 'Monday',
-//   '2': 'Tuesday',
-//   '3': 'Wednesday',
-//   '4': 'Thursday',
-//   '5': 'Friday',
-//   '6': 'Saturday'
-
-// })
-
-// Date.prototype.getWeek = function() {
-//     var onejan = new Date(this.getFullYear(),0,1);
-//     return Math.ceil((((this - onejan) / 86400000) + onejan.getDay()+1)/7);
-// } 
-
-// const todayWeekday = () => (new Date()).getDay()
-
 const alerts = reminder => {
 
   return reminder.match ? console.log(reminder.msg) : null
@@ -41,13 +23,6 @@ const alerts = reminder => {
   
 }
 
-// const dayAlert = day => {
-
-// }
-
-// const dateAlert = date => {
-  
-// }
 
 const Homepage =  props => {
   if (props.loading) {
@@ -83,9 +58,7 @@ const Homepage =  props => {
         </Grid.Row>
 
       </Grid>
-      {/* <Route exact path='/user/edit' component={ UserSettingsForm } /> */}
 
-      
       {props.reminders.map(r => alerts(r))}
 
       {/* {props.reminders.filter(r => r.date !== null && new Date(r.date) >= new Date()).map(r => console.log(r.msg, new Date(r.date)))} */}
