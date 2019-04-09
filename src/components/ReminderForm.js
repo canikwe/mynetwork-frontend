@@ -13,8 +13,8 @@ class ReminderForm extends React.Component {
       start_date: props.reminder ? props.reminder.start_date : new Date(),
       interval: props.reminder ? props.reminder.interval : 1,
       period: props.reminder ? props.reminder.period : 'weekly',
-      snoozed: props.reminder ? props.reminder.snoozed : false,
-      current: props.reminder ? props.reminder.current : new Date(),
+      // snoozed: props.reminder ? props.reminder.snoozed : false,
+      // current: props.reminder ? props.reminder.current : new Date(),
       contact_id: props.contact.id
     }
   }

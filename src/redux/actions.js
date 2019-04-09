@@ -1,5 +1,5 @@
 import {
-  TESTING_REDUCER, FETCHED_USER, LOADING_USER, ADD_REMINDER, ADD_CONTACT, UPDATE_REMINDER, DELETE_REMINDER, DELETE_CONTACT, UPDATING_USER, UPDATE_CONTACT
+  TESTING_REDUCER, FETCHED_USER, LOADING_USER, ADD_REMINDER, ADD_CONTACT, UPDATE_REMINDER, DELETE_REMINDER, DELETE_CONTACT, UPDATING_USER, UPDATE_CONTACT, UPDATE_SEARCH_TERM
 } from './types'
 
 const URL = () =>{
@@ -15,19 +15,19 @@ function loadingUser(){
   return {type: LOADING_USER}
 }
 
-// function fetchingUser(id){
-//   return (dispatch) => {
-//     dispatch(loadingUser)
+function fetchingUser(id){
+  return (dispatch) => {
+    dispatch(loadingUser)
     
-//     fetch(`${URL()}/users/${id}`)
-//     .then(res => res.json())
-//     .then(user => {
-//       console.log(user)
+    fetch(`${URL()}/users/${id}`)
+    .then(res => res.json())
+    .then(user => {
+      console.log(user)
   
-//       dispatch(fetchedUser(user))
-//     })
-//   }
-// }
+      dispatch(fetchedUser(user))
+    })
+  }
+}
 
 
 const authenticatingUser = params => {
@@ -43,7 +43,11 @@ const authenticatingUser = params => {
     .then(res => res.json())
     .then(data => {
       console.log(data)
-      dispatch(fetchedUser(data.user))
+      if (data.user !== undefined) {
+        dispatch(fetchedUser(data.user))
+      } else {
+        console.log(data)
+      }
     })
   }
 
@@ -172,13 +176,17 @@ const deletingReminder = reminder => {
   }
 }
 
+const updateSearchTerm = searchTerm => {
+  return { type: UPDATE_SEARCH_TERM, searchTerm }
+}
+
 function testAction(){
   return {type: TESTING_REDUCER}
 }
 
 export {
   testAction,
-  // fetchingUser,
+  fetchingUser,
   addingReminder,
   addingContact,
   updatingReminder,
@@ -186,5 +194,6 @@ export {
   deletingContact,
   updatingUser,
   updatingContact,
-  authenticatingUser
+  authenticatingUser,
+  updateSearchTerm
 }

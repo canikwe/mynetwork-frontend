@@ -8,7 +8,8 @@ import {
   UPDATE_REMINDER,
   DELETE_REMINDER,
   DELETE_CONTACT,
-  UPDATE_CONTACT
+  UPDATE_CONTACT,
+  UPDATE_SEARCH_TERM
 } from './types'
 
 const reduxConnection = (state='connected', action) => {
@@ -40,12 +41,15 @@ const updateReminders = (state=[], action) => {
       return state.map(r => r.id === action.reminder.id ? action.reminder : r)
     case DELETE_REMINDER:
       return state.filter(r => r.id !== action.reminder.id)
+    case DELETE_CONTACT:
+      return state.filter(r => r.contact_id !== action.contact.id)
     default:
       return state
   }
 }
 
 const updateContacts = (state=[], action) => {
+  
   switch(action.type){
     case FETCHED_USER:
       return action.user.contacts
@@ -71,12 +75,22 @@ const loadingReducer = (state = true, action) => {
   }
 }
 
+const updateSearchTerm = (state = '', action) => {
+  switch(action.type){
+    case UPDATE_SEARCH_TERM:
+      return action.searchTerm
+    default:
+      return state
+  }
+}
+
 const rootReducer = combineReducers({
   reduxConnection: reduxConnection,
   user: updateUser,
   contacts: updateContacts,
   reminders: updateReminders,
-  loading: loadingReducer
+  loading: loadingReducer,
+  searchTerm: updateSearchTerm
 })
 
 export default rootReducer

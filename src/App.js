@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import { connect } from 'react-redux'
-import { testAction } from './redux/actions'
+import { testAction,fetchingUser } from './redux/actions'
 import { Route, Switch, Redirect } from 'react-router-dom'
 import Homepage from './containers/Homepage'
 import Login from './components/Login'
@@ -14,6 +14,9 @@ import EditUserContainer from './containers/EditUserContainer'
 class App extends Component {
   componentDidMount(){
     this.props.testAction()
+
+    //Use for quick login before implementing AUTH. DON'T FORGET TO IMPORT FETCHINGUSER FROM ACTIONS
+    this.props.fetchingUser(26)
   }
 
   render() {
@@ -41,7 +44,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     testAction: () => dispatch(testAction()),
-    // fetchingUser: (id) => dispatch(fetchingUser(id))
+    //Delete after auth implementation!!
+    fetchingUser: (id) => dispatch(fetchingUser(id))
   }
 }
 
