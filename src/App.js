@@ -8,6 +8,8 @@ import Login from './components/Login'
 import ContactForm from './components/ContactForm'
 import NewUserContainer from './containers/NewUserContainer'
 import EditUserContainer from './containers/EditUserContainer'
+import NavBar from './components/NavBar'
+import Calendar from './components/Calendar'
 // import {isEmpty} from 'lodash'
 
 
@@ -22,13 +24,14 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <div>Nav Bar Goes Here!</div>
+        <NavBar />
         <Switch>
           <Route exact path='/login' component={Login} />
           <Route exact path='/' component={Homepage} />
           <Route exact path='/contacts/new' component={ContactForm} />
           <Route exact path='/signup' component={NewUserContainer} />
           <Route exact path='/profile/edit' component={EditUserContainer} />
+          <Route exact path='/calendar' component={Calendar} />
           <Redirect from='*' to='/' />
 
         </Switch>

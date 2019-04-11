@@ -3,13 +3,15 @@ import {
   TESTING_REDUCER,
   FETCHED_USER,
   LOADING_USER,
+  UPDATING_USER,
   ADD_REMINDER,
   ADD_CONTACT,
   UPDATE_REMINDER,
   DELETE_REMINDER,
   DELETE_CONTACT,
   UPDATE_CONTACT,
-  UPDATE_SEARCH_TERM
+  UPDATE_SEARCH_TERM,
+  THROW_ERROR
 } from './types'
 
 const reduxConnection = (state='connected', action) => {
@@ -21,16 +23,18 @@ const reduxConnection = (state='connected', action) => {
   }
 }
 
-const updateUser = (state={}, action) => {
+const userReducer = (state={}, action) => {
   switch(action.type){
     case FETCHED_USER:
+      return action.user
+    case UPDATING_USER:
       return action.user
     default:
       return state
   }
 }
 
-const updateReminders = (state=[], action) => {
+const remindersReducer = (state=[], action) => {
   
   switch(action.type){
     case FETCHED_USER:
@@ -48,7 +52,7 @@ const updateReminders = (state=[], action) => {
   }
 }
 
-const updateContacts = (state=[], action) => {
+const contactsReducer = (state=[], action) => {
   
   switch(action.type){
     case FETCHED_USER:
@@ -56,6 +60,7 @@ const updateContacts = (state=[], action) => {
     case ADD_CONTACT:
       return [...state, action.contact]
     case UPDATE_CONTACT:
+    // debugger
       return state.map(c => c.id === action.contact.id ? action.contact : c)
     case DELETE_CONTACT:
       return state.filter(c => c.id !== action.contact.id)
@@ -75,7 +80,7 @@ const loadingReducer = (state = true, action) => {
   }
 }
 
-const updateSearchTerm = (state = '', action) => {
+const searchTermReducer = (state = '', action) => {
   switch(action.type){
     case UPDATE_SEARCH_TERM:
       return action.searchTerm
@@ -84,13 +89,22 @@ const updateSearchTerm = (state = '', action) => {
   }
 }
 
+const errorsReducer = (state= {}, action) => {
+  switch(action.type) {
+    case THROW_ERROR:
+      return action.error
+    default: return state
+  }
+}
+
 const rootReducer = combineReducers({
   reduxConnection: reduxConnection,
-  user: updateUser,
-  contacts: updateContacts,
-  reminders: updateReminders,
+  user: userReducer,
+  contacts: contactsReducer,
+  reminders: remindersReducer,
   loading: loadingReducer,
-  searchTerm: updateSearchTerm
+  searchTerm: searchTermReducer,
+  error: errorsReducer
 })
 
 export default rootReducer

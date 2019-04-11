@@ -1,18 +1,34 @@
 import {
-  TESTING_REDUCER, FETCHED_USER, LOADING_USER, ADD_REMINDER, ADD_CONTACT, UPDATE_REMINDER, DELETE_REMINDER, DELETE_CONTACT, UPDATING_USER, UPDATE_CONTACT, UPDATE_SEARCH_TERM
+  TESTING_REDUCER, 
+  FETCHED_USER, 
+  LOADING_USER, 
+  ADD_REMINDER, 
+  ADD_CONTACT, 
+  UPDATE_REMINDER, 
+  DELETE_REMINDER, 
+  DELETE_CONTACT, 
+  UPDATING_USER, 
+  UPDATE_CONTACT, 
+  UPDATE_SEARCH_TERM, 
+  THROW_ERROR
 } from './types'
 
 const URL = () =>{
   return `http://localhost:3000/api/v1`
 }
 
-//Initial User Fetch and Loading into State
+//Initial User Fetch, loading into state, and error handling
 function fetchedUser(user){
   return {type: FETCHED_USER, user}
 }
 
 function loadingUser(){
   return {type: LOADING_USER}
+}
+
+const displayError = (error) => {
+  debugger
+  return {type: THROW_ERROR, error}
 }
 
 function fetchingUser(id){
@@ -43,11 +59,17 @@ const authenticatingUser = params => {
     .then(res => res.json())
     .then(data => {
       console.log(data)
-      if (data.user !== undefined) {
+      if (data.status === 'success') {
         dispatch(fetchedUser(data.user))
       } else {
         console.log(data)
+        dispatch(displayError(data))
       }
+    })
+    .catch((error) => {
+      // debugger
+      dispatch(displayError(error))
+      throw error
     })
   }
 
@@ -93,9 +115,10 @@ const updateContact = contact => {
   return {type: UPDATE_CONTACT, contact: contact}
 }
 
-const updatingContact = contact => {
+const updatingContact = (id, contact) => {
+  // debugger
   return (dispatch) => {
-    fetch(`${URL()}/users/${contact.id}`, {
+    fetch(`${URL()}/contacts/${id}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(contact)

@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import Feature from '../components/Feature'
 import Filter from '../components/Filter'
 import ContactCardContainer from './ContactCardContainer'
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
 import { Grid } from 'semantic-ui-react'
 
 const alerts = reminder => {
@@ -29,13 +29,11 @@ const Homepage =  props => {
     return <h1>Loading, please wait... </h1>
   } else {
     return (
-     <div>
-      <h1>My Awesome Homepage</h1>
-      <Grid>
+     <div className='wrapper'>
+      <Grid width={ 14 }>
         <Grid.Row>
-          <Grid.Column width={15}>
-            <Link to='/profile/edit'> Edit Profile</Link><br />
-            <Link to='/contacts/new'> New Contact</Link>
+          <Grid.Column >
+            <h1>myNetwork Homepage</h1>
           </Grid.Column>
         </Grid.Row>
 
@@ -45,7 +43,7 @@ const Homepage =  props => {
           </Grid.Column>
         </Grid.Row>
 
-        <Grid.Row>
+        <Grid.Row centered>
           <Grid.Column>
             <Filter />
           </Grid.Column>

@@ -3,9 +3,9 @@ import UserForm from '../components/UserForm'
 
 export default () => {
   return (
-    <React.Fragment>
+    <div className='wrapper'>
       <h2>Sign Up Here!</h2>
       <UserForm />
-    </React.Fragment>
+    </div>
   )
 }

@@ -36,13 +36,13 @@ class ContactCard extends React.Component {
         onClose={() => this.handleClose('newReminderModalOpen')}
       >
         <ReminderForm contact={this.props.contact} title={'Create a new reminder!'} handleClose={this.handleClose}/>
+        <p />
       </Modal>
       )
     }
 
   editReminder = () => {
-    // debugger
-    console.log(this.state)
+
     return (
       <Modal
         open={this.state.editReminderModalOpen}
@@ -65,10 +65,13 @@ class ContactCard extends React.Component {
         trigger={<Button 
           onClick={() => this.handleOpen('editContactOpen')}
           icon='edit outline' 
-          basic color='grey' />}
+          basic color='grey'
+        />}
+        open={this.state.editContactOpen}
         onClose={() => this.handleClose('editContactOpen')} 
+        size='tiny'
       >
-        <ContactForm contact={this.props.contact} />
+        <ContactForm contact={this.props.contact} handleClose={this.handleClose}/>
       </Modal>
     )
   }
@@ -83,12 +86,11 @@ class ContactCard extends React.Component {
   }
 
   render() {
-    console.log(this.state)
     return (
       <React.Fragment>
         <div className='card'>
           <div className='header' onClick={this.toggleMenu}>Contact Card For: {this.props.contact.name}</div>
-          <Menu fluid text vertical>
+          <Menu fluid text vertical className='scrolled'>
             {this.props.reminders.filter(r => r.contact_id === this.props.contact.id).map(r => {
               return (
                 <Dropdown key={r.id} text={r.msg} pointing='left' className='link item'>

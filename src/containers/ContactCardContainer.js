@@ -7,10 +7,9 @@ const ContactCardContainer = props => {
   return(
     
     <div>
-      <h1> I am a card container </h1>
-        <div className='ui cards'>
-          {props.contacts.filter(c => c.name.includes(props.searchTerm)).map(c => <ContactCard key={c.id} contact={c} />)}
-        </div>
+      <div className='ui cards'>
+        {props.contacts.filter(c => c.name.includes(props.searchTerm)).map(c => <ContactCard key={c.id} contact={c} />)}
+      </div>
     </div>
   )
 }
