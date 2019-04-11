@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import ReminderForm from '../components/ReminderForm';
 import ContactForm from './ContactForm'
 import { deletingContact, deletingReminder } from '../redux/actions'
-import { Dropdown, Menu, Modal, Button } from 'semantic-ui-react'
+import { Dropdown, Menu, Modal, Button, Header, Icon } from 'semantic-ui-react'
 import '../App.css'
 
 
@@ -15,6 +15,7 @@ class ContactCard extends React.Component {
       newReminderModalOpen: false,
       editReminderModalOpen: false,
       editContactOpen: false,
+      deleteReminderModalOpen: false,
       featuredReminder: {}
     }
   }
@@ -77,12 +78,35 @@ class ContactCard extends React.Component {
   }
 
   deleteContactBtn = () => {
-    return <Button 
-      onClick={() => this.props.deletingContact(this.props.contact)}
+    return (
+      <Modal
+      trigger={<Button 
+      onClick={() => this.handleOpen('deleteReminderModalOpen')}
       icon='trash alternate' 
       basic 
       color='grey' 
-      />
+      />}
+      open={this.state.deleteReminderModalOpen}
+      onClose={() => this.handleClose('deleteReminderModalOpen')}
+    >
+      <Header icon='trash' content='Delete this contact?' />
+      <p>This is an irreversible action. Are you sure you want to proceed?</p>
+      <Modal.Actions>
+        <Button basic onClick={() => this.handleClose('deleteReminderModalOpen')}>
+          <Icon name='arrow left' /> Back
+        </Button>
+        <Button color='red' onClick={() => {
+          this.props.deletingContact(this.props.contact)
+          this.handleClose('deleteReminderModalOpen')
+          }
+        }>
+          <Icon name='remove' /> Yes
+        </Button>
+      </Modal.Actions>
+    </Modal>
+    )
+    
+    
   }
 
   render() {

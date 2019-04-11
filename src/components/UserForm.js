@@ -44,7 +44,7 @@ class UserForm extends React.Component {
         } else {
           this.props.user.id ? this.props.updatingUser(this.state) : this.props.addingContact(this.state)
           this.resetState()
-          //put a redirect here
+          //put a redirect here?
         }
 
   }
