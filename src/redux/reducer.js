@@ -1,3 +1,5 @@
+import moment from 'moment'
+import recur from 'moment-recur'
 import { combineReducers } from 'redux'
 import {
   TESTING_REDUCER,
@@ -13,6 +15,39 @@ import {
   UPDATE_SEARCH_TERM,
   THROW_ERROR
 } from './types'
+
+const getRecurringEvents = (reminder) => {
+
+  let recurrence = {}
+  const end = moment('2019-4-30', "YYYY MM DD")
+  let start = moment(reminder.start_date, "YYYY MM DD")
+  
+  switch(reminder.period){
+    case 'daily':
+      recurrence = start.recur(end).every(reminder.interval).day()
+      
+      console.log(recurrence)
+      return recurrence.next(3).map(r => {return {...reminder, start: r._d}})
+
+      
+    case 'weekly':
+      recurrence = start.recur(end).every(reminder.interval).weeks()
+      
+      console.log(recurrence)
+      return recurrence.next(3).map(r => {return {...reminder, start: r._d}})
+      
+    case 'yearly':
+      recurrence = start.recur(end).every(reminder.interval).years()
+      
+      console.log(recurrence)
+      return recurrence.next(3).map(r => {return {...reminder, start: r._d}})
+      
+    default: 
+      return [recurrence]
+    }
+
+}
+
 
 const reduxConnection = (state='connected', action) => {
   switch (action.type){
@@ -97,6 +132,20 @@ const errorsReducer = (state= {}, action) => {
   }
 }
 
+const recurringRemindersReducer = (state = [], action) => {
+  switch(action.type){
+    case FETCHED_USER:
+      let rec = []
+      action.user.reminders.map(r => {        
+        rec = [...rec, ...getRecurringEvents(r)]
+        return rec
+      })
+      // debugger
+      return rec
+    default: return state
+  }
+}
+
 const rootReducer = combineReducers({
   reduxConnection: reduxConnection,
   user: userReducer,
@@ -104,7 +153,8 @@ const rootReducer = combineReducers({
   reminders: remindersReducer,
   loading: loadingReducer,
   searchTerm: searchTermReducer,
-  error: errorsReducer
+  error: errorsReducer,
+  recurringReminders: recurringRemindersReducer
 })
 
 export default rootReducer

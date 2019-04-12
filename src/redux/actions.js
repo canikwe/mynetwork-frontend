@@ -10,8 +10,11 @@ import {
   UPDATING_USER, 
   UPDATE_CONTACT, 
   UPDATE_SEARCH_TERM, 
-  THROW_ERROR
+  THROW_ERROR,
+  CREATE_RECURRENCE
 } from './types'
+
+
 
 const URL = () =>{
   return `http://localhost:3000/api/v1`
