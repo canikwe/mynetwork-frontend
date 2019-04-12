@@ -102,6 +102,10 @@
     overflow-x:hidden;
  }
 
+ .calendar {
+   height: 600px
+ }
+
  /* .scrolled {
     height: 75px;
     overflow-y: auto;
