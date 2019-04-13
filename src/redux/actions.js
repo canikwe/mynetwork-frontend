@@ -12,7 +12,8 @@ import {
   UPDATE_SEARCH_TERM, 
   THROW_ERROR,
   CREATE_RECURRENCE,
-  CLEAR_ERROR
+  CLEAR_ERROR,
+  LOGOUT_USER
 } from './types'
 
 
@@ -31,27 +32,28 @@ function loadingUser(){
 }
 
 const displayError = (error) => {
-  // debugger
   return {type: THROW_ERROR, error}
 }
 
-// function fetchingUser(id){
-//   return (dispatch) => {
-//     dispatch(loadingUser)
+function fetchingUser(token){
+  return (dispatch) => {
+    dispatch(loadingUser)
     
-//     fetch(`${URL()}/users/${id}`)
-//     .then(res => res.json())
-//     .then(user => {
-//       console.log(user)
-//       // debugger
-//       dispatch(fetchedUser(user))
-//     })
-//   }
-// }
+    fetch(`${URL()}/profile`, {
+      headers: {
+        'Authentication': `Bearer ${token}`
+      }
+    })
+    .then(res => res.json())
+    .then(user => {
+      console.log(user)
+      dispatch(fetchedUser(user))
+    })
+  }
+}
 
 
 const authenticatingUser = params => {
-
   return (dispatch) => {
     dispatch(loadingUser)
 
@@ -65,13 +67,13 @@ const authenticatingUser = params => {
       console.log(data)
       if (data.authenticated) {
         dispatch(fetchedUser(data.user))
+        localStorage.setItem('token', data.token)
       } else {
         console.log(data)
         dispatch(displayError(data))
       }
     })
     .catch((error) => {
-      // debugger
       dispatch(displayError(error))
       throw error
     })
@@ -99,6 +101,10 @@ const updatingUser = user => {
       dispatch(updateUser(user))
     })
   }
+}
+
+const logoutUser = () => {
+  return {type: LOGOUT_USER}
 }
 
 //Contacts Actions
@@ -216,7 +222,7 @@ function testAction(){
 
 export {
   testAction,
-  // fetchingUser,
+  fetchingUser,
   addingReminder,
   addingContact,
   updatingReminder,
@@ -226,5 +232,6 @@ export {
   updatingContact,
   authenticatingUser,
   updateSearchTerm,
-  clearError
+  clearError,
+  logoutUser
 }

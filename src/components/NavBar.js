@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { logoutUser } from '../redux/actions'
 import { Menu, Dropdown, Modal, Button } from 'semantic-ui-react'
 import ContactForm from './ContactForm'
 
@@ -23,6 +24,11 @@ class NavBar extends Component {
         <ContactForm handleClose={this.handleClose}/>
       </Modal>
     )
+  }
+
+  logout = () => {
+    localStorage.clear('token')
+    this.props.logoutUser()
   }
 
   render() {
@@ -48,7 +54,7 @@ class NavBar extends Component {
               <Dropdown.Menu>
                 <Dropdown.Item as={ Link } to='/profile/edit'>Edit Profile</Dropdown.Item>
                 <Dropdown.Item onClick={this.handleOpen}>New Contact</Dropdown.Item>
-                <Dropdown.Item as={ Link } to='/login'>Logout</Dropdown.Item>
+                <Dropdown.Item onClick={this.logout}>Logout</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
             </Button.Group>
@@ -65,4 +71,10 @@ const mapStateToProps = state => {
   return {user: state.user}
 }
 
-export default connect(mapStateToProps)(NavBar)
+const mapDispatchToProps = dispatch => {
+  return {
+    logoutUser: () => dispatch(logoutUser())
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar)

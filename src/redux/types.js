@@ -25,3 +25,5 @@ export const THROW_ERROR = 'THROW_ERROR'
 export const CREATE_RECURRENCE = 'CREATE_RECURRENCE'
 
 export const CLEAR_ERROR = 'CLEAR_ERROR'
+
+export const LOGOUT_USER = 'LOGOUT_USER'

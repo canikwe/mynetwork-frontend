@@ -14,7 +14,8 @@ import {
   UPDATE_CONTACT,
   UPDATE_SEARCH_TERM,
   THROW_ERROR,
-  CLEAR_ERROR
+  CLEAR_ERROR,
+  LOGOUT_USER
 } from './types'
 
 const getRecurringEvents = (reminder) => {
@@ -69,6 +70,8 @@ const userReducer = (state={}, action) => {
       return action.user
     case UPDATING_USER:
       return action.user
+    case LOGOUT_USER:
+      return {}
     default:
       return state
   }
@@ -100,7 +103,6 @@ const contactsReducer = (state=[], action) => {
     case ADD_CONTACT:
       return [...state, action.contact]
     case UPDATE_CONTACT:
-    // debugger
       return state.map(c => c.id === action.contact.id ? action.contact : c)
     case DELETE_CONTACT:
       return state.filter(c => c.id !== action.contact.id)

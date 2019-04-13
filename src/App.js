@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import { connect } from 'react-redux'
-import { testAction } from './redux/actions'
+import { testAction, fetchingUser } from './redux/actions'
 import { Route, Switch, Redirect } from 'react-router-dom'
 import Homepage from './containers/Homepage'
 import Login from './components/Login'
@@ -16,9 +16,12 @@ import {isEmpty} from 'lodash'
 class App extends Component {
   componentDidMount(){
     this.props.testAction()
-
-    //Use for quick login before implementing AUTH. DON'T FORGET TO IMPORT FETCHINGUSER FROM ACTIONS
-    // this.props.fetchingUser(51)
+    const token = localStorage.getItem('token')
+    if (token) {
+      this.props.fetchingUser(token)
+    }
+    
+    
   }
 
   render() {
@@ -51,14 +54,17 @@ class App extends Component {
 }
 
 const mapStateToProps = state => {
-  return {user: state.user}
+  return {
+    user: state.user,
+    loading: state.loading
+  }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     testAction: () => dispatch(testAction()),
     //Delete after auth implementation!!
-    // fetchingUser: (id) => dispatch(fetchingUser(id))
+    fetchingUser: (token) => dispatch(fetchingUser(token))
   }
 }
 
