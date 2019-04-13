@@ -42,7 +42,7 @@ function fetchingUser(id){
     .then(res => res.json())
     .then(user => {
       console.log(user)
-  
+      // debugger
       dispatch(fetchedUser(user))
     })
   }

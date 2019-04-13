@@ -19,28 +19,33 @@ import {
 const getRecurringEvents = (reminder) => {
 
   let recurrence = {}
-  const end = moment('2019-4-30', "YYYY MM DD")
-  let start = moment(reminder.start_date, "YYYY MM DD")
-  
+  const end = moment.parseZone(reminder.end_date)
+  let start = moment.parseZone(reminder.start_date)
+  // debugger
   switch(reminder.period){
     case 'daily':
       recurrence = start.recur(end).every(reminder.interval).day()
       
-      console.log(recurrence)
-      return recurrence.next(3).map(r => {return {...reminder, start: r._d}})
+      console.log(recurrence.all('L'))
+      return recurrence.all("L").map(r => {return {...reminder, start: r}})
 
       
     case 'weekly':
       recurrence = start.recur(end).every(reminder.interval).weeks()
       
-      console.log(recurrence)
-      return recurrence.next(3).map(r => {return {...reminder, start: r._d}})
+      console.log(recurrence.all('L'))
+      return recurrence.all("L").map(r => {return {...reminder, start: r}})
+    case 'monthly':
+      recurrence = start.recur(end).every(reminder.interval).months()
+      
+      console.log(recurrence.all('L'))
+      return recurrence.all("L").map(r => {return {...reminder, start: r}})
       
     case 'yearly':
       recurrence = start.recur(end).every(reminder.interval).years()
       
-      console.log(recurrence)
-      return recurrence.next(3).map(r => {return {...reminder, start: r._d}})
+      console.log(recurrence.all('L'))
+      return recurrence.all("L").map(r => {return {...reminder, start: r}})
       
     default: 
       return [recurrence]

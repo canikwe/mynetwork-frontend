@@ -18,7 +18,7 @@ class App extends Component {
     this.props.testAction()
 
     //Use for quick login before implementing AUTH. DON'T FORGET TO IMPORT FETCHINGUSER FROM ACTIONS
-    this.props.fetchingUser(26)
+    this.props.fetchingUser(51)
   }
 
   render() {
