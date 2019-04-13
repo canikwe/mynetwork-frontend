@@ -5,6 +5,8 @@ import Filter from '../components/Filter'
 import ContactCardContainer from './ContactCardContainer'
 import { Link } from 'react-router-dom'
 import { Grid } from 'semantic-ui-react'
+import toast from 'toasted-notes'
+import 'toasted-notes/src/styles.css';
 
 const alerts = reminder => {
 
@@ -34,7 +36,6 @@ const Homepage =  props => {
         <Grid.Row>
           <Grid.Column >
             <h1>myNetwork Homepage</h1>
-            <Link to='/calendar'>Calendar</Link>
           </Grid.Column>
         </Grid.Row>
 
@@ -59,6 +60,7 @@ const Homepage =  props => {
       </Grid>
 
       {props.reminders.map(r => alerts(r))}
+      {toast.notify('Hello World', {position: 'bottom-left'})}
 
       {/* {props.reminders.filter(r => r.date !== null && new Date(r.date) >= new Date()).map(r => console.log(r.msg, new Date(r.date)))} */}
      </div>

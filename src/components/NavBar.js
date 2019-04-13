@@ -44,6 +44,13 @@ class NavBar extends Component {
             as={ Link } to='/'
           />
 
+          <Menu.Item 
+            name='calendar' 
+            active={activeItem === 'calendar'} 
+            onClick={this.handleItemClick} 
+            as={ Link } to='/calendar'
+          />
+
           <Menu.Menu position='right'>
           <Button.Group color='teal'>
           <Button>{this.props.user.name}</Button>

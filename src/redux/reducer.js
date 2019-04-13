@@ -29,24 +29,24 @@ const getRecurringEvents = (reminder) => {
       recurrence = start.recur(end).every(reminder.interval).day()
       
       console.log(recurrence.all('L'))
-      return recurrence.all("L").map(r => {return {...reminder, start: r}})
+      return recurrence.all("L").map(r => {return {...reminder, start: new Date(r), all_day: true}})
 
     case 'weekly':
       recurrence = start.recur(end).every(reminder.interval).weeks()
       
       console.log(recurrence.all('L'))
-      return recurrence.all("L").map(r => {return {...reminder, start: r}})
+      return recurrence.all("L").map(r => {return {...reminder, start: new Date(r), all_day: true}})
     case 'monthly':
       recurrence = start.recur(end).every(reminder.interval).months()
       
       console.log(recurrence.all('L'))
-      return recurrence.all("L").map(r => {return {...reminder, start: r}})
+      return recurrence.all("L").map(r => {return {...reminder, start: new Date(r), all_day: true}})
       
     case 'yearly':
       recurrence = start.recur(end).every(reminder.interval).years()
       
       console.log(recurrence.all('L'))
-      return recurrence.all("L").map(r => {return {...reminder, start: r}})
+      return recurrence.all("L").map(r => {return {...reminder, start: new Date(r), all_day: true}})
       
     default: 
       return [recurrence]

@@ -24,6 +24,7 @@ const Calendar = props => {
             titleAccessor='msg'
             defaultView='month'
             views={['month', 'day', 'week']}
+            alldayaccessor='all_day'
 
           />
       </div>

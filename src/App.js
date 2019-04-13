@@ -13,6 +13,7 @@ import Calendar from './components/Calendar'
 import {isEmpty} from 'lodash'
 
 
+
 class App extends Component {
   componentDidMount(){
     this.props.testAction()
@@ -20,7 +21,6 @@ class App extends Component {
     if (token) {
       this.props.fetchingUser(token)
     }
-    
     
   }
 
