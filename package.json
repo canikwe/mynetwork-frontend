@@ -8,6 +8,7 @@
     "moment-recur": "^1.0.7",
     "react": "^16.8.6",
     "react-big-calendar": "^0.20.4",
+    "react-datetime-picker": "^2.3.0",
     "react-dom": "^16.8.6",
     "react-redux": "^6.0.1",
     "react-router-dom": "^5.0.0",

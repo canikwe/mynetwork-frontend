@@ -19,8 +19,8 @@ import {
 const getRecurringEvents = (reminder) => {
 
   let recurrence = {}
-  const end = moment.parseZone(reminder.end_date)
-  let start = moment.parseZone(reminder.start_date)
+  let start = moment(reminder.start_date)
+  const end = moment(reminder.end_date)
   // debugger
   switch(reminder.period){
     case 'daily':
@@ -29,7 +29,6 @@ const getRecurringEvents = (reminder) => {
       console.log(recurrence.all('L'))
       return recurrence.all("L").map(r => {return {...reminder, start: r}})
 
-      
     case 'weekly':
       recurrence = start.recur(end).every(reminder.interval).weeks()
       

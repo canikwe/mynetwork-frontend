@@ -3,6 +3,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { addingReminder, updatingReminder } from '../redux/actions'
 import { Header, Segment, Grid } from 'semantic-ui-react'
+import DateTimePicker from 'react-datetime-picker';
+
 import '../App.css'
 
 class ReminderForm extends React.Component {
@@ -11,7 +13,8 @@ class ReminderForm extends React.Component {
     this.state = {
       id: props.reminder ? props.reminder.id : null,
       msg: props.reminder ? props.reminder.msg : '',
-      start_date: props.reminder ? props.reminder.start_date : '',
+      start_date: props.reminder ? new Date(props.reminder.start_date) : '',
+      end_date: props.reminder ? new Date(props.reminder.end_date) : '',
       interval: props.reminder ? props.reminder.interval : 1,
       period: props.reminder ? props.reminder.period : 'daily',
       recurring: props.reminder ? props.reminder.recurring : false,
@@ -37,8 +40,12 @@ class ReminderForm extends React.Component {
     }
   }
 
+  handleStartDate = date => this.setState({start_date: date})
+  handleEndDate = date => this.setState({end_date: date})
+
+
   handleSubmit =(e) => {
-    e.preventDefault()
+    // e.preventDefault()
     console.log(this.state)
     console.log(this.props)
     
@@ -78,15 +85,15 @@ class ReminderForm extends React.Component {
             <Grid.Row columns={2}>
             <Grid.Column>
 
-            <form onSubmit={this.handleSubmit}>
+            <div >
               <div className='ui mini input'>
                 {/* <label htmlFor='msg'>Message: </label> */}
                 <input type='text' name='msg' value={this.state.msg} onChange={this.handleChange} placeholder='Message'></input>
               </div><br />
 
               <div className='ui mini input'>
-              <label htmlFor='start_date'>Start Date: </label>
-              <input type='date' name='start_date' value={this.state.start_date} onChange={this.handleChange}></input>
+                <label htmlFor='start_date'>Start Date: </label>
+                <DateTimePicker className='ui mini input' name='start_date' value={this.state.start_date} onChange={this.handleStartDate} />
               </div><br />
 
               {/* <div className='ui mini checkbox'> */}
@@ -96,6 +103,11 @@ class ReminderForm extends React.Component {
 
               {this.state.recurring ?
               <Grid.Column>
+                <div className='ui mini input'>
+                  <label htmlFor='end_date'>End Date: </label>
+                  <DateTimePicker className='ui mini input' name='end_date' value={this.state.end_date} onChange={this.handleEndDate} />
+                </div><br />
+
                 <label htmlFor='interval'>Interval: </label>
                 <input type='number' name='interval' value={this.state.interval} onChange={this.handleChange} min='1'></input> <br />
 
@@ -115,9 +127,9 @@ class ReminderForm extends React.Component {
               <input type='date' name='current' value={this.state.current} onChange={this.handleChange}></input> <br />
             */}
               
-              <button className='ui button' type='submit'>Submit</button>
+              <button className='ui button' onClick={this.handleSubmit}>Submit</button>
       
-            </form>
+            </div>
 
         </Grid.Column>
         </Grid.Row>
