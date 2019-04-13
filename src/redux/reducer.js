@@ -146,6 +146,12 @@ const recurringRemindersReducer = (state = [], action) => {
       })
       // debugger
       return rec
+    case ADD_REMINDER:
+      return [...state, ...getRecurringEvents(action.reminder)]
+    case UPDATE_REMINDER:
+      return [...state.filter(r => r.id !== action.reminder.id), ...getRecurringEvents(action.reminder)]
+    case DELETE_REMINDER:
+      return state.filter(r => r.id !== action.reminder.id)
     default: return state
   }
 }
