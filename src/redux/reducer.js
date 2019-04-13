@@ -13,7 +13,8 @@ import {
   DELETE_CONTACT,
   UPDATE_CONTACT,
   UPDATE_SEARCH_TERM,
-  THROW_ERROR
+  THROW_ERROR,
+  CLEAR_ERROR
 } from './types'
 
 const getRecurringEvents = (reminder) => {
@@ -132,6 +133,8 @@ const errorsReducer = (state= {}, action) => {
   switch(action.type) {
     case THROW_ERROR:
       return action.error
+    case CLEAR_ERROR:
+      return {}
     default: return state
   }
 }

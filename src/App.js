@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import { connect } from 'react-redux'
-import { testAction,fetchingUser } from './redux/actions'
+import { testAction } from './redux/actions'
 import { Route, Switch, Redirect } from 'react-router-dom'
 import Homepage from './containers/Homepage'
 import Login from './components/Login'
@@ -10,7 +10,7 @@ import NewUserContainer from './containers/NewUserContainer'
 import EditUserContainer from './containers/EditUserContainer'
 import NavBar from './components/NavBar'
 import Calendar from './components/Calendar'
-// import {isEmpty} from 'lodash'
+import {isEmpty} from 'lodash'
 
 
 class App extends Component {
@@ -18,7 +18,7 @@ class App extends Component {
     this.props.testAction()
 
     //Use for quick login before implementing AUTH. DON'T FORGET TO IMPORT FETCHINGUSER FROM ACTIONS
-    this.props.fetchingUser(51)
+    // this.props.fetchingUser(51)
   }
 
   render() {
@@ -26,12 +26,22 @@ class App extends Component {
       <div className="App">
         <NavBar />
         <Switch>
-          <Route exact path='/login' component={Login} />
-          <Route exact path='/' component={Homepage} />
+
+          <Route exact path='/' render={() => {
+            return isEmpty(this.props.user) ? <Redirect to='/login' /> : <Homepage />
+          }}
+          />
+
+          <Route exact path='/login' render={() => {
+            return isEmpty(this.props.user) ? <Login /> : <Redirect to='/' />
+          }}
+          />
+
           <Route exact path='/contacts/new' component={ContactForm} />
           <Route exact path='/signup' component={NewUserContainer} />
           <Route exact path='/profile/edit' component={EditUserContainer} />
           <Route exact path='/calendar' component={Calendar} />
+          {/* <Route component={NotFound} /> */}
           <Redirect from='*' to='/' />
 
         </Switch>
@@ -48,7 +58,7 @@ const mapDispatchToProps = dispatch => {
   return {
     testAction: () => dispatch(testAction()),
     //Delete after auth implementation!!
-    fetchingUser: (id) => dispatch(fetchingUser(id))
+    // fetchingUser: (id) => dispatch(fetchingUser(id))
   }
 }
 

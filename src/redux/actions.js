@@ -11,7 +11,8 @@ import {
   UPDATE_CONTACT, 
   UPDATE_SEARCH_TERM, 
   THROW_ERROR,
-  CREATE_RECURRENCE
+  CREATE_RECURRENCE,
+  CLEAR_ERROR
 } from './types'
 
 
@@ -30,23 +31,23 @@ function loadingUser(){
 }
 
 const displayError = (error) => {
-  debugger
+  // debugger
   return {type: THROW_ERROR, error}
 }
 
-function fetchingUser(id){
-  return (dispatch) => {
-    dispatch(loadingUser)
+// function fetchingUser(id){
+//   return (dispatch) => {
+//     dispatch(loadingUser)
     
-    fetch(`${URL()}/users/${id}`)
-    .then(res => res.json())
-    .then(user => {
-      console.log(user)
-      // debugger
-      dispatch(fetchedUser(user))
-    })
-  }
-}
+//     fetch(`${URL()}/users/${id}`)
+//     .then(res => res.json())
+//     .then(user => {
+//       console.log(user)
+//       // debugger
+//       dispatch(fetchedUser(user))
+//     })
+//   }
+// }
 
 
 const authenticatingUser = params => {
@@ -62,7 +63,7 @@ const authenticatingUser = params => {
     .then(res => res.json())
     .then(data => {
       console.log(data)
-      if (data.status === 'success') {
+      if (data.authenticated) {
         dispatch(fetchedUser(data.user))
       } else {
         console.log(data)
@@ -75,7 +76,10 @@ const authenticatingUser = params => {
       throw error
     })
   }
+}
 
+const clearError = () => {
+  return {type: CLEAR_ERROR}
 }
 
 const updateUser = user => {
@@ -212,7 +216,7 @@ function testAction(){
 
 export {
   testAction,
-  fetchingUser,
+  // fetchingUser,
   addingReminder,
   addingContact,
   updatingReminder,
@@ -221,5 +225,6 @@ export {
   updatingUser,
   updatingContact,
   authenticatingUser,
-  updateSearchTerm
+  updateSearchTerm,
+  clearError
 }

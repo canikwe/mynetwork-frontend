@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { authenticatingUser } from '../redux/actions'
+import { authenticatingUser, clearError } from '../redux/actions'
 import { Link } from 'react-router-dom'
 import { Segment, Button, Divider, Grid } from 'semantic-ui-react'
 import { isEmpty } from 'lodash'
@@ -30,6 +30,13 @@ class Login extends React.Component {
     this.setState({
       [event.target.name]: event.target.value
     })
+  }
+
+  displayAlert = () => {
+    if (!isEmpty(this.props.error)) {
+      alert(this.props.error.message)
+      this.props.clearError()
+    }
   }
 
   resetForm = () => {
@@ -66,7 +73,7 @@ class Login extends React.Component {
           <Divider vertical>Or</Divider>
         </Segment>
         
-        {!isEmpty(this.props.error) ? alert(this.props.error.message) : null}
+        {this.displayAlert()}
         
       </div>
     )
@@ -81,7 +88,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return { 
     // loadingUser: (user) => dispatch(loadingUser(user)),
-    authenticatingUser: (params) => dispatch(authenticatingUser(params)) 
+    authenticatingUser: (params) => dispatch(authenticatingUser(params)),
+    clearError: () => dispatch(clearError())
   }
 }
 
