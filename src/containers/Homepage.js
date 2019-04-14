@@ -44,11 +44,11 @@ const Homepage =  props => {
           </Grid.Column>
         </Grid.Row>
 
-        <Grid.Row centered>
+        {/* <Grid.Row centered>
           <Grid.Column>
             <Filter />
           </Grid.Column>
-        </Grid.Row>
+        </Grid.Row> */}
 
         <Grid.Row>
           <Grid.Column>

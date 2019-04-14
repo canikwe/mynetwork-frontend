@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { logoutUser } from '../redux/actions'
 import { Menu, Dropdown, Modal, Button } from 'semantic-ui-react'
 import ContactForm from './ContactForm'
+import Filter from '../components/Filter'
 
 class NavBar extends Component {
   state = { activeItem: 'home', modalOpen: false }
@@ -52,6 +53,7 @@ class NavBar extends Component {
           />
 
           <Menu.Menu position='right'>
+          <Filter />
           <Button.Group color='teal'>
           <Button>{this.props.user.name}</Button>
             <Dropdown
