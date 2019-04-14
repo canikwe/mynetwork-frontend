@@ -1,28 +1,28 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Feature from '../components/Feature'
-import Filter from '../components/Filter'
+// import Filter from '../components/Filter'
 import ContactCardContainer from './ContactCardContainer'
 import { Grid } from 'semantic-ui-react'
-import toast from 'toasted-notes'
+// import toast from 'toasted-notes'
 import 'toasted-notes/src/styles.css';
 
-const alerts = reminder => {
+// const alerts = reminder => {
 
-  return reminder.match ? toast.notify(reminder.msg, {position: 'bottom-left', duration: null}) : null
-  // reminder.day.forEach(d => {
-  //   if (d === todayWeekday()){
-  //     console.log(`${reminder.msg} today!`, d)
-  //   } else if (d === (todayWeekday() + 1)){
-  //     console.log(`Remember to ${reminder.msg} tomorrow`, d)
-  //   }
-  //   else if (d < todayWeekday() && d !== (todayWeekday() - 1)){
-  //     console.log(`${reminder.msg} next ${week()[d]}`)
-  //   }
-  // })
+//   return reminder.match ? toast.notify(reminder.msg, {position: 'bottom-left', duration: null}) : null
+//   // reminder.day.forEach(d => {
+//   //   if (d === todayWeekday()){
+//   //     console.log(`${reminder.msg} today!`, d)
+//   //   } else if (d === (todayWeekday() + 1)){
+//   //     console.log(`Remember to ${reminder.msg} tomorrow`, d)
+//   //   }
+//   //   else if (d < todayWeekday() && d !== (todayWeekday() - 1)){
+//   //     console.log(`${reminder.msg} next ${week()[d]}`)
+//   //   }
+//   // })
 
   
-}
+// }
 
 
 const Homepage =  props => {
@@ -40,7 +40,7 @@ const Homepage =  props => {
 
         <Grid.Row>
           <Grid.Column>
-            <Feature alert={alerts}/>
+            <Feature />
           </Grid.Column>
         </Grid.Row>
 

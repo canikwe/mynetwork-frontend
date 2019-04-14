@@ -17,7 +17,8 @@ import {
   THROW_ERROR,
   CLEAR_ERROR,
   LOGOUT_USER,
-  SNOOZE_REMINDERS
+  SNOOZE_REMINDERS,
+  CLEAR_LOADING
 } from './types'
 
 const getRecurringEvents = (reminder) => {
@@ -83,14 +84,13 @@ const remindersReducer = (state=[], action) => {
   
   switch(action.type){
     case FETCHED_USER:
-
       return action.user.reminders
     case ADD_REMINDER:
       return [...state, action.reminder]
     case UPDATE_REMINDER:
       return state.map(r => r.id === action.reminder.id ? action.reminder : r )
     case SNOOZE_REMINDERS:
-      return state.map(r => {return {...r, snoozed: true}})
+      return state.map(r => r.id === action.reminder.id ? {...r, snoozed: true} : r)
     case DELETE_REMINDER:
       return state.filter(r => r.id !== action.reminder.id)
     case DELETE_CONTACT:
@@ -125,6 +125,10 @@ const loadingReducer = (state = true, action) => {
     case LOADING_USER:
       return true
     case FETCHED_USER:
+      return false
+    case CLEAR_LOADING:
+      return false
+    case TESTING_REDUCER:
       return false
     default:
       return state

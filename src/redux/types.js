@@ -29,3 +29,5 @@ export const CREATE_RECURRENCE = 'CREATE_RECURRENCE'
 export const CLEAR_ERROR = 'CLEAR_ERROR'
 
 export const LOGOUT_USER = 'LOGOUT_USER'
+
+export const CLEAR_LOADING = 'CLEAR_LOADING'

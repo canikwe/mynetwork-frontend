@@ -13,7 +13,8 @@ import {
   THROW_ERROR,
   CLEAR_ERROR,
   LOGOUT_USER,
-  SNOOZE_REMINDERS
+  SNOOZE_REMINDERS,
+  CLEAR_LOADING
 } from './types'
 
 
@@ -31,6 +32,10 @@ function loadingUser(){
   return {type: LOADING_USER}
 }
 
+const clearLoading = () => {
+  return {type: CLEAR_LOADING}
+}
+
 const displayError = (errors) => {
   return {type: THROW_ERROR, errors}
 }
@@ -46,8 +51,12 @@ function fetchingUser(token){
     })
     .then(res => res.json())
     .then(user => {
-      console.log(user)
-      dispatch(fetchedUser(user))
+      if (user.id !== undefined) {
+        console.log(user)
+        dispatch(fetchedUser(user))
+      } else {
+        dispatch(clearLoading())
+      }
     })
   }
 }
@@ -70,6 +79,7 @@ const addingUser = user => {
       } else {
         console.log(data.message)
         dispatch(displayError(data))
+        dispatch(clearLoading())
       }
     })
   }
@@ -94,6 +104,7 @@ const authenticatingUser = params => {
       } else {
         console.log(data)
         dispatch(displayError(data.message))
+        dispatch(clearLoading())
       }
     })
     .catch((error) => {
@@ -195,8 +206,8 @@ function addingReminder(newReminderData) {
   }
 }
 
-const snoozeReminders = () => {
-  return {type: SNOOZE_REMINDERS}
+const snoozeReminders = (reminder) => {
+  return {type: SNOOZE_REMINDERS, reminder}
 }
 
 const addReminder = (newReminderObj) => {

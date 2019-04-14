@@ -30,7 +30,7 @@ class ContactForm extends React.Component {
       const updatedContact = {contact_info: {id: this.state.id}, requested_attributes: {...this.state, id: this.props.contact.friend_id}}
 
       this.props.updatingContact(this.state.id, updatedContact)
-      this.props.handleClose('editContactOpen')
+      this.props.handleClose('editContactModal')
       } else {
       const newContact = {...this.state, requestor_id: this.props.id}
 
@@ -54,7 +54,7 @@ class ContactForm extends React.Component {
 
         </form>
 
-        <Link to='/' onClick={() => this.props.handleClose('editContactOpen')}>BACH TO BUSINESS</Link>
+        <Link to='/' onClick={() => this.props.handleClose('editContactModal')}>BACH TO BUSINESS</Link>
 
       </Segment>
     )

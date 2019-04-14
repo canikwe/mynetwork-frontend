@@ -53,11 +53,11 @@ class ReminderForm extends React.Component {
       alert('You are missing some values there, bud')
     } else if (this.props.reminder) {
       this.props.updatingReminder(this.state)
-      this.props.handleClose('editReminderModalOpen')
+      this.props.handleClose('editReminderModal')
       this.resetForm()
     } else {
       this.props.addingReminder(this.state)
-      this.props.handleClose('newReminderModalOpen')
+      this.props.handleClose('newReminderModal')
       this.resetForm()
     }
   }

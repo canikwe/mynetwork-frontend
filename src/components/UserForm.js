@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { addingUser, updatingUser, clearError } from '../redux/actions'
 import { Segment, Grid, Button } from 'semantic-ui-react'
-import isEmpty from 'lodash'
+import { isEmpty } from 'lodash'
 import toast from 'toasted-notes'
 import 'toasted-notes/src/styles.css';
 
@@ -30,12 +30,10 @@ class UserForm extends React.Component {
   }
 
   componentDidUpdate() {
-    // debugger
-    if (this.props.errors.length !== 0) {
-      console.log(this.props.errors.message)
+    if (this.props.errors.length >= 1 || !isEmpty(this.props.errors)) {
+      console.log(isEmpty(this.props.errors.message))
       this.props.errors.message.forEach(e => toast.notify(e, {duration: null}))
-    } else {
-      
+      this.props.clearError()
     }
   }
 

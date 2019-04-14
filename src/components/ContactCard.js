@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import ReminderForm from '../components/ReminderForm';
 import ContactForm from './ContactForm'
 import { deletingContact, deletingReminder } from '../redux/actions'
-import { Dropdown, Menu, Modal, Button, Header, Icon } from 'semantic-ui-react'
+import { Dropdown, Menu, Modal, Button, Header } from 'semantic-ui-react'
 import '../App.css'
 
 
@@ -12,16 +12,18 @@ class ContactCard extends React.Component {
   constructor(){
     super()
     this.state = {
-      newReminderModalOpen: false,
-      editReminderModalOpen: false,
-      deleteReminderModalOpen: false,
-      editContactOpen: false,
-      deleteContactOpen: false,
+      newReminderModal: false,
+      editReminderModal: false,
+      deleteReminderModal: false,
+      editContactModal: false,
+      deleteContactModal: false,
       featuredReminder: {}
     }
   }
 
   handleOpen = (modal, featuredReminder) => this.setState({[modal]: true, featuredReminder})
+
+  handleDelete = () => this.setState({deleteReminderModal: false})
 
   handleClose = modal => this.setState({[modal]: false})
 
@@ -30,12 +32,12 @@ class ContactCard extends React.Component {
     return (
       <Modal
         trigger={<Button
-          onClick={() => this.handleOpen('newReminderModalOpen')}
+          onClick={() => this.handleOpen('newReminderModal')}
           icon ='calendar plus outline'
           primary 
         />}
-        open={this.state.newReminderModalOpen}
-        onClose={() => this.handleClose('newReminderModalOpen')}
+        open={this.state.newReminderModal}
+        onClose={() => this.handleClose('newReminderModal')}
       >
         <ReminderForm contact={this.props.contact} title={'Create a new reminder!'} handleClose={this.handleClose}/>
         <p />
@@ -47,8 +49,8 @@ class ContactCard extends React.Component {
 
     return (
       <Modal
-        open={this.state.editReminderModalOpen}
-        onClose={() => this.handleClose('editReminderModalOpen')}
+        open={this.state.editReminderModal}
+        onClose={() => this.handleClose('editReminderModal')}
       >
         <ReminderForm 
           contact={this.props.contact} 
@@ -65,12 +67,12 @@ class ContactCard extends React.Component {
     return (
       <Modal
         trigger={<Button 
-          onClick={() => this.handleOpen('editContactOpen')}
+          onClick={() => this.handleOpen('editContactModal')}
           icon='edit outline' 
           basic color='grey'
         />}
-        open={this.state.editContactOpen}
-        onClose={() => this.handleClose('editContactOpen')} 
+        open={this.state.editContactModal}
+        onClose={() => this.handleClose('editContactModal')} 
         size='tiny'
       >
         <ContactForm contact={this.props.contact} handleClose={this.handleClose}/>
@@ -81,28 +83,27 @@ class ContactCard extends React.Component {
   deleteContactBtn = () => {
     return (
       <Modal
+      size='mini'
       trigger={<Button 
-      onClick={() => this.handleOpen('deleteContactOpen')}
-      icon='trash alternate' 
-      basic 
-      color='grey' 
-      />}
-      open={this.state.deleteContactOpen}
-      onClose={() => this.handleClose('deleteContactOpen')}
-    >
+        onClick={() => this.handleOpen('deleteContactModal')}
+        icon='trash alternate' 
+        basic 
+        color='grey' 
+        />}
+      open={this.state.deleteContactModal}
+      onClose={() => this.handleClose('deleteContactModal')}
+      >
       <Header icon='trash' content='Delete this contact?' />
-      <p>This is an irreversible action. Are you sure you want to proceed?</p>
+      <Modal.Content>
+        <p>This is an irreversible action. Are you sure you want to proceed?</p>
+      </Modal.Content>
       <Modal.Actions>
-        <Button basic onClick={() => this.handleClose('deleteContactOpen')}>
-          <Icon name='arrow left' /> Back
-        </Button>
-        <Button color='red' onClick={() => {
+        <Button negative content='No' onClick={() => this.handleClose('deleteContactModal')} />
+        <Button positive icon='checkmark' labelPosition='right' content='Yes' onClick={() => {
           this.props.deletingContact(this.props.contact)
-          this.handleClose('deleteContactOpen')
+          this.handleClose('deleteContactModal')
           }
-        }>
-          <Icon name='remove' /> Yes
-        </Button>
+        } />
       </Modal.Actions>
     </Modal>
     )
@@ -111,23 +112,22 @@ class ContactCard extends React.Component {
   deleteReminder = () => {
     return (
       <Modal
-      open={this.state.deleteReminderModalOpen}
-      onClose={() => this.handleClose('deleteReminderModalOpen')}
-    >
-      <Header icon='trash' content='Delete this reminder?' />
-      <p>This is an irreversible action. Are you sure you want to proceed?</p>
-      <Modal.Actions>
-        <Button basic onClick={() => this.handleClose('deleteReminderModalOpen')}>
-          <Icon name='arrow left' /> Back
-        </Button>
-        <Button color='red' onClick={() => {
-          this.props.deletingReminder(this.state.featuredReminder)
-          this.handleClose('deleteReminderModalOpen')
-          }
-        }>
-          <Icon name='remove' /> Yes
-        </Button>
-      </Modal.Actions>
+      size='mini'
+      open={this.state.deleteReminderModal}
+      onClose={() => this.handleClose('deleteReminderModal')}
+      >
+        <Header icon='trash' content='Delete this reminder?'/>
+        <Modal.Content>
+          <p>This is an irreversible action. Are you sure you want to proceed?</p>
+        </Modal.Content>
+        <Modal.Actions>
+          <Button negative content='No' onClick={() => this.handleClose('deleteReminderModal')} />
+          <Button positive icon='checkmark' labelPosition='right' content='Yes' onClick={() => {
+            this.props.deletingReminder(this.state.featuredReminder)
+            this.handleClose('deleteReminderModal')
+            }
+          }/>
+        </Modal.Actions>
     </Modal>
     )
   }
@@ -142,9 +142,9 @@ class ContactCard extends React.Component {
               return (
                 <Dropdown key={r.id} text={r.msg} pointing='left' className='link item'>
                   <Dropdown.Menu>
-                    <Dropdown.Item onClick={() => this.handleOpen('editReminderModalOpen', r)
+                    <Dropdown.Item onClick={() => this.handleOpen('editReminderModal', r)
                       }>Edit Reminder { this.editReminder() }</Dropdown.Item>
-                    <Dropdown.Item onClick={() => this.handleOpen('deleteReminderModalOpen', r)}>Delete Reminder { this.deleteReminder() }</Dropdown.Item>
+                    <Dropdown.Item onClick={() => this.handleOpen('deleteReminderModal', r)}>Delete Reminder { this.deleteReminder() }</Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
               )

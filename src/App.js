@@ -10,7 +10,7 @@ import NewUserContainer from './containers/NewUserContainer'
 import EditUserContainer from './containers/EditUserContainer'
 import NavBar from './components/NavBar'
 import Calendar from './components/Calendar'
-import {isEmpty} from 'lodash'
+import { isEmpty } from 'lodash'
 import toast from 'toasted-notes'
 import 'toasted-notes/src/styles.css';
 
@@ -37,7 +37,12 @@ class App extends Component {
   }
 
   componentDidUpdate(){
-    this.props.reminders.map(r => r.snoozed ? null : this.alerts(r))
+    this.props.reminders.map(r => {
+      if (r.match && !r.snoozed) {
+        this.alerts(r)
+        this.props.snoozeReminders(r)
+      }
+    })
   }
 
   alerts = reminder => {
@@ -112,7 +117,7 @@ const mapDispatchToProps = dispatch => {
     testAction: () => dispatch(testAction()),
     //Delete after auth implementation!!
     fetchingUser: (token) => dispatch(fetchingUser(token)),
-    snoozeReminders: () => dispatch(snoozeReminders())
+    snoozeReminders: (r) => dispatch(snoozeReminders(r))
   }
 }
 
