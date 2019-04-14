@@ -8,7 +8,7 @@ const ContactCardContainer = props => {
     
     <div>
       <div className='ui five stackable cards'>
-        {props.contacts.filter(c => c.name.includes(props.searchTerm)).map(c => <ContactCard key={c.id} contact={c} />)}
+        {props.contacts.filter(c => c.name.toLowerCase().includes(props.searchTerm.toLowerCase())).map(c => <ContactCard key={c.id} contact={c} />)}
       </div>
     </div>
   )
