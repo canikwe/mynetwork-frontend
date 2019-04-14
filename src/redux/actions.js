@@ -124,15 +124,15 @@ const updateUser = user => {
 
 const updatingUser = user => {
   return dispatch => {
-    fetch(`${URL()}/users/${user.id}`, {
+    fetch(`${URL()}/users/${user.user.id}`, {
       method: 'PATCH',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(user)
     })
     .then(res => res.json())
-    .then(user => {
-      console.log(user)
-      dispatch(updateUser(user))
+    .then(data => {
+      console.log(data)
+      dispatch(updateUser(data))
     })
   }
 }
@@ -273,5 +273,6 @@ export {
   clearError,
   logoutUser,
   snoozeReminders,
-  addingUser
+  addingUser,
+  clearLoading
 }

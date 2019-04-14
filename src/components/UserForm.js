@@ -30,10 +30,15 @@ class UserForm extends React.Component {
   }
 
   componentDidUpdate() {
-    if (this.props.errors.length >= 1 || !isEmpty(this.props.errors)) {
-      console.log(isEmpty(this.props.errors.message))
-      this.props.errors.message.forEach(e => toast.notify(e, {duration: null}))
-      this.props.clearError()
+    if (this.props.notifications.length >= 1 || !isEmpty(this.props.notifications)) {
+      if (this.props.notifications.status !== 500) {
+        console.log(isEmpty(this.props.notifications.message))
+        this.props.notifications.message.forEach(e => toast.notify(e, {duration: null}))
+        this.props.clearError()
+      } else {
+        toast.notify(this.props.notifications.error, {duration: null})
+        this.props.clearError()
+      }
     }
   }
 
@@ -68,7 +73,7 @@ class UserForm extends React.Component {
   //     debugger
   //   if (!isEmpty(this.props.error)) {
   //     debugger
-  //     this.props.errors.forEach(e => {
+  //     this.props.notifications.forEach(e => {
   //       console.log(e)
   //       alert(e)
   //     })
@@ -146,7 +151,7 @@ class UserForm extends React.Component {
 const mapStateToProps = state => {
   return {
     user: state.user,
-    errors: state.error
+    notifications: state.notifications
   }
 }
 

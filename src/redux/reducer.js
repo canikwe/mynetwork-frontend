@@ -72,7 +72,7 @@ const userReducer = (state={}, action) => {
     
       return action.user
     case UPDATING_USER:
-      return action.user
+      return action.user.user
     case LOGOUT_USER:
       return {}
     default:
@@ -128,8 +128,6 @@ const loadingReducer = (state = true, action) => {
       return false
     case CLEAR_LOADING:
       return false
-    case TESTING_REDUCER:
-      return false
     default:
       return state
   }
@@ -146,13 +144,15 @@ const searchTermReducer = (state = '', action) => {
   }
 }
 
-const errorsReducer = (state= [], action) => {
+const notificationReducer = (state= [], action) => {
   switch(action.type) {
     case THROW_ERROR:
       console.log(action.errors)
       return action.errors
+    case UPDATING_USER:
+      return {message: [action.user.message]}
     case CLEAR_ERROR:
-      return {}
+      return []
     default: return state
   }
 }
@@ -185,7 +185,7 @@ const rootReducer = combineReducers({
   reminders: remindersReducer,
   loading: loadingReducer,
   searchTerm: searchTermReducer,
-  error: errorsReducer,
+  notifications: notificationReducer,
   recurringReminders: recurringRemindersReducer
 })
 
