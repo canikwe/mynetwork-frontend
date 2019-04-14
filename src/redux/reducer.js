@@ -1,4 +1,5 @@
 import moment from 'moment'
+// eslint-disable-next-line
 import recur from 'moment-recur'
 import { combineReducers } from 'redux'
 import {
@@ -15,11 +16,12 @@ import {
   UPDATE_SEARCH_TERM,
   THROW_ERROR,
   CLEAR_ERROR,
-  LOGOUT_USER
+  LOGOUT_USER,
+  SNOOZE_REMINDERS
 } from './types'
 
 const getRecurringEvents = (reminder) => {
-
+  
   let recurrence = {}
   let start = moment(reminder.start_date)
   const end = moment(reminder.end_date)
@@ -28,30 +30,29 @@ const getRecurringEvents = (reminder) => {
     case 'daily':
       recurrence = start.recur(end).every(reminder.interval).day()
       
-      console.log(recurrence.all('L'))
+      // console.log(recurrence.all('L'))
       return recurrence.all("L").map(r => {return {...reminder, start: new Date(r), all_day: true}})
 
     case 'weekly':
       recurrence = start.recur(end).every(reminder.interval).weeks()
       
-      console.log(recurrence.all('L'))
+      // console.log(recurrence.all('L'))
       return recurrence.all("L").map(r => {return {...reminder, start: new Date(r), all_day: true}})
     case 'monthly':
       recurrence = start.recur(end).every(reminder.interval).months()
       
-      console.log(recurrence.all('L'))
+      // console.log(recurrence.all('L'))
       return recurrence.all("L").map(r => {return {...reminder, start: new Date(r), all_day: true}})
       
     case 'yearly':
       recurrence = start.recur(end).every(reminder.interval).years()
       
-      console.log(recurrence.all('L'))
+      // console.log(recurrence.all('L'))
       return recurrence.all("L").map(r => {return {...reminder, start: new Date(r), all_day: true}})
       
     default: 
       return [recurrence]
     }
-
 }
 
 
@@ -67,6 +68,7 @@ const reduxConnection = (state='connected', action) => {
 const userReducer = (state={}, action) => {
   switch(action.type){
     case FETCHED_USER:
+    
       return action.user
     case UPDATING_USER:
       return action.user
@@ -81,15 +83,20 @@ const remindersReducer = (state=[], action) => {
   
   switch(action.type){
     case FETCHED_USER:
+
       return action.user.reminders
     case ADD_REMINDER:
       return [...state, action.reminder]
     case UPDATE_REMINDER:
-      return state.map(r => r.id === action.reminder.id ? action.reminder : r)
+      return state.map(r => r.id === action.reminder.id ? action.reminder : r )
+    case SNOOZE_REMINDERS:
+      return state.map(r => {return {...r, snoozed: true}})
     case DELETE_REMINDER:
       return state.filter(r => r.id !== action.reminder.id)
     case DELETE_CONTACT:
       return state.filter(r => r.contact_id !== action.contact.id)
+    case LOGOUT_USER:
+      return []
     default:
       return state
   }
@@ -106,6 +113,8 @@ const contactsReducer = (state=[], action) => {
       return state.map(c => c.id === action.contact.id ? action.contact : c)
     case DELETE_CONTACT:
       return state.filter(c => c.id !== action.contact.id)
+    case LOGOUT_USER:
+      return []
     default:
       return state
   }
@@ -126,15 +135,18 @@ const searchTermReducer = (state = '', action) => {
   switch(action.type){
     case UPDATE_SEARCH_TERM:
       return action.searchTerm
+    case LOGOUT_USER:
+      return ''
     default:
       return state
   }
 }
 
-const errorsReducer = (state= {}, action) => {
+const errorsReducer = (state= [], action) => {
   switch(action.type) {
     case THROW_ERROR:
-      return action.error
+      console.log(action.errors)
+      return action.errors
     case CLEAR_ERROR:
       return {}
     default: return state
@@ -149,7 +161,6 @@ const recurringRemindersReducer = (state = [], action) => {
         rec = [...rec, ...getRecurringEvents(r)]
         return rec
       })
-      // debugger
       return rec
     case ADD_REMINDER:
       return [...state, ...getRecurringEvents(action.reminder)]
@@ -157,6 +168,8 @@ const recurringRemindersReducer = (state = [], action) => {
       return [...state.filter(r => r.id !== action.reminder.id), ...getRecurringEvents(action.reminder)]
     case DELETE_REMINDER:
       return state.filter(r => r.id !== action.reminder.id)
+    case LOGOUT_USER:
+      return []
     default: return state
   }
 }

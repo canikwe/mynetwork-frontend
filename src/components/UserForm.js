@@ -1,7 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { addingContact, updatingUser } from '../redux/actions'
+import { addingUser, updatingUser, clearError } from '../redux/actions'
 import { Segment, Grid, Button } from 'semantic-ui-react'
+import isEmpty from 'lodash'
+import toast from 'toasted-notes'
+import 'toasted-notes/src/styles.css';
 
 class UserForm extends React.Component {
   constructor(){
@@ -26,6 +29,16 @@ class UserForm extends React.Component {
     }
   }
 
+  componentDidUpdate() {
+    // debugger
+    if (this.props.errors.length !== 0) {
+      console.log(this.props.errors.message)
+      this.props.errors.message.forEach(e => toast.notify(e, {duration: null}))
+    } else {
+      
+    }
+  }
+
   handleChange = e => {
     this.setState({
       [e.target.name]: e.target.value
@@ -40,14 +53,30 @@ class UserForm extends React.Component {
         this.state.username === '' ||
         this.state.email === '' ||
         this.state.avatar === '') {
-          alert('Please fill out all required fields')
+          toast.notify('Please fill out all required fields', {duration: null})
         } else {
-          this.props.user.id ? this.props.updatingUser(this.state) : this.props.addingContact(this.state)
-          this.resetState()
-          //put a redirect here?
+          
+          if (this.props.user.id){
+            this.props.updatingUser({user: this.state})
+          } else {
+            this.props.addingUser({user: this.state})
+          }
+          // this.resetState()
         }
 
   }
+
+  //   displayAlert = () => {
+  //     debugger
+  //   if (!isEmpty(this.props.error)) {
+  //     debugger
+  //     this.props.errors.forEach(e => {
+  //       console.log(e)
+  //       alert(e)
+  //     })
+  //     this.props.clearError()
+  //   }
+  // }
 
   resetState = () => {
     this.setState({
@@ -107,6 +136,7 @@ class UserForm extends React.Component {
           </div>
         </Grid.Column>
         </Grid>
+        {/* {this.displayAlert()} */}
 
       </Segment>
     )
@@ -116,13 +146,17 @@ class UserForm extends React.Component {
 }
 
 const mapStateToProps = state => {
-  return {user: state.user}
+  return {
+    user: state.user,
+    errors: state.error
+  }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    addingContact: (contact) => dispatch(addingContact(contact)),
-    updatingUser: (user) => dispatch(updatingUser(user))
+    addingUser: (contact) => dispatch(addingUser(contact)),
+    updatingUser: (user) => dispatch(updatingUser(user)),
+    clearError: () => dispatch(clearError())
   }
 }
 

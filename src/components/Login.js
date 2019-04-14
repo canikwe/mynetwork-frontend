@@ -4,6 +4,8 @@ import { authenticatingUser, clearError } from '../redux/actions'
 import { Link } from 'react-router-dom'
 import { Segment, Button, Divider, Grid } from 'semantic-ui-react'
 import { isEmpty } from 'lodash'
+import toaster from 'toasted-notes';
+import 'toasted-notes/src/styles.css';
 
 class Login extends React.Component {
   constructor(){
@@ -17,9 +19,9 @@ class Login extends React.Component {
     event.preventDefault()
 
     if (this.state.username === ''){
-      alert('Username must be filled out')
+      toaster.notify('Username must be filled out', {duration: null})
     } else if (this.state.password === ''){
-      alert('Password must be filled out')
+      toaster.notify('Password must be filled out', {duration: null})
     } else{
       this.props.authenticatingUser({user: this.state})
       this.resetForm()
@@ -34,7 +36,7 @@ class Login extends React.Component {
 
   displayAlert = () => {
     if (!isEmpty(this.props.error)) {
-      alert(this.props.error.message)
+      toaster.notify(this.props.error, {duration: null})
       this.props.clearError()
     }
   }

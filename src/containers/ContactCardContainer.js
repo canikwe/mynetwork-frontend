@@ -7,7 +7,7 @@ const ContactCardContainer = props => {
   return(
     
     <div>
-      <div className='ui cards'>
+      <div className='ui five stackable cards'>
         {props.contacts.filter(c => c.name.includes(props.searchTerm)).map(c => <ContactCard key={c.id} contact={c} />)}
       </div>
     </div>

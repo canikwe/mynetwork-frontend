@@ -11,9 +11,9 @@ import {
   UPDATE_CONTACT, 
   UPDATE_SEARCH_TERM, 
   THROW_ERROR,
-  CREATE_RECURRENCE,
   CLEAR_ERROR,
-  LOGOUT_USER
+  LOGOUT_USER,
+  SNOOZE_REMINDERS
 } from './types'
 
 
@@ -31,8 +31,8 @@ function loadingUser(){
   return {type: LOADING_USER}
 }
 
-const displayError = (error) => {
-  return {type: THROW_ERROR, error}
+const displayError = (errors) => {
+  return {type: THROW_ERROR, errors}
 }
 
 function fetchingUser(token){
@@ -48,6 +48,29 @@ function fetchingUser(token){
     .then(user => {
       console.log(user)
       dispatch(fetchedUser(user))
+    })
+  }
+}
+
+const addingUser = user => {
+  return (dispatch) => {
+    dispatch(loadingUser)
+
+    fetch(`${URL()}/users`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(user)
+    })
+    .then(res => res.json())
+    .then(data => {
+      console.log(data)
+      if (data.authenticated) {
+        dispatch(fetchedUser(data.user))
+        localStorage.setItem('token', data.token)
+      } else {
+        console.log(data.message)
+        dispatch(displayError(data))
+      }
     })
   }
 }
@@ -70,7 +93,7 @@ const authenticatingUser = params => {
         localStorage.setItem('token', data.token)
       } else {
         console.log(data)
-        dispatch(displayError(data))
+        dispatch(displayError(data.message))
       }
     })
     .catch((error) => {
@@ -172,6 +195,10 @@ function addingReminder(newReminderData) {
   }
 }
 
+const snoozeReminders = () => {
+  return {type: SNOOZE_REMINDERS}
+}
+
 const addReminder = (newReminderObj) => {
   return {type: ADD_REMINDER, reminder: newReminderObj}
 }
@@ -233,5 +260,7 @@ export {
   authenticatingUser,
   updateSearchTerm,
   clearError,
-  logoutUser
+  logoutUser,
+  snoozeReminders,
+  addingUser
 }

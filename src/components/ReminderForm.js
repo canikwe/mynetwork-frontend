@@ -2,7 +2,7 @@ import React from 'react'
 // import { week } from '../Dates'
 import { connect } from 'react-redux'
 import { addingReminder, updatingReminder } from '../redux/actions'
-import { Header, Segment, Grid } from 'semantic-ui-react'
+import { Header, Segment, Grid, Icon } from 'semantic-ui-react'
 import DateTimePicker from 'react-datetime-picker';
 
 import '../App.css'
@@ -86,14 +86,21 @@ class ReminderForm extends React.Component {
             <Grid.Column>
 
             <div >
-              <div className='ui mini input'>
+              <div className='ui input'>
                 {/* <label htmlFor='msg'>Message: </label> */}
                 <input type='text' name='msg' value={this.state.msg} onChange={this.handleChange} placeholder='Message'></input>
               </div><br />
 
-              <div className='ui mini input'>
+              <div className='ui input' >
                 <label htmlFor='start_date'>Start Date: </label>
-                <DateTimePicker className='ui mini input' name='start_date' value={this.state.start_date} onChange={this.handleStartDate} />
+                <DateTimePicker 
+                  className='date-picker' 
+                  name='start_date' 
+                  value={this.state.start_date} 
+                  onChange={this.handleStartDate} 
+                  calendarIcon={<Icon name='calendar alternate outline' />}
+                  clearIcon={<Icon name='delete' />}
+                />
               </div><br />
 
               {/* <div className='ui mini checkbox'> */}

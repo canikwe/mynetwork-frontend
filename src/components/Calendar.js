@@ -1,7 +1,6 @@
 import React from 'react'
 import BigCalendar from 'react-big-calendar'
 import moment from 'moment'
-import recur from 'moment-recur'
 import { connect } from 'react-redux'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 

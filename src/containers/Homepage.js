@@ -3,14 +3,13 @@ import { connect } from 'react-redux'
 import Feature from '../components/Feature'
 import Filter from '../components/Filter'
 import ContactCardContainer from './ContactCardContainer'
-import { Link } from 'react-router-dom'
 import { Grid } from 'semantic-ui-react'
 import toast from 'toasted-notes'
 import 'toasted-notes/src/styles.css';
 
 const alerts = reminder => {
 
-  return reminder.match ? console.log(reminder.msg) : null
+  return reminder.match ? toast.notify(reminder.msg, {position: 'bottom-left', duration: null}) : null
   // reminder.day.forEach(d => {
   //   if (d === todayWeekday()){
   //     console.log(`${reminder.msg} today!`, d)
@@ -59,8 +58,8 @@ const Homepage =  props => {
 
       </Grid>
 
-      {props.reminders.map(r => alerts(r))}
-      {toast.notify('Hello World', {position: 'bottom-left'})}
+      {/* {props.reminders.map(r => alerts(r))} */}
+      {/* {toast.notify('Hello World', {position: 'bottom-left'})} */}
 
       {/* {props.reminders.filter(r => r.date !== null && new Date(r.date) >= new Date()).map(r => console.log(r.msg, new Date(r.date)))} */}
      </div>
