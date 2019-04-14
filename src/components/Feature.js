@@ -1,22 +1,25 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { months } from '../Dates'
-import { Grid, Segment, Image } from 'semantic-ui-react'
+import moment from 'moment'
+import { Grid, Segment, Image, Transition } from 'semantic-ui-react'
 import '../App.css'
 
 class Feature extends React.Component {
-
-  parseDate = () => {
-    // console.log(months)
-    return `${months()[new Date().getMonth()]} - ${new Date().getDate()}`
+  constructor(){
+    super()
+    this.state = {
+      toggleReminders: false
+    }
   }
+
+  toggleReminders = () => this.setState({toggleReminders: !this.state.toggleReminders})
 
   render(){
 
     return (
-      <Grid celled='internally' stackable columns={2}>
-        <Grid.Column >
-          <div className='landing-image img-feature'>
+      <Grid celled='internally' stackable columns='equal'>
+        <Grid.Column>
+          <div className='landing-image img-feature' onClick={this.toggleReminders}>
             <Image 
               size='tiny'
               circular
@@ -26,14 +29,17 @@ class Feature extends React.Component {
             />
           </div>
         </Grid.Column>
-        <Grid.Column >
-          <React.Fragment>
-            <h4>Current Reminders for: { this.parseDate() }</h4>
+        {this.state.toggleReminders ? 
+        <Grid.Column width={5}>
+          <div onClick={this.toggleReminders}>
+            <h4>Current Reminders for: { moment().format('dddd, MMMM Do, YYYY') }</h4>
             <div className='reminders-container'>
                 {this.props.reminders.map(r => r.match ? <Segment key={r.id} compact>{r.msg}</Segment> : null)}
             </div>
-          </React.Fragment>
+          </div>
         </Grid.Column>
+        : null
+        }
       </Grid>)
   }
 }

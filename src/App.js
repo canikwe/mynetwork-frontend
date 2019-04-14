@@ -45,48 +45,57 @@ class App extends Component {
   }
 
   render() {
-    return (
-      <div className="App">
-        <NavBar />
-        <Switch>
+    if (this.props.loading) {
+      return (
+        <React.Fragment>
+          <NavBar />
+          <h1>Loading, please wait... </h1>
+        </React.Fragment>
+      )
+    } else {
+      return (
+        <div className="App">
+          <NavBar />
+          <Switch>
 
-          <Route exact path='/' render={() => {
-            return isEmpty(this.props.user) ? <Redirect to='/login' /> : <Homepage />
-          }}
-          />
+            <Route exact path='/' render={() => {
+              return isEmpty(this.props.user) ? <Redirect to='/login' /> : <Homepage />
+            }}
+            />
 
-          <Route exact path='/login' render={() => {
-            return isEmpty(this.props.user) ? <Login /> : <Redirect to='/' />
-          }}
-          />
+            <Route exact path='/login' render={() => {
+              return isEmpty(this.props.user) ? <Login /> : <Redirect to='/' />
+            }}
+            />
 
-          <Route exact path='/contacts/new' render={() => {
-            return !isEmpty(this.props.user) ? <ContactForm /> : <Redirect to='/login' />
-          }}
-          />
+            <Route exact path='/contacts/new' render={() => {
+              return !isEmpty(this.props.user) ? <ContactForm /> : <Redirect to='/login' />
+            }}
+            />
 
-          <Route exact path='/signup' render={() => {
-            return isEmpty(this.props.user) ? <NewUserContainer /> : <Redirect to='/' />
-          }}
-          />
+            <Route exact path='/signup' render={() => {
+              return isEmpty(this.props.user) ? <NewUserContainer /> : <Redirect to='/' />
+            }}
+            />
 
-          <Route exact path='/profile/edit' render={() => {
-            return !isEmpty(this.props.user) ? <EditUserContainer /> : <Redirect to='/login' />
-          }} 
-          />
+            <Route exact path='/profile/edit' render={() => {
+              return !isEmpty(this.props.user) ? <EditUserContainer /> : <Redirect to='/login' />
+            }} 
+            />
 
-          <Route exact path='/calendar' render={() => {
-            return !isEmpty(this.props.user) ? <Calendar /> : <Redirect to='/login' />
-          }}
-          />
-          {/* <Route component={NotFound} /> */}
-          <Redirect from='*' to='/' />
+            <Route exact path='/calendar' render={() => {
+              return !isEmpty(this.props.user) ? <Calendar /> : <Redirect to='/login' />
+            }}
+            />
+            {/* <Route component={NotFound} /> */}
+            <Redirect from='*' to='/' />
 
-        </Switch>
-        {/* {this.props.reminders.map(r => this.alerts(r))} */}
+          </Switch>
+          {/* {this.props.reminders.map(r => this.alerts(r))} */}
 
-      </div>
-    );
+        </div>
+      );
+    }
   }
 }
 
