@@ -1,14 +1,33 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { updateSearchTerm } from '../redux/actions'
-import { Input } from 'semantic-ui-react'
+import { Input, Transition } from 'semantic-ui-react'
 
-const Filter = props => {
-  return (
-    <div className='filter'>
-        <Input icon='search' type='text' size='small' value={props.searchTerm} onChange={(e) => props.updateSearchTerm(e.target.value)} name='filter' placeholder='Search Contacts...'></Input>
-    </div>
-  )
+class Filter extends React.PureComponent {
+  state = {
+    visible: true
+  }
+
+  toggleVisibility = () => this.setState({ visible: !this.state.visible })
+
+  render() {
+    return (
+      <div className='filter'>
+        <Transition animation='jiggle' duration={500} visible={this.state.visible}>
+          <Input
+            icon='search' 
+            type='text' 
+            size='large' 
+            value={this.props.searchTerm} 
+            onChange={(e) => this.props.updateSearchTerm(e.target.value)}
+            onFocus={this.toggleVisibility}
+            name='filter' 
+            placeholder='Search Contacts...'>
+          </Input>
+        </Transition>
+      </div>
+    )
+  }
 }
 
 const mapStateToProps = state => {

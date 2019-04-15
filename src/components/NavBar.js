@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { logoutUser } from '../redux/actions'
-import { Menu, Dropdown, Modal, Button } from 'semantic-ui-react'
+import { Menu, Dropdown, Modal, Segment, Label } from 'semantic-ui-react'
 import { isEmpty } from 'lodash'
 import ContactForm from './ContactForm'
 import Filter from '../components/Filter'
@@ -37,8 +37,14 @@ class NavBar extends Component {
     const { activeItem } = this.state
 
     return (
-      <div>
-        <Menu pointing secondary>
+      <Segment inverted>
+        <Menu 
+          pointing 
+          secondary 
+          inverted 
+          fluid 
+          // widths={3}
+        >
         { !isEmpty(this.props.user) ?
 
           <React.Fragment>
@@ -57,14 +63,22 @@ class NavBar extends Component {
               as={ Link } to='/calendar'
             /> 
 
+            <Menu.Menu  position='right'>
+
+            <Menu.Item header><h2>myNetwork</h2></Menu.Item>
+            </Menu.Menu>
+
           <Menu.Menu position='right'>
 
           <Filter />
-          
-          <Button.Group color='teal'>
-          <Button>{this.props.user.name}</Button>
+
             <Dropdown
-              as={Button}
+              trigger={<Label
+                className='filter'
+                size='massive'
+                color='blue'
+                circular>{`${this.props.user.first_name.slice(0, 1)}${this.props.user.last_name.slice(0, 1)}`}
+                </Label>}
               pointing='top right'              
             >
               <Dropdown.Menu>
@@ -73,7 +87,6 @@ class NavBar extends Component {
                 <Dropdown.Item onClick={this.logout}>Logout</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
-            </Button.Group>
           </Menu.Menu>
         </React.Fragment>
           : 
@@ -86,7 +99,7 @@ class NavBar extends Component {
           }
         </Menu>
         {this.newContactForm()}
-      </div>
+      </Segment>
     )
   }
 }

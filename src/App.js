@@ -110,7 +110,8 @@ const mapStateToProps = state => {
   return {
     user: state.user,
     loading: state.loading,
-    reminders: state.reminders
+    reminders: state.reminders,
+    notifications: state.notifications
   }
 }
 
