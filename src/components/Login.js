@@ -50,31 +50,36 @@ class Login extends React.Component {
 
   render() {
     return (
-      <div className='wrapper'>
-        <h1>myNetwork</h1>
-        <Segment>
-          <Grid columns={2} relaxed='very' stackable>
-            <Grid.Column>
-              <form className='ui form' onSubmit={this.handleSubmit}>
-                <div className='required field'>
-                  <label htmlFor='username'>Username: </label>
-                  <input type='text' name='username' onChange={this.handleChange} value={this.state.username}></input>
-                </div>
+      <div className='wrapper' >
+      <Grid centered textAlign='left'>
+        <Grid.Row>
+          <h1>myNetwork</h1>
+        </Grid.Row>
+        <Grid.Row>
+          <Segment >
+            <Grid columns={2} relaxed='very' stackable>
+              <Grid.Column>
+                <form className='ui form' onSubmit={this.handleSubmit}>
+                  <div className='required field'>
+                    <label htmlFor='username'>Username: </label>
+                    <input type='text' name='username' onChange={this.handleChange} value={this.state.username}></input>
+                  </div>
 
-                <div className='required field'>
-                  <label htmlFor='password'>Password: </label>
-                  <input type='password' name='password' onChange={this.handleChange} value={this.state.password}></input><br />
-                </div>
-                <button className='ui button primary' type='submit'>Submit</button>
-              </form>
-            </Grid.Column>
-            <Grid.Column verticalAlign='middle'>
-              <Button content='Sign Up' as={ Link } to='/signup' icon='signup' size='big'/>
-            </Grid.Column>
-          </Grid>
-          <Divider vertical>Or</Divider>
-        </Segment>
-        
+                  <div className='required field'>
+                    <label htmlFor='password'>Password: </label>
+                    <input type='password' name='password' onChange={this.handleChange} value={this.state.password}></input><br />
+                  </div>
+                  <button className='ui button primary' type='submit'>Submit</button>
+                </form>
+              </Grid.Column>
+              <Grid.Column textAlign='center' verticalAlign='middle'>
+                <Button content='Sign Up' as={ Link } to='/signup' icon='signup' size='big'/>
+              </Grid.Column>
+            </Grid>
+            <Divider vertical>Or</Divider>
+          </Segment>
+        </Grid.Row>
+      </Grid>
         {this.displayAlert()}
         
       </div>

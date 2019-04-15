@@ -22,7 +22,7 @@ import {
 } from './types'
 
 const getRecurringEvents = (reminder) => {
-  
+
   let recurrence = {}
   let start = moment(reminder.start_date)
   const end = moment(reminder.end_date)
@@ -53,7 +53,7 @@ const getRecurringEvents = (reminder) => {
       
     default: 
       return [recurrence]
-    }
+  }
 }
 
 

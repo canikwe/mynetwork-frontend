@@ -40,7 +40,7 @@ class ReminderForm extends React.Component {
     }
   }
 
-  handleStartDate = date => this.setState({start_date: date})
+  handleStartDate = date => this.setState({start_date: date, end_date: date})
   handleEndDate = date => this.setState({end_date: date})
 
 

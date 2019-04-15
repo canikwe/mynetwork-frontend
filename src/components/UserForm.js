@@ -18,7 +18,8 @@ class UserForm extends React.Component {
       email: '',
       username: '',
       password: '',
-      // password_confirm: ''
+      // password_confirm: '',
+      splash_image: ''
     }
   }
 
@@ -107,6 +108,7 @@ class UserForm extends React.Component {
             <label htmlFor='avatar'>Avatar: </label><br />
             <input type='text' name='avatar' value={ avatar } onChange={this.handleChange}></input><br />
 
+            <input type='file' name='splash_image' accept='image/*' onChange={this.handleChange}></input>
           
               <label htmlFor='bio'>Bio:</label><br />
               <textarea name='bio' rows='6' value={ bio } onChange={this.handleChange}></textarea>
