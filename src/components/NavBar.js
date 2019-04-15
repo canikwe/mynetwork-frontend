@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { logoutUser } from '../redux/actions'
 import { Menu, Dropdown, Modal, Button } from 'semantic-ui-react'
+import { isEmpty } from 'lodash'
 import ContactForm from './ContactForm'
 import Filter from '../components/Filter'
 
@@ -38,22 +39,28 @@ class NavBar extends Component {
     return (
       <div>
         <Menu pointing secondary>
-          <Menu.Item 
-            name='home' 
-            active={activeItem === 'home'} 
-            onClick={this.handleItemClick} 
-            as={ Link } to='/'
-          />
+        { !isEmpty(this.props.user) ?
 
-          <Menu.Item 
-            name='calendar' 
-            active={activeItem === 'calendar'} 
-            onClick={this.handleItemClick} 
-            as={ Link } to='/calendar'
-          />
+          <React.Fragment>
+
+            <Menu.Item 
+              name='home' 
+              active={activeItem === 'home'} 
+              onClick={this.handleItemClick} 
+              as={ Link } to='/'
+            />
+
+            <Menu.Item 
+              name='calendar' 
+              active={activeItem === 'calendar'} 
+              onClick={this.handleItemClick} 
+              as={ Link } to='/calendar'
+            /> 
 
           <Menu.Menu position='right'>
+
           <Filter />
+          
           <Button.Group color='teal'>
           <Button>{this.props.user.name}</Button>
             <Dropdown
@@ -68,8 +75,16 @@ class NavBar extends Component {
             </Dropdown>
             </Button.Group>
           </Menu.Menu>
+        </React.Fragment>
+          : 
+            <Menu.Item 
+              name='about' 
+              active={activeItem === 'about'} 
+              onClick={this.handleItemClick} 
+              as={ Link } to='/about'
+            /> 
+          }
         </Menu>
-        
         {this.newContactForm()}
       </div>
     )
