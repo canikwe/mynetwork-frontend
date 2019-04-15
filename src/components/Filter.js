@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { updateSearchTerm } from '../redux/actions'
 import { Input, Transition } from 'semantic-ui-react'
+import { withRouter } from 'react-router-dom'
 
 class Filter extends React.PureComponent {
   state = {
@@ -11,9 +12,10 @@ class Filter extends React.PureComponent {
   toggleVisibility = () => this.setState({ visible: !this.state.visible })
 
   render() {
+    console.log(this.props.location.pathname)
     return (
       <div className='filter'>
-        <Transition animation='jiggle' duration={500} visible={this.state.visible}>
+        <Transition animation='jiggle' duration={500} visible={this.props.location.pathname === '/calendar' ? false : this.state.visible}>
           <Input
             icon='search' 
             type='text' 
@@ -38,4 +40,4 @@ const mapDispatchToProps = dispatch => {
   return { updateSearchTerm: (searchTerm) => dispatch(updateSearchTerm(searchTerm)) }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Filter)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Filter))

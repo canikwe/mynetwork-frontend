@@ -2,7 +2,7 @@ import React from 'react'
 // import { week } from '../Dates'
 import { connect } from 'react-redux'
 import { addingReminder, updatingReminder } from '../redux/actions'
-import { Header, Segment, Grid, Icon } from 'semantic-ui-react'
+import { Header, Segment, Grid, Icon, Transition, Dropdown } from 'semantic-ui-react'
 import DateTimePicker from 'react-datetime-picker';
 
 import '../App.css'
@@ -40,8 +40,9 @@ class ReminderForm extends React.Component {
     }
   }
 
-  handleStartDate = date => this.setState({start_date: date, end_date: date})
-  handleEndDate = date => this.setState({end_date: date})
+  handlePeriodChange = (e, { value }) => this.setState({period: value})
+  handleStartDateChange = date => this.state.end_date === '' ? this.setState({start_date: date, end_date: date}) : this.setState({start_date: date})
+  handleEndDateChange = date => this.setState({end_date: date})
 
 
   handleSubmit =(e) => {
@@ -71,6 +72,15 @@ class ReminderForm extends React.Component {
     })
   }
 
+  periodDropdown = () => {
+    return ([
+      {key: 'daily', text: 'Daily', value: 'daily'},
+      {key: 'weekly', text:'Weekly', value: 'weekly'},
+      {key: 'monthly', text: 'Monthly', value: 'monthly'},
+      {key: 'yearly', text: 'Yearly', value:'yearly'}
+    ])
+  }
+
   render() {
     
     if (this.props.loading) {
@@ -81,51 +91,88 @@ class ReminderForm extends React.Component {
           <Header as='h2' attached='top'>{this.props.title}</Header>
 
           <Segment attached>
-          <Grid divided>
+          <Grid divided={this.state.recurring}>
             <Grid.Row columns={2}>
             <Grid.Column>
 
-            <div >
-              <div className='ui input'>
-                {/* <label htmlFor='msg'>Message: </label> */}
-                <input type='text' name='msg' value={this.state.msg} onChange={this.handleChange} placeholder='Message'></input>
-              </div><br />
+            <div>
+                <label htmlFor='msg'>Message: </label><p />
+              <div className='ui input field'>
+                <input
+                  type='text' 
+                  name='msg' 
+                  value={this.state.msg} 
+                  onChange={this.handleChange} />
+              </div><p />
 
+                <label htmlFor='start_date'>Start Date: </label><p />
               <div className='ui input' >
-                <label htmlFor='start_date'>Start Date: </label>
                 <DateTimePicker 
                   className='date-picker' 
                   name='start_date' 
                   value={this.state.start_date} 
-                  onChange={this.handleStartDate} 
+                  onChange={this.handleStartDateChange} 
                   calendarIcon={<Icon name='calendar alternate outline' />}
                   clearIcon={<Icon name='delete' />}
                 />
-              </div><br />
+              </div><p />
 
               {/* <div className='ui mini checkbox'> */}
                 <label htmlFor='recurring'>Recurring ? </label>
-                <input type='checkbox' name='recurring' checked={this.state.recurring} onChange={this.handleChange} ></input><br /> 
+                <div className='ui checkbox'>
+                <input 
+                  type='checkbox' 
+                  name='recurring' 
+                  checked={this.state.recurring} 
+                  onChange={this.handleChange} 
+                  tabIndex="0" >
+                  </input><br /> 
+                </div><p />
               {/* </div><br /> */}
 
-              {this.state.recurring ?
+              {/* {this.state.recurring ? */}
+              <button className='ui button' onClick={this.handleSubmit}>Submit</button>
+            </div>
+              </Grid.Column>
               <Grid.Column>
-                <div className='ui mini input'>
-                  <label htmlFor='end_date'>End Date: </label>
-                  <DateTimePicker className='ui mini input' name='end_date' value={this.state.end_date} onChange={this.handleEndDate} />
-                </div><br />
+                <Transition animation='scale' duration={400} visible={this.state.recurring}>
+                <div>
+                  <label htmlFor='end_date'>End Date: </label><p />
+                <div className='ui input'>
+                  <DateTimePicker 
+                  className='date-picker' 
+                  name='end_date' 
+                  value={this.state.end_date} 
+                  onChange={this.handleEndDateChange}
+                  calendarIcon={<Icon name='calendar alternate outline' />}
+                  clearIcon={<Icon name='delete' />}/>
+                </div><p />
 
-                <label htmlFor='interval'>Interval: </label>
+                <label htmlFor='interval'>Interval: </label><p />
+                <div className='ui input'>
                 <input type='number' name='interval' value={this.state.interval} onChange={this.handleChange} min='1'></input> <br />
+                </div><p />
 
-                <label htmlFor='period'>Period: </label>
-                <select name='period' onChange={this.handleChange} defaultValue={this.state.period}>
+                <label htmlFor='period'>Period: </label><p />
+                <Dropdown
+                  name='period'
+                  placeholder="Select and opetion"
+                  options={this.periodDropdown()}
+                  onChange={this.handlePeriodChange}
+                  value={this.state.period}
+                  selection
+                >
+                {/* <select name='period' onChange={this.handleChange} defaultValue={this.state.period}>
                   <option value='daily'>Daily</option>
                   <option value='weekly'>Weekly</option>
                   <option value='monthly'>Monthly</option>
                   <option value='yearly'>Yearly</option>
-                </select><br />
-              </Grid.Column> : null}
+                </select><br /> */}
+                </Dropdown>
+                </div>
+              </Transition>
+              </Grid.Column>
+              {/* : null} */}
 
               {/* <label htmlFor='snoozed'>Snoozed ? </label>
               <input type='checkbox' name='snoozed' value={this.state.snoozed} checked={this.state.snoozed} onChange={this.handleChange}></input> <br />
@@ -134,11 +181,8 @@ class ReminderForm extends React.Component {
               <input type='date' name='current' value={this.state.current} onChange={this.handleChange}></input> <br />
             */}
               
-              <button className='ui button' onClick={this.handleSubmit}>Submit</button>
       
-            </div>
 
-        </Grid.Column>
         </Grid.Row>
         </Grid>
         </Segment>

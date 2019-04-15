@@ -34,7 +34,7 @@ class Feature extends React.Component {
           <div onClick={this.toggleReminders}>
             <h4>Current Reminders for: { moment().format('dddd, MMMM Do, YYYY') }</h4>
             <div className='reminders-container'>
-                {this.props.reminders.map(r => r.match ? <Segment key={r.id} compact>{r.msg}</Segment> : null)}
+                {this.props.reminders.map(r => r.match ? <Segment key={r.id} >{r.msg}</Segment> : null)}
             </div>
           </div>
         </Grid.Column>

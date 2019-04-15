@@ -43,12 +43,11 @@ class NavBar extends Component {
           secondary 
           inverted 
           fluid 
-          // widths={3}
         >
         { !isEmpty(this.props.user) ?
 
           <React.Fragment>
-
+            
             <Menu.Item 
               name='home' 
               active={activeItem === 'home'} 
