@@ -46,7 +46,7 @@ class ReminderForm extends React.Component {
 
 
   handleSubmit =(e) => {
-    // e.preventDefault()
+    e.stopPropagation()
     console.log(this.state)
     console.log(this.props)
     

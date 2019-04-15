@@ -12,7 +12,7 @@ class Filter extends React.PureComponent {
   toggleVisibility = () => this.setState({ visible: !this.state.visible })
 
   render() {
-    console.log(this.props.location.pathname)
+    // console.log(this.props.location.pathname)
     return (
       <div className='filter'>
         <Transition animation='jiggle' duration={500} visible={this.props.location.pathname === '/calendar' ? false : this.state.visible}>

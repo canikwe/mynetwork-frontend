@@ -25,7 +25,9 @@ class ContactCard extends React.Component {
 
   handleDelete = () => this.setState({deleteReminderModal: false})
 
-  handleClose = modal => this.setState({[modal]: false})
+  handleClose = (modal) => {
+    this.setState({[modal]: false})
+  }
 
   //Methods for Reminder CRUD actions
   createReminderBtn = () => {
@@ -121,8 +123,14 @@ class ContactCard extends React.Component {
           <p>This is an irreversible action. Are you sure you want to proceed?</p>
         </Modal.Content>
         <Modal.Actions>
-          <Button negative content='No' onClick={() => this.handleClose('deleteReminderModal')} />
-          <Button positive icon='checkmark' labelPosition='right' content='Yes' onClick={() => {
+          <Button negative content='No' onClick={
+            (e) => {
+              e.stopPropagation()
+              this.handleClose('deleteReminderModal')
+            }
+          }/>
+          <Button positive icon='checkmark' labelPosition='right' content='Yes' onClick={(e) => {
+            e.stopPropagation()
             this.props.deletingReminder(this.state.featuredReminder)
             this.handleClose('deleteReminderModal')
             }
@@ -142,7 +150,7 @@ class ContactCard extends React.Component {
               return (
                 <Dropdown key={r.id} text={r.msg} pointing='left' className='link item'>
                   <Dropdown.Menu>
-                    <Dropdown.Item onClick={() => this.handleOpen('editReminderModal', r)
+                    <Dropdown.Item onClick={(e) => this.handleOpen('editReminderModal', r)
                       }>Edit Reminder { this.editReminder() }</Dropdown.Item>
                     <Dropdown.Item onClick={() => this.handleOpen('deleteReminderModal', r)}>Delete Reminder { this.deleteReminder() }</Dropdown.Item>
                   </Dropdown.Menu>
