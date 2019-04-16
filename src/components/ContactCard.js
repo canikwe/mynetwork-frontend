@@ -3,10 +3,9 @@ import { connect } from 'react-redux'
 import ReminderForm from '../components/ReminderForm';
 import ContactForm from './ContactForm'
 import { deletingContact, deletingReminder } from '../redux/actions'
-import { Dropdown, Menu, Modal, Button, Header } from 'semantic-ui-react'
-import '../App.css'
-
-
+import { Dropdown, Menu, Modal, Button, Header, Card, Icon, Image, Segment, Container } from 'semantic-ui-react'
+import ContactShow from './ContactShow'
+import moment from 'moment'
 
 class ContactCard extends React.Component {
   constructor(){
@@ -17,7 +16,8 @@ class ContactCard extends React.Component {
       deleteReminderModal: false,
       editContactModal: false,
       deleteContactModal: false,
-      featuredReminder: {}
+      featuredReminder: {},
+      contactModal: false
     }
   }
 
@@ -25,10 +25,11 @@ class ContactCard extends React.Component {
 
   handleDelete = () => this.setState({deleteReminderModal: false})
 
-  handleClose = (modal) => {
-    this.setState({[modal]: false})
-  }
+  handleClose = (modal) => this.setState({[modal]: false})
 
+  openContact = () => this.setState({contactModal: true})
+  closeContact = () => this.setState({contactModal: false})
+  
   //Methods for Reminder CRUD actions
   createReminderBtn = () => {
     return (
@@ -111,6 +112,24 @@ class ContactCard extends React.Component {
     )
   }
 
+  displayContact = () => {
+    return (
+      <Modal
+        open={this.state.contactModal}
+        onClose={this.closeContact}
+        size='tiny'>
+        <Segment>
+          <ContactShow contact={this.props.contact} reminders={this.contactReminders()}/>
+            <Container textAlign='right'>
+              {this.createReminderBtn()}
+              {this.editContactBtn()}
+              {this.deleteContactBtn()}
+            </Container>
+        </Segment>
+      </Modal>
+    )
+  }
+
   deleteReminder = () => {
     return (
       <Modal
@@ -140,12 +159,22 @@ class ContactCard extends React.Component {
     )
   }
 
+  contactReminders = () => {
+    return this.props.reminders.filter(r => r.contact_id === this.props.contact.id)
+  }
+
   render() {
     return (
       <React.Fragment>
-        <div className='ui raised fluid card' >
-          <div className='header' >Contact Card For: {this.props.contact.name}</div>
-          <Menu fluid text vertical className='scrolled'>
+        <Card onClick={this.openContact}>
+        <Card.Content>
+          <Image floated='right' size='mini' src={this.props.contact.avatar} />
+          <Card.Header>{this.props.contact.name}</Card.Header>
+          <Card.Meta>
+            <span className='date'>Connected {moment(this.props.contact.created_at).endOf('day').fromNow()}</span>
+          </Card.Meta>
+          <Card.Description>{this.props.contact.kind}</Card.Description>
+          {/* <Menu fluid text vertical className='scrolled'>
             {this.props.reminders.filter(r => r.contact_id === this.props.contact.id).map(r => {
               return (
                 <Dropdown key={r.id} text={r.msg} pointing='left' className='link item'>
@@ -157,14 +186,15 @@ class ContactCard extends React.Component {
                 </Dropdown>
               )
             })}
-          </Menu>
+          </Menu> */}
+        </Card.Content>
 
-          <div className='extra content'>
-            {this.createReminderBtn()}
-            {this.editContactBtn()}
-            {this.deleteContactBtn()}
-          </div>
-        </div>
+          <Card.Content extra>
+            <Icon name='user' />
+            {this.contactReminders().length} Reminder(s)
+          </Card.Content>
+        </Card>
+            {this.displayContact()}
       </React.Fragment>
     )
   }
