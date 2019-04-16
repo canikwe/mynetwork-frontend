@@ -1,11 +1,8 @@
 import React from 'react'
-// import { week } from '../Dates'
 import { connect } from 'react-redux'
 import { addingReminder, updatingReminder } from '../redux/actions'
 import { Header, Segment, Grid, Icon, Transition, Dropdown } from 'semantic-ui-react'
 import DateTimePicker from 'react-datetime-picker';
-
-import '../App.css'
 
 class ReminderForm extends React.Component {
   constructor(props){
@@ -153,6 +150,7 @@ class ReminderForm extends React.Component {
 
               {/* {this.state.recurring ? */}
               <button className='ui button' onClick={this.handleSubmit}>Submit</button>
+              <button className='ui button' onClick={this.props.handleClose}>Go Back</button>
             </div>
               </Grid.Column>
               <Grid.Column>
@@ -161,12 +159,13 @@ class ReminderForm extends React.Component {
                   <label htmlFor='end_date'>End Date: </label><p />
                 <div className='ui input'>
                   <DateTimePicker 
-                  className='date-picker' 
-                  name='end_date' 
-                  value={this.state.end_date} 
-                  onChange={this.handleEndDateChange}
-                  calendarIcon={<Icon name='calendar alternate outline' />}
-                  clearIcon={<Icon name='delete' />}/>
+                    className='date-picker' 
+                    name='end_date' 
+                    value={this.state.end_date} 
+                    onChange={this.handleEndDateChange}
+                    calendarIcon={<Icon name='calendar alternate outline' />}
+                    clearIcon={<Icon name='delete' />}
+                  />
                 </div><p />
 
                 <label htmlFor='interval'>Interval: </label><p />

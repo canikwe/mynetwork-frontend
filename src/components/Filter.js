@@ -22,7 +22,7 @@ class Filter extends React.PureComponent {
             size='large' 
             value={this.props.searchTerm} 
             onChange={(e) => this.props.updateSearchTerm(e.target.value)}
-            onFocus={this.toggleVisibility}
+            onClick={this.toggleVisibility}
             name='filter' 
             placeholder='Search Contacts...'>
           </Input>

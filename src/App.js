@@ -29,10 +29,6 @@ class App extends Component {
     const token = localStorage.getItem('token')
     if (token) {
       this.props.fetchingUser(token)
-      // if (!this.state.notfied){
-      //   this.props.reminders.map(r => this.alerts(r))
-      //   this.setState({notified: true})
-      // }
     } else {
       this.props.clearLoading()
     }

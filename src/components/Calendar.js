@@ -3,43 +3,33 @@ import BigCalendar from 'react-big-calendar'
 import moment from 'moment'
 import { connect } from 'react-redux'
 import ReminderForm from '../components/ReminderForm'
+import ReminderShow from '../components/ReminderShow'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
-import { Dropdown, Menu, Modal, Button, Header } from 'semantic-ui-react'
+import { Dropdown, Menu, Modal, Button, Header, Segment } from 'semantic-ui-react'
+import { deletingReminder } from '../redux/actions'
+import DeleteConfirmation from './DeleteConfirmation';
+
 
 
 const localizer = BigCalendar.momentLocalizer(moment)
 
 
-class Calendar extends React.PureComponent {
+class Calendar extends PureComponent {
   constructor() {
     super()
     this.state = {
       modalOpen: false,
-      featuredEvent: {}
+      featuredEvent: {},
+      editForm: false,
+      // deleteConfirmation: false
     }
   }
-  
 
   handleOpen = (event) => this.setState({modalOpen: true, featuredEvent: event})
-  handleClose = () => this.setState({modalOpen: false})
-
-  editContactBtn = () => {
-    //edit modal goes here
-    return (
-      <Modal
-        // trigger={<Button 
-        //   onClick={() => this.handleOpen('editContactModal')}
-        //   icon='edit outline' 
-        //   basic color='grey'
-        // />}
-        open={this.state.modalOpen}
-        onClose={this.handleClose} 
-        size='tiny'
-      >
-        {/* <ContactForm contact={null} handleClose={this.handleClose}/> */}
-      </Modal>
-    )
-  }
+  handleClose = () => this.setState({modalOpen: false, editForm: false, deleteConfirmation: false})
+  toggleEditForm = () => this.setState({editForm: !this.state.editForm})
+  // openDeleteConfirmation = () => this.setState({deleteConfirmation: true})
+  closeDeleteConfirmation = () => this.setState({deleteConfirmation: false, editForm: false, modalOpen: false})
 
   render() {
     if (this.props.loading) {
@@ -63,21 +53,30 @@ class Calendar extends React.PureComponent {
             />
 
         <Modal
-        // trigger={<Button 
-        //   onClick={() => this.handleOpen('editContactModal')}
-        //   icon='edit outline' 
-        //   basic color='grey'
-        // />}
-        open={this.state.modalOpen}
-        onClose={this.handleClose} 
-        size='small'
-      >
+          open={this.state.modalOpen}
+          onClose={() => {
+            this.toggleEditForm()
+            this.handleClose()
+          }} 
+          size='small'
+        >
+        {!this.state.editForm ? 
+        <Segment>
+          <ReminderShow
+            reminder={this.state.featuredEvent}
+            handleClose={this.handleClose}
+          />
+          <Button content='Edit Reminder' onClick={this.toggleEditForm}/> 
+          <DeleteConfirmation reminder={this.state.featuredEvent} handleClose={this.closeDeleteConfirmation}/>
+        </Segment>
+        :
         <ReminderForm 
           contact={null} 
           title={'Update reminder!'} 
           reminder={this.state.featuredEvent} 
           handleClose={this.handleClose}
         />
+      }
       </Modal>
 
         </div>
@@ -97,4 +96,10 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(Calendar)
+const mapDispatchToProps = dispatch => {
+  return {
+    deletingReminder: (reminder) => dispatch(deletingReminder(reminder))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Calendar)
