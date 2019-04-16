@@ -31,6 +31,31 @@ class Calendar extends PureComponent {
   // openDeleteConfirmation = () => this.setState({deleteConfirmation: true})
   closeDeleteConfirmation = () => this.setState({deleteConfirmation: false, editForm: false, modalOpen: false})
 
+  eventStyleGetter = (e, start, end, isSelected) => {
+    let style = {
+      backgroundColor: 'white',
+      borderRadius: '0px',
+      opacity: 0.8,
+      color: 'black',
+      border: '0px',
+      display: 'block',
+      margin: '1px'
+    }
+
+    switch (e.priority){
+      case 1:
+        return {style: {...style, color: 'red'}}
+      case 2:
+        return {style: {...style, color: 'orange'}}
+      case 3:
+        return {style: {...style, color: 'green'}}
+      case 4: 
+        return {style: {...style, color: 'purple'}}
+      default:
+        return {style: {...style, color: 'blue'}}
+    }
+  }
+
   render() {
     if (this.props.loading) {
       return <h1>Loading...</h1>
@@ -50,6 +75,7 @@ class Calendar extends PureComponent {
               popup
               selectable
               onSelectEvent={(event, e) => {this.handleOpen(event)}}
+              eventPropGetter={(this.eventStyleGetter)}
             />
 
         <Modal

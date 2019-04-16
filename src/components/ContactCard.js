@@ -163,10 +163,26 @@ class ContactCard extends React.Component {
     return this.props.reminders.filter(r => r.contact_id === this.props.contact.id)
   }
 
+  contactKindColorMapper = () => {
+    switch (this.props.contact.kind){
+      case 'family':
+        return 'yellow'
+      case 'friend':
+        return 'blue'
+      case 'colleague':
+        return 'red'
+      case 'acquaintance':
+        return 'green'
+      default:
+        return 'purple'
+    }
+  }
+
   render() {
+    // debugger
     return (
       <React.Fragment>
-        <Card onClick={this.openContact}>
+        <Card onClick={this.openContact} color={this.contactKindColorMapper()}>
         <Card.Content>
           <Image floated='right' size='mini' src={this.props.contact.avatar} />
           <Card.Header>{this.props.contact.name}</Card.Header>
