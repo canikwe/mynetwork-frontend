@@ -143,8 +143,8 @@ class ContactCard extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <div className='ui raised fluid card'>
-          <div className='header' onClick={this.toggleMenu}>Contact Card For: {this.props.contact.name}</div>
+        <div className='ui raised fluid card' >
+          <div className='header' >Contact Card For: {this.props.contact.name}</div>
           <Menu fluid text vertical className='scrolled'>
             {this.props.reminders.filter(r => r.contact_id === this.props.contact.id).map(r => {
               return (

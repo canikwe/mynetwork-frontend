@@ -42,7 +42,8 @@ class NavBar extends Component {
           pointing 
           secondary 
           inverted 
-          fluid 
+          fluid
+          stackable
         >
         { !isEmpty(this.props.user) ?
 

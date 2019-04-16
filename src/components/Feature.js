@@ -61,13 +61,17 @@ class Feature extends React.Component {
     )
   }
 
+  todaysReminders = () => {
+    return this.props.reminders.filter(r => r.match)
+  }
+
   render(){
     return (
       <Grid celled='internally' stackable columns='equal'>
         <Grid.Column>
           <Segment raised>
             <Label as='a' color='red' ribbon='right' onClick={this.toggleReminders}>
-              {this.props.reminders.length} Reminders
+              {this.todaysReminders().length} Reminders
             </Label> 
           <div className='landing-image img-feature' >
             <Image 
@@ -85,7 +89,7 @@ class Feature extends React.Component {
           <div>
             <h4>Current Reminders for: { moment().format('dddd, MMMM Do, YYYY') }</h4>
             <div className='reminders-container'>
-                {this.props.reminders.map(r => r.match ? <Segment key={r.id} onClick={() => this.show(r)}>{r.msg} {this.handleReminderSnooze(r)}</Segment> : null)}
+                {this.todaysReminders().map(r => <Segment inverted={r.priority === 1} color={r.priority === 1 ? 'red' : null} key={r.id} onClick={() => this.show(r)}>{r.msg} {this.handleReminderSnooze(r)}</Segment>)}
             </div>
             
             <Button onClick={this.toggleReminders} content='Close Reminders'/>

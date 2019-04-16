@@ -41,7 +41,7 @@ class App extends Component {
 
   componentDidUpdate(){
     this.props.reminders.map(r => {
-      if (r.match && !r.notified) {
+      if (r.match && !r.notified && !r.snoozed) {
         this.alerts(r)
         this.props.notifyReminders(r)
       }

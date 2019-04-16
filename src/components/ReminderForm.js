@@ -20,6 +20,7 @@ class ReminderForm extends React.Component {
       recurring: props.reminder ? props.reminder.recurring : false,
       // snoozed: props.reminder ? props.reminder.snoozed : false,
       // current: props.reminder ? props.reminder.current : new Date(),
+      priority: props.reminder ? props.reminder.priority : 'none',
       contact_id: props.reminder ? props.reminder.contact_id : props.contact.id
     }
   }
@@ -41,6 +42,7 @@ class ReminderForm extends React.Component {
   }
 
   handlePeriodChange = (e, { value }) => this.setState({period: value})
+  handlePriorityChange = (e, { value }) => this.setState({priority: parseInt(value)})
   handleStartDateChange = date => this.state.end_date === '' ? this.setState({start_date: date, end_date: date}) : this.setState({start_date: date})
   handleEndDateChange = date => this.setState({end_date: date})
 
@@ -81,8 +83,17 @@ class ReminderForm extends React.Component {
     ])
   }
 
+  priorityDropdown = () => {
+    return ([
+      {key: 'high', text: 'High', value: 1},
+      {key: 'medium', text:'Medium', value: 2},
+      {key: 'low', text: 'Low', value: 3},
+      {key: 'none', text: 'None', value: 4}
+    ])
+  }
+
   render() {
-    console.log(this.props)
+    console.log(this.state.priority)
     if (this.props.loading) {
       return <h2>Loading...</h2>
     } else {
@@ -116,6 +127,16 @@ class ReminderForm extends React.Component {
                   clearIcon={<Icon name='delete' />}
                 />
               </div><p />
+
+              <label htmlFor='priority'>Priority: </label><p />
+                <Dropdown
+                  name='priority'
+                  placeholder="Select and option"
+                  options={this.priorityDropdown()}
+                  onChange={this.handlePriorityChange}
+                  value={this.state.priority}
+                  selection
+                />
 
               {/* <div className='ui mini checkbox'> */}
                 <label htmlFor='recurring'>Recurring ? </label>
@@ -161,14 +182,7 @@ class ReminderForm extends React.Component {
                   onChange={this.handlePeriodChange}
                   value={this.state.period}
                   selection
-                >
-                {/* <select name='period' onChange={this.handleChange} defaultValue={this.state.period}>
-                  <option value='daily'>Daily</option>
-                  <option value='weekly'>Weekly</option>
-                  <option value='monthly'>Monthly</option>
-                  <option value='yearly'>Yearly</option>
-                </select><br /> */}
-                </Dropdown>
+                />
                 </div>
               </Transition>
               </Grid.Column>
