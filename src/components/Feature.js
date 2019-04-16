@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import moment from 'moment'
-import { Grid, Segment, Image, Transition, Button, Modal, Label } from 'semantic-ui-react'
+import { Grid, Segment, Image, Transition, Button, Modal, Label, Checkbox } from 'semantic-ui-react'
 import '../App.css'
 import { updatingReminder } from '../redux/actions'
 
@@ -11,7 +11,8 @@ class Feature extends React.Component {
     this.state = {
       toggleReminders: false,
       openSnooze: false,
-      featuredReminder: {}
+      featuredReminder: {},
+      sortByPriority: false
     }
   }
 
@@ -19,6 +20,7 @@ class Feature extends React.Component {
   close = () => this.setState({ openSnooze: false })
 
   toggleReminders = () => this.setState({toggleReminders: !this.state.toggleReminders})
+  togglePrioritySort = () => this.setState({sortByPriority: !this.state.sortByPriority})
 
   handleReminderSnooze = () =>{
     const { openSnooze, featuredReminder } = this.state
@@ -53,7 +55,8 @@ class Feature extends React.Component {
                   e.stopPropagation()
                   this.close()
                   this.props.updatingReminder(snoozedReminder)
-                }} />
+                }}
+              />
             </React.Fragment>
             }
           </Modal.Actions>
@@ -62,7 +65,11 @@ class Feature extends React.Component {
   }
 
   todaysReminders = () => {
-    return this.props.reminders.filter(r => r.match)
+    if (this.state.sortByPriority) {
+      return this.props.reminders.filter(r => r.match).sort((a, b) => a.priority - b.priority)
+    } else {
+      return this.props.reminders.filter(r => r.match)
+    }
   }
 
   render(){
@@ -93,6 +100,12 @@ class Feature extends React.Component {
             </div>
             
             <Button onClick={this.toggleReminders} content='Close Reminders'/>
+            <Checkbox 
+              slider
+              label='Sort By Priority'
+              checked={this.state.sortByPriority}
+              onChange={this.togglePrioritySort}
+            />
           </div>
         </Grid.Column>
         : null

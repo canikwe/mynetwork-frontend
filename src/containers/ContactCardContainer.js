@@ -1,9 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import ContactCard from '../components/ContactCard'
-import {
-  Checkbox
-} from 'semantic-ui-react'
+import { Checkbox } from 'semantic-ui-react'
 
 class ContactCardContainer extends React.PureComponent {
   state = { checked: false }

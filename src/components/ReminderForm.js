@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { addingReminder, updatingReminder } from '../redux/actions'
-import { Header, Segment, Grid, Icon, Transition, Dropdown } from 'semantic-ui-react'
+import { Header, Segment, Grid, Icon, Transition, Dropdown, Checkbox } from 'semantic-ui-react'
 import DateTimePicker from 'react-datetime-picker';
 
 class ReminderForm extends React.Component {
@@ -31,8 +31,8 @@ class ReminderForm extends React.Component {
     switch (e.target.name){
       case 'snoozed':
         return this.setState({snoozed: !this.state.snoozed})
-      case 'recurring':
-        return this.setState({recurring: !this.state.recurring})
+      // case 'recurring':
+      //   return this.setState({recurring: !this.state.recurring})
       default:
         return this.setState({[e.target.name]: e.target.value})
     }
@@ -42,7 +42,7 @@ class ReminderForm extends React.Component {
   handlePriorityChange = (e, { value }) => this.setState({priority: parseInt(value)})
   handleStartDateChange = date => this.state.end_date === '' ? this.setState({start_date: date, end_date: date}) : this.setState({start_date: date})
   handleEndDateChange = date => this.setState({end_date: date})
-
+  toggleRecurring = () => this.setState({ recurring: !this.state.recurring })
 
   handleSubmit =(e) => {
     e.stopPropagation()
@@ -133,19 +133,27 @@ class ReminderForm extends React.Component {
                   onChange={this.handlePriorityChange}
                   value={this.state.priority}
                   selection
-                />
+                /><p />
 
               {/* <div className='ui mini checkbox'> */}
-                <label htmlFor='recurring'>Recurring ? </label>
-                <div className='ui checkbox'>
-                <input 
+                {/* <label htmlFor='recurring'>Recurring ? </label>
+                <div className='ui checkbox'> */}
+                  <Checkbox 
+                    slider
+                    label='Recurring?'
+                    checked={this.state.recurring}
+                    onChange={this.toggleRecurring}
+                  />
+
+                {/* <input 
                   type='checkbox' 
                   name='recurring' 
                   checked={this.state.recurring} 
                   onChange={this.handleChange} 
                   tabIndex="0" >
-                  </input><br /> 
-                </div><p />
+                  </input><br />  */}
+                {/* </div> */}
+                <p />
               {/* </div><br /> */}
 
               {/* {this.state.recurring ? */}
