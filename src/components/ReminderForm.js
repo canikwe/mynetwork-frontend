@@ -20,7 +20,7 @@ class ReminderForm extends React.Component {
       recurring: props.reminder ? props.reminder.recurring : false,
       // snoozed: props.reminder ? props.reminder.snoozed : false,
       // current: props.reminder ? props.reminder.current : new Date(),
-      contact_id: props.contact.id
+      contact_id: props.reminder ? props.reminder.contact_id : props.contact.id
     }
   }
 
@@ -82,7 +82,7 @@ class ReminderForm extends React.Component {
   }
 
   render() {
-    
+    console.log(this.props)
     if (this.props.loading) {
       return <h2>Loading...</h2>
     } else {

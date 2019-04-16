@@ -34,7 +34,7 @@ const Homepage =  props => {
       <Grid width={ 14 }>
         <Grid.Row>
           <Grid.Column >
-            <h1>myNetwork Homepage</h1>
+            <h1>Welome back, {props.user.first_name} !</h1>
           </Grid.Column>
         </Grid.Row>
 

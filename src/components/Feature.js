@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import moment from 'moment'
-import { Grid, Segment, Image, Transition, Button, Modal } from 'semantic-ui-react'
+import { Grid, Segment, Image, Transition, Button, Modal, Label } from 'semantic-ui-react'
 import '../App.css'
 import { updatingReminder } from '../redux/actions'
 
@@ -10,40 +10,52 @@ class Feature extends React.Component {
     super()
     this.state = {
       toggleReminders: false,
-      openSnooze: false
+      openSnooze: false,
+      featuredReminder: {}
     }
   }
 
-  show = () => this.setState({ openSnooze: true })
+  show = (featuredReminder) => this.setState({ openSnooze: true, featuredReminder })
   close = () => this.setState({ openSnooze: false })
 
   toggleReminders = () => this.setState({toggleReminders: !this.state.toggleReminders})
 
-  handleReminderSnooze = r =>{
-    
-    const snoozedReminder = {...r, snoozed: true, current: new Date()}
+  handleReminderSnooze = () =>{
+    const { openSnooze, featuredReminder } = this.state
+    const snoozedReminder = {...featuredReminder, snoozed: true, current: new Date()}
     return (
-      <Modal size='tiny' open={this.state.openSnooze} onClose={this.close} >
+      <Modal size='tiny' open={openSnooze} onClose={this.close} >
           <Modal.Header>Snooze</Modal.Header>
           <Modal.Content>
-            <p>Would you like to snooze this notification? { r.msg }</p>
+            {featuredReminder ? 
+            <p>This reminder has been snoozed for today!</p> :
+            <p>Would you like to snooze this notification? { featuredReminder.msg }</p>
+            }
           </Modal.Content>
           <Modal.Actions>
-            <Button negative onClick={(e) => {
+            {featuredReminder ? 
+            <Button basic onClick={(e) => {
               e.stopPropagation()
               this.close()
-            }} >No</Button>
-            <Button 
-              positive 
-              icon='checkmark' 
-              labelPosition='right' 
-              content='Yes' 
-              onClick={(e) => {
+            }} >Back </Button>
+            :
+            <React.Fragment>
+              <Button negative onClick={(e) => {
                 e.stopPropagation()
                 this.close()
-                this.props.updatingReminder(snoozedReminder)
-                }} 
-              />
+              }}> No</Button>
+              <Button 
+                positive 
+                icon='checkmark' 
+                labelPosition='right' 
+                content='Yes' 
+                onClick={(e) => {
+                  e.stopPropagation()
+                  this.close()
+                  this.props.updatingReminder(snoozedReminder)
+                }} />
+            </React.Fragment>
+            }
           </Modal.Actions>
       </Modal>
     )
@@ -53,7 +65,11 @@ class Feature extends React.Component {
     return (
       <Grid celled='internally' stackable columns='equal'>
         <Grid.Column>
-          <div className='landing-image img-feature' onClick={this.toggleReminders}>
+          <Segment raised>
+            <Label as='a' color='red' ribbon='right' onClick={this.toggleReminders}>
+              {this.props.reminders.length} Reminders
+            </Label> 
+          <div className='landing-image img-feature' >
             <Image 
               size='tiny'
               circular
@@ -62,13 +78,14 @@ class Feature extends React.Component {
               spaced
             />
           </div>
+          </Segment>
         </Grid.Column>
         {this.state.toggleReminders ? 
         <Grid.Column width={5}>
           <div>
             <h4>Current Reminders for: { moment().format('dddd, MMMM Do, YYYY') }</h4>
             <div className='reminders-container'>
-                {this.props.reminders.map(r => r.match ? <Segment key={r.id} onClick={this.show}>{r.msg} {this.handleReminderSnooze(r)}</Segment> : null)}
+                {this.props.reminders.map(r => r.match ? <Segment key={r.id} onClick={() => this.show(r)}>{r.msg} {this.handleReminderSnooze(r)}</Segment> : null)}
             </div>
             
             <Button onClick={this.toggleReminders} content='Close Reminders'/>
