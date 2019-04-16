@@ -61,9 +61,9 @@ class UserForm extends React.Component {
         } else {
           
           if (this.props.user.id){
-            this.props.updatingUser({user: this.state})
+            this.props.updatingUser({user: {user_info: this.state}})
           } else {
-            this.props.addingUser({user: this.state})
+            this.props.addingUser({user: {user_info: this.state}})
           }
           // this.resetState()
         }

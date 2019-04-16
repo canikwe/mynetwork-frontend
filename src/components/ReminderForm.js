@@ -156,7 +156,7 @@ class ReminderForm extends React.Component {
                 <label htmlFor='period'>Period: </label><p />
                 <Dropdown
                   name='period'
-                  placeholder="Select and opetion"
+                  placeholder="Select and option"
                   options={this.periodDropdown()}
                   onChange={this.handlePeriodChange}
                   value={this.state.period}

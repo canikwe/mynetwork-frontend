@@ -2,7 +2,9 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { addingContact, updatingContact } from '../redux/actions'
 import { Link } from 'react-router-dom'
-import { Segment, Button } from 'semantic-ui-react'
+import { Segment, Button, Grid, Dropdown } from 'semantic-ui-react'
+import toast from 'toasted-notes'
+import 'toasted-notes/src/styles.css';
 
 class ContactForm extends React.Component {
   constructor(props){
@@ -10,52 +12,107 @@ class ContactForm extends React.Component {
     this.state = {
       id: this.props.contact ? this.props.contact.id : '',
       first_name: this.props.contact ? this.props.contact.first_name : '',
-      last_name: this.props.contact ? this.props.contact.last_name : ''
+      last_name: this.props.contact ? this.props.contact.last_name : '',
+      kind: this.props.contact ? this.props.contact.kind : '',
+      details: this.props.contact ? this.props.contact.details : '',
+      avatar: this.props.contact ? this.props.contact.avatar : 'https://ayogo.com/wp-content/uploads/2015/06/jp-avatar-placeholder.png'
     }
   }
 
-  handleChange = e => {
-    this.setState({
-      [e.target.name]: e.target.value
-    })
-  }
+  handleChange = e => this.setState({[e.target.name]: e.target.value})
+  handleKindChange = (e, { value }) => this.setState({kind: value})
 
-  submitForm = (e) => {
-    e.preventDefault()
+
+  submitForm = () => {
+    // e.preventDefault()
     // console.log(this.props)
 
     if (this.state.first_name === '') {
-      alert('A girl has no name, but a contact must.')
+      toast.notify('A girl has no name, but a contact must.', {duration: null})
+
     } else if (this.props.contact) {
-      const updatedContact = {contact_info: {id: this.state.id}, requested_attributes: {...this.state, id: this.props.contact.friend_id}}
+      const updatedContact = {
+        contact: { 
+          contact_info: {id: this.state.id, kind: this.state.kind, details: this.state.details}, 
+          requested_attributes: {first_name: this.state.first_name, last_name: this.state.last_name, id: this.props.contact.friend_id, avatar: this.state.avatar}
+        }
+      }
 
       this.props.updatingContact(this.state.id, updatedContact)
       this.props.handleClose('editContactModal')
       } else {
-      const newContact = {...this.state, requestor_id: this.props.id}
+      const newContact = {
+        user:{
+          user_info: {
+            first_name: this.state.first_name,
+            last_name: this.state.last_name,
+            avatar: this.state.avatar
+          },
+          contact_attributes: {
+            requestor_id: this.props.id,
+            kind: this.state.kind,
+            details: this.state.details
+          }
+        }
+      }
 
       this.props.addingContact(newContact)
       this.props.handleClose()
     }
   }
 
+  kindDropdown = () => {
+    return ([
+      {key: 'family', text: 'Family', value: 'family'},
+      {key: 'friend', text:'Friend', value: 'friend'},
+      {key: 'colleague', text: 'Colleague', value: 'colleague'},
+      {key: 'acquaintance', text: 'Acquaintance', value:'acquaintance'}
+    ])
+  }
+
   render(){
     // console.log(this.state)
     return (
       <Segment padded>
-        {this.props.contact ? <h3>Edit {this.props.contact.name}</h3> : <h3>Add a new Contact!</h3> }
-  
-        <form className='ui form' onSubmit={this.submitForm}>
-          <label htmlFor="first_name">First Name:</label>
-          <input type='text' value={this.state.first_name} name='first_name' onChange={this.handleChange}></input><br />
-          <label htmlFor='last_name'>Last Name:</label>
-          <input type='text' value={this.state.last_name} name='last_name' onChange={this.handleChange}></input><br />
-          <Button>Submit</Button>
+        <Grid columns={2}>
+          <Grid.Row>
+            {this.props.contact ? <h3>Edit {this.props.contact.name}</h3> : <h3>Add a new Contact!</h3> }
+          </Grid.Row>
+          <Grid.Row>
+            <Grid.Column>
+              <div className='ui form'>
+                <img className='ui small image' src={ this.state.avatar } alt='user_avatar'/><br />
+                <input type='text' value={this.state.avatar} name='avatar' onChange={this.handleChange}></input><br />
 
-        </form>
+
+              </div>
+            </Grid.Column>
+            <Grid.Column>
+              <div className='ui form' >
+                <label htmlFor="first_name">First Name:</label>
+                <input type='text' value={this.state.first_name} name='first_name' onChange={this.handleChange}></input><p />
+                <label htmlFor='last_name'>Last Name:</label>
+                <input type='text' value={this.state.last_name} name='last_name' onChange={this.handleChange}></input><p />
+                <label htmlFor="avatar">Type:</label>
+                <Dropdown
+                  name='kind'
+                  placeholder="Select and option"
+                  options={this.kindDropdown()}
+                  onChange={this.handleKindChange}
+                  value={this.state.kind}
+                  selection
+                /><p />
+
+                <label htmlFor="first_name">Details: </label>
+                <textarea name='details' rows='3' value={ this.state.details } onChange={this.handleChange}></textarea><p />
+              <Button onClick={this.submitForm}>Submit</Button>
+            </div>
+
+          </Grid.Column>
 
         <Link to='/' onClick={() => this.props.handleClose('editContactModal')}>BACH TO BUSINESS</Link>
-
+        </Grid.Row>
+        </Grid>
       </Segment>
     )
 

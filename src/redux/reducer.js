@@ -17,7 +17,7 @@ import {
   THROW_ERROR,
   CLEAR_ERROR,
   LOGOUT_USER,
-  SNOOZE_REMINDERS,
+  NOTIFY_REMINDERS,
   CLEAR_LOADING
 } from './types'
 
@@ -89,8 +89,8 @@ const remindersReducer = (state=[], action) => {
       return [...state, action.reminder]
     case UPDATE_REMINDER:
       return state.map(r => r.id === action.reminder.id ? action.reminder : r )
-    case SNOOZE_REMINDERS:
-      return state.map(r => r.id === action.reminder.id ? {...r, snoozed: true} : r)
+    case NOTIFY_REMINDERS:
+      return state.map(r => r.id === action.reminder.id ? {...r, notified: true} : r)
     case DELETE_REMINDER:
       return state.filter(r => r.id !== action.reminder.id)
     case DELETE_CONTACT:

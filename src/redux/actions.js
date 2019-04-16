@@ -13,7 +13,7 @@ import {
   THROW_ERROR,
   CLEAR_ERROR,
   LOGOUT_USER,
-  SNOOZE_REMINDERS,
+  NOTIFY_REMINDERS,
   CLEAR_LOADING
 } from './types'
 
@@ -123,8 +123,9 @@ const updateUser = user => {
 }
 
 const updatingUser = user => {
+  
   return dispatch => {
-    fetch(`${URL()}/users/${user.user.id}`, {
+    fetch(`${URL()}/users/${user.user.user_info.id}`, {
       method: 'PATCH',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(user)
@@ -206,8 +207,8 @@ function addingReminder(newReminderData) {
   }
 }
 
-const snoozeReminders = (reminder) => {
-  return {type: SNOOZE_REMINDERS, reminder}
+const notifyReminders = (reminder) => {
+  return {type: NOTIFY_REMINDERS, reminder}
 }
 
 const addReminder = (newReminderObj) => {
@@ -272,7 +273,7 @@ export {
   updateSearchTerm,
   clearError,
   logoutUser,
-  snoozeReminders,
+  notifyReminders,
   addingUser,
   clearLoading
 }

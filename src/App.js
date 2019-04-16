@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import { connect } from 'react-redux'
-import { testAction, fetchingUser, snoozeReminders, clearLoading } from './redux/actions'
+import { testAction, fetchingUser, notifyReminders, clearLoading } from './redux/actions'
 import { Route, Switch, Redirect } from 'react-router-dom'
 import Homepage from './containers/Homepage'
 import Login from './components/Login'
@@ -41,9 +41,9 @@ class App extends Component {
 
   componentDidUpdate(){
     this.props.reminders.map(r => {
-      if (r.match && !r.snoozed) {
+      if (r.match && !r.notified) {
         this.alerts(r)
-        this.props.snoozeReminders(r)
+        this.props.notifyReminders(r)
       }
     })
   }
@@ -129,7 +129,7 @@ const mapDispatchToProps = dispatch => {
     testAction: () => dispatch(testAction()),
     //Delete after auth implementation!!
     fetchingUser: (token) => dispatch(fetchingUser(token)),
-    snoozeReminders: (r) => dispatch(snoozeReminders(r)),
+    notifyReminders: (r) => dispatch(notifyReminders(r)),
     clearLoading: () => dispatch(clearLoading())
   }
 }

@@ -27,13 +27,13 @@ class Feature extends React.Component {
       <Modal size='tiny' open={openSnooze} onClose={this.close} >
           <Modal.Header>Snooze</Modal.Header>
           <Modal.Content>
-            {featuredReminder ? 
+            {featuredReminder.snoozed ? 
             <p>This reminder has been snoozed for today!</p> :
             <p>Would you like to snooze this notification? { featuredReminder.msg }</p>
             }
           </Modal.Content>
           <Modal.Actions>
-            {featuredReminder ? 
+            {featuredReminder.snoozed ? 
             <Button basic onClick={(e) => {
               e.stopPropagation()
               this.close()
