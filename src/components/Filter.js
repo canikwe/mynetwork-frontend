@@ -28,7 +28,7 @@ class Filter extends React.PureComponent {
       {
         key: 'Low',
         text: 'Low',
-        value: 2,
+        value: 3,
         label: { color: 'blue', empty: true, circular: true },
       },
       {

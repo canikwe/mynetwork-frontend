@@ -73,19 +73,25 @@
  /* .App {
   text-align: center;
 } */
+/* body {
+  position: relative;
+  min-height: 100vh;
+} */
 
  .wrapper {
   /* text-align: center; */
-  padding-right: 10%;
-  padding-left: 10%;
+  padding-right: 15%;
+  padding-left: 15%;
   display: block;
   justify-content: center;
-  flex-direction: center
+  flex-direction: center;
+  
 }
 
 .filter {
   margin: 10px;
 }
+
 
 /* div .signup {
   height: 70vh;
@@ -112,10 +118,10 @@
    height: 100%
  }
 
- .landing-image {
+ /* .landing-image {
    background-image: url('https://images.unsplash.com/photo-1554004389-abf213c41d0d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1491&q=80') !important;
    background-size: cover !important;
- }
+ } */
 
  .reminders-container {
     height: 200px;
@@ -129,7 +135,7 @@
  }
 
  .calendar {
-   height: 600px
+   height: 800px
  }
 
  /* .date-picker {
