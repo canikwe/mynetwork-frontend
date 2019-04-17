@@ -158,7 +158,11 @@ class ReminderForm extends React.Component {
 
               {/* {this.state.recurring ? */}
               <button className='ui button' onClick={this.handleSubmit}>Submit</button>
-              <button className='ui button' onClick={this.props.handleClose}>Go Back</button>
+              <button className='ui button' onClick={(e) => {
+                e.stopPropagation()
+                this.props.handleClose('newReminderModal')
+                }
+              }>Go Back</button>
             </div>
               </Grid.Column>
               <Grid.Column>

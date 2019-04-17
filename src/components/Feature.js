@@ -87,6 +87,7 @@ class Feature extends React.Component {
               src={this.props.user.avatar}
               alt="avatar"
               spaced
+              bordered
             />
           </div>
           </Segment>
