@@ -14,7 +14,8 @@ import {
   CLEAR_ERROR,
   LOGOUT_USER,
   NOTIFY_REMINDERS,
-  CLEAR_LOADING
+  CLEAR_LOADING,
+  SET_PRIORITY_FILTER
 } from './types'
 
 
@@ -255,6 +256,10 @@ const updateSearchTerm = searchTerm => {
   return { type: UPDATE_SEARCH_TERM, searchTerm }
 }
 
+const filterCalendar = term => {
+  return { type: SET_PRIORITY_FILTER, term}
+}
+
 function testAction(){
   return {type: TESTING_REDUCER}
 }
@@ -275,5 +280,6 @@ export {
   logoutUser,
   notifyReminders,
   addingUser,
-  clearLoading
+  clearLoading,
+  filterCalendar
 }

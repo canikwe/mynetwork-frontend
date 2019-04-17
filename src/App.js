@@ -12,7 +12,7 @@ import NavBar from './components/NavBar'
 import Calendar from './components/Calendar'
 import { isEmpty } from 'lodash'
 import toast from 'toasted-notes'
-import { Dimmer, Loader, Image, Segment } from 'semantic-ui-react'
+import { Image, Segment } from 'semantic-ui-react'
 import 'toasted-notes/src/styles.css';
 
 class App extends Component {
@@ -24,7 +24,6 @@ class App extends Component {
   // }
 
   componentDidMount(){
-    console.log('mounted')
     this.props.testAction()
     const token = localStorage.getItem('token')
     if (token) {

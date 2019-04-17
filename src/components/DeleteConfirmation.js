@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Dropdown, Menu, Modal, Button, Header, Segment } from 'semantic-ui-react'
+import { Modal, Button, Header } from 'semantic-ui-react'
 import { deletingReminder } from '../redux/actions'
 
 class DeleteConfirmation extends React.PureComponent {

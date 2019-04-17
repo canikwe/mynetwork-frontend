@@ -4,15 +4,12 @@ import moment from 'moment'
 import { connect } from 'react-redux'
 import ReminderForm from '../components/ReminderForm'
 import ReminderShow from '../components/ReminderShow'
-import 'react-big-calendar/lib/css/react-big-calendar.css'
-import { Dropdown, Menu, Modal, Button, Header, Segment } from 'semantic-ui-react'
+import { Modal, Button, Segment } from 'semantic-ui-react'
 import { deletingReminder } from '../redux/actions'
 import DeleteConfirmation from './DeleteConfirmation';
-
-
+import 'react-big-calendar/lib/css/react-big-calendar.css'
 
 const localizer = BigCalendar.momentLocalizer(moment)
-
 
 class Calendar extends PureComponent {
   constructor() {
@@ -48,12 +45,16 @@ class Calendar extends PureComponent {
       case 2:
         return {style: {...style, color: 'orange'}}
       case 3:
-        return {style: {...style, color: 'green'}}
+        return {style: {...style, color: 'blue'}}
       case 4: 
-        return {style: {...style, color: 'purple'}}
+        return {style: {...style, color: 'grey'}}
       default:
         return {style: {...style, color: 'blue'}}
     }
+  }
+
+  filterReminders = () => {
+    return this.props.recurringReminders.filter(r => this.props.calendarFilter === '' ? r : r.priority === this.props.calendarFilter)
   }
 
   render() {
@@ -65,7 +66,7 @@ class Calendar extends PureComponent {
           <h1>Calendar</h1>
             <BigCalendar
               localizer={localizer}
-              events={this.props.recurringReminders}
+              events={ this.filterReminders() }
               startAccessor='start'
               endAccessor='start'
               titleAccessor='msg'
@@ -118,7 +119,8 @@ const mapStateToProps = state => {
   return {
     reminders: state.reminders,
     loading: state.loading,
-    recurringReminders: state.recurringReminders
+    recurringReminders: state.recurringReminders,
+    calendarFilter: state.calendarFilter
   }
 }
 

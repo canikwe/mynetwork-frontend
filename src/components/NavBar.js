@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { logoutUser } from '../redux/actions'
 import { Menu, Dropdown, Modal, Segment, Label } from 'semantic-ui-react'
@@ -10,14 +10,11 @@ import Filter from '../components/Filter'
 class NavBar extends Component {
   state = { activeItem: 'home', modalOpen: false }
 
-  handleItemClick = (e, { name }) => this.setState({ activeItem: name })
-
   handleOpen = () => this.setState({modalOpen: true})
 
   handleClose = () => this.setState({modalOpen: false})
 
   newContactForm = () => {
-    //edit modal goes here
     return (
       <Modal
         open={this.state.modalOpen}
@@ -34,8 +31,6 @@ class NavBar extends Component {
   }
 
   render() {
-    const { activeItem } = this.state
-
     return (
       <Segment inverted>
         <Menu 
@@ -51,21 +46,19 @@ class NavBar extends Component {
             
             <Menu.Item 
               name='home' 
-              active={activeItem === 'home'} 
-              onClick={this.handleItemClick} 
+              active={ this.props.location.pathname === '/' } 
               as={ Link } to='/'
             />
 
             <Menu.Item 
               name='calendar' 
-              active={activeItem === 'calendar'} 
-              onClick={this.handleItemClick} 
+              active={ this.props.location.pathname === '/calendar' }
               as={ Link } to='/calendar'
             /> 
 
             <Menu.Menu  position='right'>
 
-            <Menu.Item header><h2>myNetwork</h2></Menu.Item>
+              <Menu.Item header><h2>myNetwork</h2></Menu.Item>
             </Menu.Menu>
 
           <Menu.Menu position='right'>
@@ -90,12 +83,14 @@ class NavBar extends Component {
           </Menu.Menu>
         </React.Fragment>
           : 
-            <Menu.Item 
-              name='about' 
-              active={activeItem === 'about'} 
-              onClick={this.handleItemClick} 
-              as={ Link } to='/about'
-            /> 
+            // <Menu.Item 
+            //   name='about' 
+            //   active={activeItem === 'about'} 
+            //   onClick={this.handleItemClick} 
+            //   as={ Link } to='/about'
+            // /> 
+
+            <Menu.Item header><h2>myNetwork</h2></Menu.Item>
           }
         </Menu>
         {this.newContactForm()}
@@ -114,4 +109,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(NavBar)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(NavBar))

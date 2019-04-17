@@ -18,7 +18,8 @@ import {
   CLEAR_ERROR,
   LOGOUT_USER,
   NOTIFY_REMINDERS,
-  CLEAR_LOADING
+  CLEAR_LOADING,
+  SET_PRIORITY_FILTER
 } from './types'
 
 const getRecurringEvents = (reminder) => {
@@ -178,6 +179,15 @@ const recurringRemindersReducer = (state = [], action) => {
   }
 }
 
+const calendarFilterReducer = (state = '', action) => {
+  switch(action.type){
+    case SET_PRIORITY_FILTER:
+      return action.term
+    default:
+    return state
+  }
+}
+
 const rootReducer = combineReducers({
   reduxConnection: reduxConnection,
   user: userReducer,
@@ -186,7 +196,8 @@ const rootReducer = combineReducers({
   loading: loadingReducer,
   searchTerm: searchTermReducer,
   notifications: notificationReducer,
-  recurringReminders: recurringRemindersReducer
+  recurringReminders: recurringRemindersReducer,
+  calendarFilter: calendarFilterReducer
 })
 
 export default rootReducer

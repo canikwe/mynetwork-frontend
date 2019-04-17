@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import moment from 'moment'
-import { Grid, Segment, Image, Transition, Button, Modal, Label, Checkbox } from 'semantic-ui-react'
+import { Grid, Segment, Image, Button, Modal, Label, Checkbox } from 'semantic-ui-react'
 import '../App.css'
 import { updatingReminder } from '../redux/actions'
 

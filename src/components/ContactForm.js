@@ -63,10 +63,10 @@ class ContactForm extends React.Component {
 
   kindDropdown = () => {
     return ([
-      {key: 'family', text: 'Family', value: 'family'},
-      {key: 'friend', text:'Friend', value: 'friend'},
-      {key: 'colleague', text: 'Colleague', value: 'colleague'},
-      {key: 'acquaintance', text: 'Acquaintance', value:'acquaintance'}
+      {key: 'family', text: 'Family', value: 'Family'},
+      {key: 'friend', text:'Friend', value: 'Friend'},
+      {key: 'colleague', text: 'Colleague', value: 'Colleague'},
+      {key: 'acquaintance', text: 'Acquaintance', value:'Acquaintance'}
     ])
   }
 

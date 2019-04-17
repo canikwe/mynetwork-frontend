@@ -1,5 +1,5 @@
 import React from 'react'
-import { Image, Header, Container, List, Button, Icon, Divider } from 'semantic-ui-react'
+import { Image, Header, Container, List, Icon, Divider } from 'semantic-ui-react'
 import moment from 'moment';
 
 

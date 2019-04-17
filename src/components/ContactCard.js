@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import ReminderForm from '../components/ReminderForm';
 import ContactForm from './ContactForm'
 import { deletingContact, deletingReminder } from '../redux/actions'
-import { Dropdown, Menu, Modal, Button, Header, Card, Icon, Image, Segment, Container } from 'semantic-ui-react'
+import { Modal, Button, Header, Card, Icon, Image, Segment, Container } from 'semantic-ui-react'
 import ContactShow from './ContactShow'
 import moment from 'moment'
 
@@ -164,7 +164,7 @@ class ContactCard extends React.Component {
   }
 
   contactKindColorMapper = () => {
-    switch (this.props.contact.kind){
+    switch (this.props.contact.kind.toLowerCase()){
       case 'family':
         return 'yellow'
       case 'friend':
