@@ -107,6 +107,11 @@
   /* align-items: flex-start */
  }
 
+ .img-splash {
+   width: 100%;
+   height: 100%
+ }
+
  .landing-image {
    background-image: url('https://images.unsplash.com/photo-1554004389-abf213c41d0d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1491&q=80') !important;
    background-size: cover !important;
@@ -114,6 +119,11 @@
 
  .reminders-container {
     height: 200px;
+
+ }
+
+ .reminders {
+    height: 95%;
     overflow-y: auto;
     overflow-x:hidden;
  }

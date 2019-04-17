@@ -64,6 +64,20 @@ class Feature extends React.Component {
     )
   }
 
+  styleSplash = () => {
+    const { splash_image } = this.props.user
+    // debugger
+    return({
+      backgroundImage: `url(${ splash_image === '' ? 'https://images.unsplash.com/photo-1554004389-abf213c41d0d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1491&q=80' : splash_image })`,
+      backgroundSize: 'cover',
+      width: '100%,',
+      height: '200px',
+      display: 'flex',
+      justifyContent: 'flex-end',
+      flexDirection: 'column'
+    })
+  }
+
   todaysReminders = () => {
     if (this.state.sortByPriority) {
       return this.props.reminders.filter(r => r.match).sort((a, b) => a.priority - b.priority)
@@ -78,9 +92,9 @@ class Feature extends React.Component {
         <Grid.Column>
           <Segment raised>
             <Label as='a' color='red' ribbon='right' onClick={this.toggleReminders}>
-              {this.todaysReminders().length} Reminders
+              {this.todaysReminders().length} Reminder(s)
             </Label> 
-          <div className='landing-image img-feature' >
+          <div style={this.styleSplash()}>
             <Image 
               size='tiny'
               circular
@@ -94,19 +108,20 @@ class Feature extends React.Component {
         </Grid.Column>
         {this.state.toggleReminders ? 
         <Grid.Column width={5}>
-          <div>
+          <div className='reminders-container'>
             <h4>Current Reminders for: { moment().format('dddd, MMMM Do, YYYY') }</h4>
-            <div className='reminders-container'>
+            <div className='reminders'>
                 {this.todaysReminders().map(r => <Segment inverted={r.priority === 1} color={r.priority === 1 ? 'red' : null} key={r.id} onClick={() => this.show(r)}>{r.msg} {this.handleReminderSnooze(r)}</Segment>)}
             </div>
-            
-            <Button onClick={this.toggleReminders} content='Close Reminders'/>
+            <div>
+            {/* <Button onClick={this.toggleReminders} content='Close Reminders'/> */}
             <Checkbox 
               slider
               label='Sort By Priority'
               checked={this.state.sortByPriority}
               onChange={this.togglePrioritySort}
             />
+            </div>
           </div>
         </Grid.Column>
         : null

@@ -25,8 +25,8 @@ class UserForm extends React.Component {
 
   componentDidMount() {
     if (this.props.user.id) {
-      const { id, avatar, bio, first_name, last_name, email, username } = this.props.user
-      this.setState({ id, avatar, bio, first_name, last_name, email, username })
+      const { id, avatar, bio, first_name, last_name, email, username, splash_image } = this.props.user
+      this.setState({ id, avatar, bio, first_name, last_name, email, username, splash_image })
     }
   }
 
@@ -96,7 +96,7 @@ class UserForm extends React.Component {
   }
 
   render(){
-    const { avatar, bio, first_name, last_name, email, username, password, password_confirm } = this.state
+    const { avatar, bio, first_name, last_name, email, username, password, password_confirm, splash_image } = this.state
     return(
       <Segment raised>
         <Grid columns={2}>
@@ -104,15 +104,24 @@ class UserForm extends React.Component {
 
 
           <div className="ui form">
-            <img className='ui small image' src={ avatar } alt='user_avatar'/><br />
+            <Segment compact>
+              <img className='ui small image' src={ avatar } alt='user_avatar'/>
+            </Segment>
             <label htmlFor='avatar'>Avatar: </label><br />
             <input type='text' name='avatar' value={ avatar } onChange={this.handleChange}></input><br />
 
-            <input type='file' name='splash_image' accept='image/*' onChange={this.handleChange}></input>
-          
-              <label htmlFor='bio'>Bio:</label><br />
-              <textarea name='bio' rows='6' value={ bio } onChange={this.handleChange}></textarea>
-            </div>
+
+            {/* <input type='file' name='splash_image' accept='image/*' onChange={this.handleChange}></input> */}
+            
+            { splash_image !== '' ?
+            <Segment>
+              <img className='ui img-splash' alt='user_splash_img' src={ splash_image } />
+            </Segment> : null }
+
+            <label htmlFor='splash_image'>Splash Image: </label><br />
+            <input type='text' name='splash_image' value={ splash_image } onChange={this.handleChange}></input><br />
+            
+          </div>
           </Grid.Column>
 
           <Grid.Column>
@@ -136,6 +145,9 @@ class UserForm extends React.Component {
           
           <label htmlFor='password_confirm'>Password Confirmation: </label>
           <input type='password' name='password_confirm' value={ password_confirm } onChange={this.handleChange}></input><br />
+
+          <label htmlFor='bio'>Bio:</label><br />
+          <textarea name='bio' rows='6' value={ bio } onChange={this.handleChange}></textarea><p />
   
           <Button onClick={this.handleSubmit} >Submit</Button>
           </div>
