@@ -95,9 +95,8 @@
 }
 
 .filter {
-  margin: 10px;
+  margin: 10px 10px 0px 10px;
 }
-
 
 /* div .signup {
   height: 70vh;
@@ -122,6 +121,14 @@
  .img-splash {
    width: 100%;
    height: 100%
+ }
+
+ .backImage {
+    background-image: url('http://sfwallpaper.com/images/city-light-background-2.jpg');
+    background-size: cover;
+    background-position: fixed;
+    /* background-size: 100%; */
+    height: 100vh;
  }
 
  /* .landing-image {

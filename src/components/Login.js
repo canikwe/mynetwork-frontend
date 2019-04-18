@@ -15,6 +15,11 @@ class Login extends React.Component {
       password: ''
     }
   }
+
+  // componentDidMount() {
+  //   document.body.style.backgroundColor = "red"// Set the style
+  // }
+
   handleSubmit = event => {
     event.preventDefault()
 
@@ -50,10 +55,10 @@ class Login extends React.Component {
 
   render() {
     return (
-      <div className='wrapper' >
+      <div className='wrapper backImage' >
       <Grid centered textAlign='left'>
         <Grid.Row>
-          <h1>myNetwork</h1>
+          <h1> </h1>
         </Grid.Row>
         <Grid.Row>
           <Segment >

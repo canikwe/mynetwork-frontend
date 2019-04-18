@@ -67,7 +67,7 @@ class NavBar extends Component {
 
             <Dropdown
               trigger={<Label
-                className='filter'
+                // className='filter'
                 size='massive'
                 color='blue'
                 circular>{`${this.props.user.first_name.slice(0, 1)}${this.props.user.last_name.slice(0, 1)}`}

@@ -86,6 +86,22 @@ class Feature extends React.Component {
     }
   }
 
+  displayPriorityColor = (r) => {
+    switch (r.priority){
+      case 1:
+        return 'red'
+      case 2:
+        return 'yellow'
+      case 3:
+        return 'blue'
+      case 4: 
+        return 'grey'
+      default:
+        return 'blue'
+    }
+  }
+  
+
   render(){
     return (
       <Grid celled='internally' stackable columns='equal'>
@@ -111,7 +127,9 @@ class Feature extends React.Component {
           <div className='reminders-container'>
             <h4>Current Reminders for: { moment().format('dddd, MMMM Do, YYYY') }</h4>
             <div className='reminders'>
-                {this.todaysReminders().map(r => <Segment inverted={r.priority === 1} color={r.priority === 1 ? 'red' : null} key={r.id} onClick={() => this.show(r)}>{r.msg} {this.handleReminderSnooze(r)}</Segment>)}
+              <Segment.Group>
+                {this.todaysReminders().map(r => <Segment inverted={r.priority === 5} color={this.displayPriorityColor(r)} key={r.id} onClick={() => this.show(r)}>{r.msg} {this.handleReminderSnooze(r)}</Segment>)}
+              </Segment.Group>
             </div>
             <div>
             {/* <Button onClick={this.toggleReminders} content='Close Reminders'/> */}

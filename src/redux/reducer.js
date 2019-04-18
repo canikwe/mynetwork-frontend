@@ -173,6 +173,8 @@ const recurringRemindersReducer = (state = [], action) => {
       return [...state.filter(r => r.id !== action.reminder.id), ...getRecurringEvents(action.reminder)]
     case DELETE_REMINDER:
       return state.filter(r => r.id !== action.reminder.id)
+    case DELETE_CONTACT:
+      return state.filter(r => r.contact_id !== action.contact.id)
     case LOGOUT_USER:
       return []
     default: return state
