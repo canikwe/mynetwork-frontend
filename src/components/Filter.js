@@ -38,8 +38,8 @@ class Filter extends React.PureComponent {
         label: { color: 'grey', empty: true, circular: true },
       },
       {
-        key: 'Clear',
-        text: 'Clear',
+        key: 'All',
+        text: 'All',
         value: '',
         label: { color: 'black', empty: true, circular: true },
       }      

@@ -142,9 +142,9 @@ class UserForm extends React.Component {
   
           <label htmlFor='password'>Password: </label>
           <input type='password' name='password' value={ password } onChange={this.handleChange}></input><br />
-          
+{/*           
           <label htmlFor='password_confirm'>Password Confirmation: </label>
-          <input type='password' name='password_confirm' value={ password_confirm } onChange={this.handleChange}></input><br />
+          <input type='password' name='password_confirm' value={ password_confirm } onChange={this.handleChange}></input><br /> */}
 
           <label htmlFor='bio'>Bio:</label><br />
           <textarea name='bio' rows='6' value={ bio } onChange={this.handleChange}></textarea><p />
