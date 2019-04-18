@@ -12,7 +12,7 @@ import NavBar from './components/NavBar'
 import Calendar from './components/Calendar'
 import { isEmpty } from 'lodash'
 import toast from 'toasted-notes'
-import { Image, Segment } from 'semantic-ui-react'
+import { Image } from 'semantic-ui-react'
 import 'toasted-notes/src/styles.css';
 
 class App extends Component {
@@ -50,18 +50,18 @@ class App extends Component {
   render() {
     if (this.props.loading) {
       return (
-        <React.Fragment>
+        <div className="App">
           <NavBar />
-              <Segment>
       {/* <Dimmer active>
         <Loader size='massive'>Loading</Loader>
       </Dimmer> */}
-
-      <Image src='http://www.dariusland.com/images/load.gif' />
+      <div className='loading'>
+        <Image
+          centered src='https://cdn.dribbble.com/users/563824/screenshots/4268258/untitled_180_3.gif' />
+      </div>
       {/* <Image src='https://react.semantic-ui.com/images/wireframe/short-paragraph.png' />
       <Image src='https://react.semantic-ui.com/images/wireframe/short-paragraph.png' /> */}
-    </Segment>
-        </React.Fragment>
+        </div>
       )
     } else {
       return (

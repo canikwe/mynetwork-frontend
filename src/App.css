@@ -84,8 +84,14 @@
   padding-left: 15%;
   display: block;
   justify-content: center;
-  flex-direction: center;
-  
+  flex-direction: center; 
+}
+
+.loading {
+  /* margin: 10%; */
+  display: block;
+  justify-content: center;
+  align-items: center
 }
 
 .filter {
