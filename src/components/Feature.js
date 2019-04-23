@@ -68,7 +68,7 @@ class Feature extends React.Component {
     const { splash_image } = this.props.user
     // debugger
     return({
-      backgroundImage: `url(${ splash_image === '' ? 'https://images.unsplash.com/photo-1554004389-abf213c41d0d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1491&q=80' : splash_image })`,
+      backgroundImage: `url(${ splash_image === null ? 'https://cdn2.vectorstock.com/i/1000x1000/19/21/cartoon-clouds-isolated-on-blue-sky-panorama-vector-16631921.jpg' : splash_image })`,
       backgroundSize: 'cover',
       width: '100%,',
       height: '200px',

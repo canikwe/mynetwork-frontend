@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Feature from '../components/Feature'
-// import Filter from '../components/Filter'
+import ContactPlaceholder from '../components/ContactPlaceholder'
 import ContactCardContainer from './ContactCardContainer'
 import { Grid } from 'semantic-ui-react'
 // import toast from 'toasted-notes'
@@ -52,7 +52,11 @@ const Homepage =  props => {
 
         <Grid.Row>
           <Grid.Column>
+            {props.user.contacts.length === 0 ?
+            <ContactPlaceholder />
+            :
             <ContactCardContainer />
+            }
           </Grid.Column>
         </Grid.Row>
 

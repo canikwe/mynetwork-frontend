@@ -3,13 +3,14 @@ import React from 'react'
 import { Header, Divider, Container } from 'semantic-ui-react'
 import moment from 'moment'
 
-const ReminderShow = ({reminder: {interval, msg, period, priority, recurring, start}}) => {
+const ReminderShow = ({reminder: {interval, msg, period, priority, recurring, start, contact_name}}) => {
   return (
     <React.Fragment>
       <Header as='h4' floated='left'>{moment(start).format('ll')}</Header>
       <Header as='h2' floated='right'> { msg }</Header>
       <Divider clearing />
         <Container>
+          <p>{ contact_name }</p>
           { recurring ? 
           <React.Fragment>
             <p>Recurring Event</p> 
