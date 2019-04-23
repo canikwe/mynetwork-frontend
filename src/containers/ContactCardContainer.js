@@ -37,7 +37,18 @@ class ContactCardContainer extends React.PureComponent {
               return 0
             }).map(c => <ContactCard key={c.id} contact={c} />)
           :
-            this.filteredContacts().map(c => <ContactCard key={c.id} contact={c} />)
+            this.filteredContacts().sort((a, b) => {
+              const createdA = new Date(a.created_at)
+              const createdB = new Date(b.created_at)
+
+              if (createdB < createdA) {
+                return -1
+              }
+              if (createdB > createdA) {
+                return 1
+              }
+                return 0
+            }).map(c => <ContactCard key={c.id} contact={c} />)
 
           }
         </div>
