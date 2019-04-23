@@ -187,7 +187,7 @@ class ContactCard extends React.Component {
           <Image floated='right' size='mini' src={this.props.contact.avatar} />
           <Card.Header>{this.props.contact.name}</Card.Header>
           <Card.Meta>
-            <span className='date'>Connected {moment(this.props.contact.created_at).endOf('day').fromNow()}</span>
+            <span className='date'>Connected {moment(this.props.contact.created_at).fromNow()}</span>
           </Card.Meta>
           <Card.Description>{this.props.contact.kind}</Card.Description>
           {/* <Menu fluid text vertical className='scrolled'>

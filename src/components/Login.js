@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { authenticatingUser, clearError } from '../redux/actions'
 import { Link } from 'react-router-dom'
-import { Segment, Button, Divider, Grid } from 'semantic-ui-react'
+import { Segment, Button, Divider, Grid, Header } from 'semantic-ui-react'
 import { isEmpty } from 'lodash'
 import toaster from 'toasted-notes';
 import 'toasted-notes/src/styles.css';
@@ -61,7 +61,8 @@ class Login extends React.Component {
           <h1> </h1>
         </Grid.Row>
         <Grid.Row>
-          <Segment >
+          <Segment id='login'>
+          {/* <Header floated='left'>Login</Header> */}
             <Grid columns={2} relaxed='very' stackable>
               <Grid.Column>
                 <form className='ui form' onSubmit={this.handleSubmit}>
@@ -74,7 +75,7 @@ class Login extends React.Component {
                     <label htmlFor='password'>Password: </label>
                     <input type='password' name='password' onChange={this.handleChange} value={this.state.password}></input><br />
                   </div>
-                  <button className='ui button primary' type='submit'>Submit</button>
+                  <button className='ui button primary' type='submit'>Login</button>
                 </form>
               </Grid.Column>
               <Grid.Column textAlign='center' verticalAlign='middle'>
