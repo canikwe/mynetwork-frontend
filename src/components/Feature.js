@@ -107,9 +107,12 @@ class Feature extends React.Component {
       <Grid celled='internally' stackable columns='equal'>
         <Grid.Column>
           <Segment raised>
+            {this.todaysReminders().length === 0 ?
+            null
+            :
             <Label as='a' color='red' ribbon='right' onClick={this.toggleReminders}>
               {this.todaysReminders().length} Reminder(s)
-            </Label> 
+            </Label> }
           <div style={this.styleSplash()}>
             <Image 
               size='tiny'

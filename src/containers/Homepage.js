@@ -52,7 +52,7 @@ const Homepage =  props => {
 
         <Grid.Row>
           <Grid.Column>
-            {props.user.contacts.length === 0 ?
+            {props.contacts.length === 0 ?
             <ContactPlaceholder />
             :
             <ContactCardContainer />
@@ -75,7 +75,8 @@ const mapStateToProps = state => {
   return {
     loading: state.loading,
     user: state.user,
-    reminders: state.reminders
+    reminders: state.reminders,
+    contacts: state.contacts
   }
 }
 
