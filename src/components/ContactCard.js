@@ -13,7 +13,7 @@ class ContactCard extends React.Component {
     this.state = {
       newReminderModal: false,
       editReminderModal: false,
-      deleteReminderModal: false,
+      // deleteReminderModal: false,
       editContactModal: false,
       deleteContactModal: false,
       featuredReminder: {},
@@ -23,7 +23,7 @@ class ContactCard extends React.Component {
 
   handleOpen = (modal, featuredReminder) => this.setState({[modal]: true, featuredReminder})
 
-  handleDelete = () => this.setState({deleteReminderModal: false})
+  // handleDelete = () => this.setState({deleteReminderModal: false})
 
   handleClose = (modal) => this.setState({[modal]: false})
 
@@ -49,7 +49,6 @@ class ContactCard extends React.Component {
     }
 
   editReminder = () => {
-
     return (
       <Modal
         open={this.state.editReminderModal}
@@ -130,34 +129,34 @@ class ContactCard extends React.Component {
     )
   }
 
-  deleteReminder = () => {
-    return (
-      <Modal
-      size='mini'
-      open={this.state.deleteReminderModal}
-      onClose={() => this.handleClose('deleteReminderModal')}
-      >
-        <Header icon='trash' content='Delete this reminder?'/>
-        <Modal.Content>
-          <p>This is an irreversible action. Are you sure you want to proceed?</p>
-        </Modal.Content>
-        <Modal.Actions>
-          <Button negative content='No' onClick={
-            (e) => {
-              e.stopPropagation()
-              this.handleClose('deleteReminderModal')
-            }
-          }/>
-          <Button positive icon='checkmark' labelPosition='right' content='Yes' onClick={(e) => {
-            e.stopPropagation()
-            this.props.deletingReminder(this.state.featuredReminder)
-            this.handleClose('deleteReminderModal')
-            }
-          }/>
-        </Modal.Actions>
-    </Modal>
-    )
-  }
+  // deleteReminder = () => {
+  //   return (
+  //     <Modal
+  //     size='mini'
+  //     open={this.state.deleteReminderModal}
+  //     onClose={() => this.handleClose('deleteReminderModal')}
+  //     >
+  //       <Header icon='trash' content='Delete this reminder?'/>
+  //       <Modal.Content>
+  //         <p>This is an irreversible action. Are you sure you want to proceed?</p>
+  //       </Modal.Content>
+  //       <Modal.Actions>
+  //         <Button negative content='No' onClick={
+  //           (e) => {
+  //             e.stopPropagation()
+  //             this.handleClose('deleteReminderModal')
+  //           }
+  //         }/>
+  //         <Button positive icon='checkmark' labelPosition='right' content='Yes' onClick={(e) => {
+  //           e.stopPropagation()
+  //           this.props.deletingReminder(this.state.featuredReminder)
+  //           this.handleClose('deleteReminderModal')
+  //           }
+  //         }/>
+  //       </Modal.Actions>
+  //   </Modal>
+  //   )
+  // }
 
   contactReminders = () => {
     return this.props.reminders.filter(r => r.contact_id === this.props.contact.id)
