@@ -66,17 +66,17 @@ class ConactCardShow extends React.PureComponent {
               {details}
             </p>
   
-            <List divided verticalAlign='middle'>
+            <List animated selection verticalAlign='middle'>
               {reminders.map(r => {
                 return (
                   <React.Fragment key={r.id}>
-                    <List.Item onClick={this.toggleEditModal}>
+                    <List.Item active={!r.expired} onClick={this.toggleEditModal}>
                       {/* <List.Content floated='right'>
                         <p>{ moment(r.start_date).format('MMMM Do, YYYY') }</p>
                       </List.Content> */}
                       <List.Content>
                         <Icon name='bell outline' color={this.displayPriorityColor(r)}/>
-                        {r.msg}
+                        { r.msg }
                       </List.Content>
                     </List.Item>
                     <EditReminder modalOpen={this.state.editModal} reminder={r} modalClose={this.toggleEditModal}/>
