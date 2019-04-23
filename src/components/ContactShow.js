@@ -58,7 +58,7 @@ class ConactCardShow extends React.PureComponent {
         <Header as='h2' dividing>
           <Image circular src={ avatar } />{ name }
             <Header.Content>
-              <Header.Subheader >Friends since {moment(created_at).calendar()}</Header.Subheader>
+              <Header.Subheader>Friends since { moment(created_at).format('ll') }</Header.Subheader>
             </Header.Content>
           </Header>
           <Container>
@@ -69,8 +69,8 @@ class ConactCardShow extends React.PureComponent {
             <List divided verticalAlign='middle'>
               {reminders.map(r => {
                 return (
-                  <React.Fragment>
-                    <List.Item key={r.id} onClick={this.toggleEditModal}>
+                  <React.Fragment key={r.id}>
+                    <List.Item onClick={this.toggleEditModal}>
                       {/* <List.Content floated='right'>
                         <p>{ moment(r.start_date).format('MMMM Do, YYYY') }</p>
                       </List.Content> */}
