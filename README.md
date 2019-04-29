@@ -1,68 +1,37 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# myNetwork | Frontend
+myNetwork is a web application written with a React-Redux frontend and a Rails API backend. It gives users full CRUD capabilities over their contacts and reminders for those contacts. Styled with Semantic-React, it incorporates form validations, toast notifications, and conditional component rendering.
 
-## Available Scripts
+## Demo
+[myNetwork](https://youtu.be/q1ODMvxXRG0)
 
-In the project directory, you can run:
+## Installation
+Please note, this application requires both the frontend and the backend to run. Click [here](https://github.com/canikwe/mynetwork-backend) for instructions on installing and setting up the backend. **Please follow all backend instructions _before_ proceeding with frontend installation**.
 
-### `npm start`
+myNetwork utilizes several packages for styling and functionality. Please use the package manager [npm](https://www.npmjs.com) to install all dependencies.
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+To start, please clone or download the repository to your computer. If you are already in your computer's terminal, cd into the directory. If you are in your computers Finder or Explorer, right-click and select an option to open the directory in your terminal.
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+**Make sure you are in the mynetwork-frontend directory before proceeding to the next step.**
 
-### `npm test`
+Type `npm install` to install all package dependencies.
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+To run the app in development mode, type `npm start` in your terminal. If backend setup instructions are complete, and the development server is up and running, the terminal should prompt you to run the frontend on localhost:3001. Select Y to load the app on your browser.
 
-### `npm run build`
+### Login:
+![myNetwork Login](https://media.giphy.com/media/KgENfwDC4M1NiYVgLU/giphy.gif)
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Homepage:
+![myNetwork Homepage](https://media.giphy.com/media/ZYKlTxLJNWLjYmjljq/giphy.gif)
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+### Calendar:
+![myNetwork Calendar](https://media.giphy.com/media/W5SyuH1spLcYVeDEGt/giphy.gif)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Snooze:
+![myNetwork Snooze](https://media.giphy.com/media/cjKe5VJEG9t7GPeEFr/giphy.gif)
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+## License
+[GPL-3.0](https://choosealicense.com/licenses/gpl-3.0/)
