@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { logoutUser } from '../redux/actions'
+import { logoutUser } from '../redux/actions/actions'
 import { Menu, Dropdown, Modal, Segment, Label } from 'semantic-ui-react'
 import { isEmpty } from 'lodash'
 import ContactForm from './ContactForm'

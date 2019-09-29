@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { updateSearchTerm, filterCalendar } from '../redux/actions'
+import { updateSearchTerm, filterCalendar } from '../redux/actions/actions'
 import { Input, Transition, Dropdown } from 'semantic-ui-react'
 import { withRouter } from 'react-router-dom'
 

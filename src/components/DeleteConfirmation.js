@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Modal, Button, Header } from 'semantic-ui-react'
-import { deletingReminder } from '../redux/actions'
+import { deletingReminder } from '../redux/actions/actions'
 
 class DeleteConfirmation extends React.PureComponent {
   state={

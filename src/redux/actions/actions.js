@@ -16,7 +16,7 @@ import {
   NOTIFY_REMINDERS,
   CLEAR_LOADING,
   SET_PRIORITY_FILTER
-} from './types'
+} from '../types'
 
 
 
@@ -25,8 +25,8 @@ const URL = () =>{
 }
 
 //Initial User Fetch, loading into state, and error handling
-function fetchedUser(user){
-  return {type: FETCHED_USER, user}
+function fetchedUser(payload){
+  return {type: FETCHED_USER, payload}
 }
 
 function loadingUser(){
@@ -51,10 +51,10 @@ function fetchingUser(token){
       }
     })
     .then(res => res.json())
-    .then(user => {
-      if (user.id !== undefined) {
-        console.log(user)
-        dispatch(fetchedUser(user))
+    .then(data => {
+      if (data.user.id !== undefined) {
+        console.log(data.user)
+        dispatch(fetchedUser(data))
       } else {
         dispatch(clearLoading())
       }
@@ -75,7 +75,7 @@ const addingUser = user => {
     .then(data => {
       console.log(data)
       if (data.authenticated) {
-        dispatch(fetchedUser(data.user))
+        dispatch(fetchedUser(data.user)) //this will break with the refactor. Please fix new user controller in backend
         localStorage.setItem('token', data.token)
       } else {
         console.log(data.message)

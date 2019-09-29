@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import moment from 'moment'
 import { Grid, Segment, Image, Button, Modal, Label, Checkbox } from 'semantic-ui-react'
 import '../App.css'
-import { updatingReminder } from '../redux/actions'
+import { updatingReminder } from '../redux/actions/actions'
 
 class Feature extends React.Component {
   constructor(){

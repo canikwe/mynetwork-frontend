@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import { connect } from 'react-redux'
-import { testAction, fetchingUser, notifyReminders, clearLoading } from './redux/actions'
+import { testAction, fetchingUser, notifyReminders, clearLoading } from './redux/actions/actions'
 import { Route, Switch, Redirect } from 'react-router-dom'
 import Homepage from './containers/Homepage'
 import Login from './components/Login'

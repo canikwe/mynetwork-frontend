@@ -20,7 +20,7 @@ import {
   NOTIFY_REMINDERS,
   CLEAR_LOADING,
   SET_PRIORITY_FILTER
-} from './types'
+} from '../types'
 
 const getRecurringEvents = (reminder) => {
 
@@ -71,7 +71,7 @@ const userReducer = (state={}, action) => {
   switch(action.type){
     case FETCHED_USER:
     
-      return action.user
+      return action.payload.user
     case UPDATING_USER:
       return action.user.user
     case LOGOUT_USER:
@@ -85,7 +85,7 @@ const remindersReducer = (state=[], action) => {
   
   switch(action.type){
     case FETCHED_USER:
-      return action.user.reminders
+      return action.payload.reminders
     case ADD_REMINDER:
       return [...state, action.reminder]
     case UPDATE_REMINDER:
@@ -107,7 +107,7 @@ const contactsReducer = (state=[], action) => {
   
   switch(action.type){
     case FETCHED_USER:
-      return action.user.contacts
+      return action.payload.contacts
     case ADD_CONTACT:
       return [...state, action.contact]
     case UPDATE_CONTACT:
@@ -161,9 +161,9 @@ const notificationReducer = (state= [], action) => {
 const recurringRemindersReducer = (state = [], action) => {
   switch(action.type){
     case FETCHED_USER:
-      let rec = []
-      action.user.reminders.map(r => {        
-        rec = [...rec, ...getRecurringEvents(r)]
+      const rec = []
+      action.payload.reminders.forEach(r => {
+        rec.push(...getRecurringEvents(r))
         return rec
       })
       return rec

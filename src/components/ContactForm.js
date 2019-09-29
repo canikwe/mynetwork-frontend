@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { addingContact, updatingContact } from '../redux/actions'
+import { addingContact, updatingContact } from '../redux/actions/actions'
 import { Link } from 'react-router-dom'
 import { Segment, Button, Grid, Dropdown } from 'semantic-ui-react'
 import toast from 'toasted-notes'

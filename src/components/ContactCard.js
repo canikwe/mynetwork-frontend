@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import ReminderForm from '../components/ReminderForm';
 import ContactForm from './ContactForm'
-import { deletingContact, deletingReminder } from '../redux/actions'
+import { deletingContact, deletingReminder } from '../redux/actions/actions'
 import { Modal, Button, Header, Card, Icon, Image, Segment, Container } from 'semantic-ui-react'
 import ContactShow from './ContactShow'
 import moment from 'moment'
