@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { authenticatingUser, clearError } from '../redux/actions/actions'
 import { Link } from 'react-router-dom'
-import { Segment, Button, Divider, Grid, Header } from 'semantic-ui-react'
+import { Segment, Button, Divider, Grid } from 'semantic-ui-react'
 import { isEmpty } from 'lodash'
 import toaster from 'toasted-notes';
 import 'toasted-notes/src/styles.css';

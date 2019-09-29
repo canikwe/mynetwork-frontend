@@ -96,7 +96,7 @@ class UserForm extends React.Component {
   }
 
   render(){
-    const { avatar, bio, first_name, last_name, email, username, password, password_confirm, splash_image } = this.state
+    const { avatar, bio, first_name, last_name, email, username, password, splash_image } = this.state
     return(
       <Segment raised>
         <Grid columns={2}>

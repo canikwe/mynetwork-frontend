@@ -25,7 +25,7 @@ import {
 const getRecurringEvents = (reminder) => {
 
   let recurrence = {}
-  let start = moment(reminder.start_date)
+  const start = moment(reminder.start_date)
   const end = moment(reminder.end_date)
   // debugger
   switch(reminder.period){
@@ -70,7 +70,6 @@ const reduxConnection = (state='connected', action) => {
 const userReducer = (state={}, action) => {
   switch(action.type){
     case FETCHED_USER:
-    
       return action.payload.user
     case UPDATING_USER:
       return action.user.user
@@ -145,7 +144,7 @@ const searchTermReducer = (state = '', action) => {
   }
 }
 
-const notificationReducer = (state= [], action) => {
+const notificationReducer = (state=[], action) => {
   switch(action.type) {
     case THROW_ERROR:
       console.log(action.errors)
@@ -164,7 +163,6 @@ const recurringRemindersReducer = (state = [], action) => {
       const rec = []
       action.payload.reminders.forEach(r => {
         rec.push(...getRecurringEvents(r))
-        return rec
       })
       return rec
     case ADD_REMINDER:
