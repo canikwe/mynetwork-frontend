@@ -75,7 +75,7 @@ const addingUser = user => {
     .then(data => {
       console.log(data)
       if (data.authenticated) {
-        dispatch(fetchedUser(data.user)) //this will break with the refactor. Please fix new user controller in backend
+        dispatch(fetchedUser(data))
         localStorage.setItem('token', data.token)
       } else {
         console.log(data.message)
@@ -100,9 +100,10 @@ const authenticatingUser = params => {
     .then(data => {
       console.log(data)
       if (data.authenticated) {
-        dispatch(fetchedUser(data.user))
+        dispatch(fetchedUser(data))
         localStorage.setItem('token', data.token)
       } else {
+        debugger
         console.log(data)
         dispatch(displayError(data.message))
         dispatch(clearLoading())
@@ -123,13 +124,13 @@ const updateUser = user => {
   return {type: UPDATING_USER, user: user}
 }
 
-const updatingUser = user => {
-  
+const updatingUser = (user, id) => {
+  debugger  
   return dispatch => {
-    fetch(`${URL()}/users/${user.user.user_info.id}`, {
+    fetch(`${URL()}/users/${id}`, {
       method: 'PATCH',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(user)
+      // headers: {'Content-Type': 'application/json'},
+      body: user
     })
     .then(res => res.json())
     .then(data => {

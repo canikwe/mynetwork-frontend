@@ -19,7 +19,8 @@ class UserForm extends React.Component {
       username: '',
       password: '',
       // password_confirm: '',
-      splash_image: ''
+      splash_image: '',
+      photo: {}
     }
   }
 
@@ -44,29 +45,51 @@ class UserForm extends React.Component {
   }
 
   handleChange = e => {
-    this.setState({
-      [e.target.name]: e.target.value
-    })
+    if (e.target.name !== 'photo'){
+      this.setState({
+        [e.target.name]: e.target.value
+      })
+    } else {
+      this.setState({
+        [e.target.name]: e.target.files[0]
+      })
+    }
   }
 
   handleSubmit = () => {
     // debugger
     //check password and password_confirm are identical (else throw alert)
-    if (this.state.first_name === '' ||
-        this.state.last_name === '' ||
-        this.state.username === '' ||
-        this.state.email === '' ||
-        this.state.avatar === '') {
-          toast.notify('Please fill out all required fields', {duration: null})
-        } else {
+    const data = new FormData()
+    const formObj = this.state
+
+    console.log(formObj)
+    for (let key in formObj){
+      // data.append(key, formObj[key])
+      
+      data.append(key, formObj[key])
+      
+    }
+
+
+    this.props.updatingUser(data, this.state.id)
+
+
+    // debugger
+    // if (this.state.first_name === '' ||
+    //     this.state.last_name === '' ||
+    //     this.state.username === '' ||
+    //     this.state.email === '' ||
+    //     this.state.avatar === '') {
+    //       toast.notify('Please fill out all required fields', {duration: null})
+    //     } else {
           
-          if (this.props.user.id){
-            this.props.updatingUser({user: {user_info: this.state}})
-          } else {
-            this.props.addingUser({user: {user_info: this.state}})
-          }
-          // this.resetState()
-        }
+    //       if (this.props.user.id){
+    //         this.props.updatingUser({user: {user_info: this.state}})
+    //       } else {
+    //         this.props.addingUser({user: {user_info: this.state}})
+    //       }
+    //       // this.resetState()
+    //     }
 
   }
 
@@ -91,6 +114,7 @@ class UserForm extends React.Component {
       email: '',
       username: '',
       password: '',
+      photo: {}
       // password_confirm: ''
     })
   }
@@ -148,12 +172,17 @@ class UserForm extends React.Component {
 
           <label htmlFor='bio'>Bio:</label><br />
           <textarea name='bio' rows='6' value={ bio } onChange={this.handleChange}></textarea><p />
+
+          <label htmlFor='photo'>Photo:</label><br />
+          <input type='file' name='photo' onChange={this.handleChange}/> 
+
   
           <Button onClick={this.handleSubmit} >Submit</Button>
           </div>
         </Grid.Column>
         </Grid>
         {/* {this.displayAlert()} */}
+        <img src={`http://localhost:3000${this.props.user.photo}`} />
 
       </Segment>
     )
@@ -172,7 +201,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     addingUser: (contact) => dispatch(addingUser(contact)),
-    updatingUser: (user) => dispatch(updatingUser(user)),
+    updatingUser: (user, id) => dispatch(updatingUser(user, id)),
     clearError: () => dispatch(clearError())
   }
 }
