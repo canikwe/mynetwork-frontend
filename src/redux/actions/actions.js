@@ -153,7 +153,6 @@ const addContact = (newContactObj) => {
 }
 
 const addingContact = (contact) => {
-  debugger
   return (dispatch) => {
     fetch(`${URL()}/contacts`, {
       method: 'POST',

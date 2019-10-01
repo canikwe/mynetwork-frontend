@@ -10,6 +10,7 @@ class ContactForm extends React.Component {
   constructor(props){
     super(props)
     this.state = {
+      id: this.props.contact ? this.props.contact.id : '',
       first_name: this.props.contact ? this.props.contact.first_name : '',
       last_name: this.props.contact ? this.props.contact.last_name : '',
       kind: this.props.contact ? this.props.contact.kind : '',
@@ -30,15 +31,18 @@ class ContactForm extends React.Component {
       toast.notify('A girl has no name, but a contact must.', {duration: null})
 
     } else if (this.props.contact) {
-      const updatedContact = {
-        contact: { 
-          contact_info: {id: this.state.id, kind: this.state.kind, details: this.state.details}, 
-          requested_attributes: {first_name: this.state.first_name, last_name: this.state.last_name, id: this.props.contact.friend_id, avatar: this.state.avatar}
+        const updatedContact = {
+          contact: { 
+            id: this.state.id,
+            first_name: this.state.first_name,
+            last_name: this.state.last_name,
+            kind: this.state.kind,
+            details: this.state.details,
+            user_id: this.props.id
+          }
         }
-      }
-
-      this.props.updatingContact(this.state.id, updatedContact)
-      this.props.handleClose('editContactModal')
+        this.props.updatingContact(this.state.id, updatedContact)
+        this.props.handleClose('editContactModal')
       } else {
       const newContact = {
         contact: {
