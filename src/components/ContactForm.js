@@ -10,7 +10,6 @@ class ContactForm extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      id: this.props.contact ? this.props.contact.id : '',
       first_name: this.props.contact ? this.props.contact.first_name : '',
       last_name: this.props.contact ? this.props.contact.last_name : '',
       kind: this.props.contact ? this.props.contact.kind : '',
@@ -42,23 +41,18 @@ class ContactForm extends React.Component {
       this.props.handleClose('editContactModal')
       } else {
       const newContact = {
-        user:{
-          user_info: {
+        contact: {
             first_name: this.state.first_name,
             last_name: this.state.last_name,
-            avatar: this.state.avatar
-          },
-          contact_attributes: {
-            requestor_id: this.props.id,
+            avatar: this.state.avatar,
+            user_id: this.props.id,
             kind: this.state.kind,
             details: this.state.details
           }
         }
-      }
-
       this.props.addingContact(newContact)
       this.props.handleClose()
-    }
+      }
   }
 
   kindDropdown = () => {

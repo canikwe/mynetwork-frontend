@@ -63,16 +63,18 @@ function fetchingUser(token){
 }
 
 const addingUser = user => {
+  debugger
   return (dispatch) => {
     dispatch(loadingUser)
 
     fetch(`${URL()}/users`, {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(user)
+      // headers: {'Content-Type': 'application/json'},
+      body: user
     })
     .then(res => res.json())
     .then(data => {
+      debugger
       console.log(data)
       if (data.authenticated) {
         dispatch(fetchedUser(data))
@@ -98,6 +100,7 @@ const authenticatingUser = params => {
     })
     .then(res => res.json())
     .then(data => {
+      debugger
       console.log(data)
       if (data.authenticated) {
         dispatch(fetchedUser(data))
@@ -150,8 +153,9 @@ const addContact = (newContactObj) => {
 }
 
 const addingContact = (contact) => {
+  debugger
   return (dispatch) => {
-    fetch(`${URL()}/users`, {
+    fetch(`${URL()}/contacts`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(contact)
@@ -162,6 +166,7 @@ const addingContact = (contact) => {
 }
 
 const updateContact = contact => {
+  debugger
   return {type: UPDATE_CONTACT, contact: contact}
 }
 

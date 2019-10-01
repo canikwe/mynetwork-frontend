@@ -63,16 +63,21 @@ class UserForm extends React.Component {
     const formObj = this.state
 
     console.log(formObj)
-    for (let key in formObj){
-      // data.append(key, formObj[key])
-      
-      data.append(key, formObj[key])
-      
+    if (this.props.user.id) {
+      for (let key in formObj){
+        data.append(key, formObj[key])
+      }
+      this.props.updatingUser(data, this.state.id)
+    } else {
+      for (let key in formObj){
+        if (key !== 'id'){
+          data.append(key, formObj[key])
+        }
+      }
+      this.props.addingUser(data)
     }
 
-
-    this.props.updatingUser(data, this.state.id)
-
+    this.resetState()
 
     // debugger
     // if (this.state.first_name === '' ||
