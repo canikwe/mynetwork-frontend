@@ -13,7 +13,9 @@ import Calendar from './components/Calendar'
 import { isEmpty } from 'lodash'
 import toast from 'toasted-notes'
 import { Image } from 'semantic-ui-react'
-import 'toasted-notes/src/styles.css';
+import 'toasted-notes/src/styles.css'
+
+import Home from './containers/Home'
 
 class App extends Component {
   // constructor(){
@@ -57,7 +59,7 @@ class App extends Component {
       </Dimmer> */}
       <div className='loading'>
         <Image
-          centered src='https://cdn.dribbble.com/users/563824/screenshots/4268258/untitled_180_3.gif' />
+          centered src='./images/loading_screen.gif' />
       </div>
       {/* <Image src='https://react.semantic-ui.com/images/wireframe/short-paragraph.png' />
       <Image src='https://react.semantic-ui.com/images/wireframe/short-paragraph.png' /> */}
@@ -98,7 +100,9 @@ class App extends Component {
               return !isEmpty(this.props.user) ? <Calendar /> : <Redirect to='/login' />
             }}
             />
-            {/* <Route component={NotFound} /> */}
+
+            <Route exact path='/home' component={Home}/>
+
             <Redirect from='*' to='/' />
 
           </Switch>

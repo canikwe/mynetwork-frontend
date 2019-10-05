@@ -60,9 +60,11 @@ class UserForm extends React.Component {
     // debugger
     //check password and password_confirm are identical (else throw alert)
     const data = new FormData()
-    const formObj = this.state
+    const formObj = {...this.state}
 
+    if (isEmpty(formObj['photo'])) delete formObj['photo']
     console.log(formObj)
+    
     if (this.props.user.id) {
       for (let key in formObj){
         data.append(key, formObj[key])

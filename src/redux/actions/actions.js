@@ -63,7 +63,6 @@ function fetchingUser(token){
 }
 
 const addingUser = user => {
-  debugger
   return (dispatch) => {
     dispatch(loadingUser)
 
@@ -74,7 +73,6 @@ const addingUser = user => {
     })
     .then(res => res.json())
     .then(data => {
-      debugger
       console.log(data)
       if (data.authenticated) {
         dispatch(fetchedUser(data))
@@ -127,8 +125,7 @@ const updateUser = user => {
   return {type: UPDATING_USER, user: user}
 }
 
-const updatingUser = (user, id) => {
-  debugger  
+const updatingUser = (user, id) => {  
   return dispatch => {
     fetch(`${URL()}/users/${id}`, {
       method: 'PATCH',
@@ -165,7 +162,6 @@ const addingContact = (contact) => {
 }
 
 const updateContact = contact => {
-  debugger
   return {type: UPDATE_CONTACT, contact: contact}
 }
 

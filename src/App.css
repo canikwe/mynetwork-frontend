@@ -151,6 +151,11 @@
     overflow-x:hidden;
  }
 
+ .homepage-container {
+   display: flex;
+   justify-content: space-around;
+ }
+
  .calendar {
    height: 800px
  }
