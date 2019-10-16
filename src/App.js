@@ -28,8 +28,9 @@ class App extends Component {
   componentDidMount(){
     this.props.testAction()
     const token = localStorage.getItem('token')
+
     if (token) {
-      this.props.fetchingUser(token)
+      this.props.fetchingUser()
     } else {
       this.props.clearLoading()
     }

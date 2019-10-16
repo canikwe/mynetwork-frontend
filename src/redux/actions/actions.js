@@ -24,6 +24,14 @@ const URL = () =>{
   return `http://localhost:3000/api/v1`
 }
 
+const headers = () => {
+  const token = localStorage.getItem('token')
+  return {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${token}`
+  }
+}
+
 //Initial User Fetch, loading into state, and error handling
 function fetchedUser(payload){
   return {type: FETCHED_USER, payload}
@@ -46,12 +54,11 @@ function fetchingUser(token){
     dispatch(loadingUser)
     
     fetch(`${URL()}/profile`, {
-      headers: {
-        'Authentication': `Bearer ${token}`
-      }
+      headers: headers()
     })
     .then(res => res.json())
     .then(data => {
+      debugger
       if (data.user.id !== undefined) {
         console.log(data.user)
         dispatch(fetchedUser(data))
@@ -93,7 +100,7 @@ const authenticatingUser = params => {
 
     fetch(`http://localhost:3000/api/v1/login`, {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
+      headers: headers(),
       body: JSON.stringify(params)
     })
     .then(res => res.json())
@@ -129,7 +136,7 @@ const updatingUser = (user, id) => {
   return dispatch => {
     fetch(`${URL()}/users/${id}`, {
       method: 'PATCH',
-      // headers: {'Content-Type': 'application/json'},
+      headers: headers(),
       body: user
     })
     .then(res => res.json())
@@ -153,7 +160,7 @@ const addingContact = (contact) => {
   return (dispatch) => {
     fetch(`${URL()}/contacts`, {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
+      headers: headers(),
       body: JSON.stringify(contact)
     })
     .then(res => res.json())
@@ -170,7 +177,7 @@ const updatingContact = (id, contact) => {
   return (dispatch) => {
     fetch(`${URL()}/contacts/${id}`, {
       method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
+      headers: headers(),
       body: JSON.stringify(contact)
     })
     .then(res => res.json())
@@ -185,7 +192,8 @@ const deleteContact = contact => {
 const deletingContact = contact => {
   return dispatch => {
     fetch(`${URL()}/contacts/${contact.id}`, {
-      method: 'DELETE'
+      method: 'DELETE',
+      headers: headers()
     })
     .then(res => res.json())
     .then(contactObj => {
@@ -201,7 +209,7 @@ function addingReminder(newReminderData) {
     
     fetch(`${URL()}/reminders`, {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
+      headers: headers(),
       body: JSON.stringify(newReminderData)
     })
     .then(res => res.json())
@@ -225,7 +233,7 @@ const updatingReminder = reminder => {
   return (dispatch) => {
     fetch(`${URL()}/reminders/${reminder.id}`, {
       method: 'PATCH',
-      headers: {'Content-Type': 'application/json'},
+      headers: headers(),
       body: JSON.stringify(reminder)
     })
     .then(res => res.json())
@@ -243,7 +251,8 @@ const deleteReminder = reminderObj => {
 const deletingReminder = reminder => {
   return (dispatch) => {
     fetch(`${URL()}/reminders/${reminder.id}`, {
-      method: "DELETE"
+      method: "DELETE",
+      headers: headers()
     })
     .then(res => res.json())
     .then(reminderObj => {

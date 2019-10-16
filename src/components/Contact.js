@@ -40,7 +40,7 @@ class Contact extends Component {
                             <Card.Content extra>
                                 <a>
                                     <Icon name='leaf' />
-                                    2 Upcoming Tasks
+                                    2 Upcoming Reminders
                                 </a>
                                 <br />
                                 <a>

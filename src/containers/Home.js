@@ -1,32 +1,31 @@
 import React from 'react'
 import Logo from '../components/Logo'
 import Reminders from '../components/Reminders'
-import Contact from '../components/Contact'
-import { connect } from 'react-redux'
+import ContactGroup from '../containers/ContactGroup'
+import StatsContainer from '../containers/StatsContainer'
 
-import { Card } from 'semantic-ui-react'
-
-const Home = props => {
+const Home = () => {
     return (
         <>
             <h1>Welcome to your new Homepage</h1>
-            <div className='homepage-container'>
+            <div className='homepage-container'> {/* this className is misleading. Refactor to use grid and contain the entire page?*/}
                 <Logo />
                 <Reminders />
             </div>
-            <Card.Group centered stackable>
-                {!!props.contacts ? props.contacts.map(c => {
-                    return <Contact key={c.id} contact={c}/>
-                }) : null}
-            </Card.Group>
+
+            <div>
+                <h1>"Wonder begets wisdom, DJ Chine"</h1>
+                <StatsContainer />
+            </div>
+
+            <div>
+                <ContactGroup />
+            </div>
         </>
     )
 }
 
-const mapStateToProps = state => {
-    return ({
-        contacts: state.contacts
-    })
-}
 
-export default connect(mapStateToProps)(Home)
+export default Home
+
+//If reusing, Pass some identifier to the Contact Group component so the mapStateToProps function will give one component the starred contacts and the other will give the neglected contacts?
