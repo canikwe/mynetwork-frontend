@@ -5,24 +5,24 @@ import ContactGroup from '../containers/ContactGroup'
 import StatsContainer from '../containers/StatsContainer'
 
 const Home = () => {
-    return (
-        <>
-            <h1>Welcome to your new Homepage</h1>
-            <div className='homepage-container'> {/* this className is misleading. Refactor to use grid and contain the entire page?*/}
-                <Logo />
-                <Reminders />
-            </div>
+  return (
+    <>
+      <h1>Welcome to your new Homepage</h1>
+      <div className='homepage-container'> {/* this className is misleading. Refactor to use grid and contain the entire page?*/}
+        <Logo />
+        <Reminders />
+      </div>
 
-            <div>
-                <h1>"Wonder begets wisdom, DJ Chine"</h1>
-                <StatsContainer />
-            </div>
+      <div>
+        <ContactGroup />
+      </div>
 
-            <div>
-                <ContactGroup />
-            </div>
-        </>
-    )
+      <div>
+        <h1>"Wonder begets wisdom, DJ Chine"</h1>
+        <StatsContainer />
+      </div>
+    </>
+  )
 }
 
 
