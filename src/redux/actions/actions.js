@@ -58,7 +58,6 @@ function fetchingUser(token){
     })
     .then(res => res.json())
     .then(data => {
-      debugger
       if (data.user.id !== undefined) {
         console.log(data.user)
         dispatch(fetchedUser(data))
@@ -100,18 +99,18 @@ const authenticatingUser = params => {
 
     fetch(`http://localhost:3000/api/v1/login`, {
       method: 'POST',
-      headers: headers(),
+      headers: {
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify(params)
     })
     .then(res => res.json())
     .then(data => {
-      debugger
       console.log(data)
       if (data.authenticated) {
         dispatch(fetchedUser(data))
         localStorage.setItem('token', data.token)
       } else {
-        debugger
         console.log(data)
         dispatch(displayError(data.message))
         dispatch(clearLoading())

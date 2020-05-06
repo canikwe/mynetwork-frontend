@@ -1,6 +1,6 @@
 import React from 'react'
 import Logo from '../components/Logo'
-import Reminders from '../components/Reminders'
+import Reminders from '../components/RemindersList'
 import ContactGroup from '../containers/ContactGroup'
 import StatsContainer from '../containers/StatsContainer'
 

@@ -31,7 +31,7 @@ const Homepage =  props => {
   } else {
     return (
      <div className='wrapper'>
-      <Grid width={ 14 }>
+      <Grid>
         <Grid.Row>
           <Grid.Column >
             <h1>Welome back, {props.user.first_name} !</h1>

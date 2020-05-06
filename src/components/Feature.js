@@ -1,15 +1,17 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import moment from 'moment'
-import { Grid, Segment, Image, Button, Modal, Label, Checkbox } from 'semantic-ui-react'
+import { Grid, Segment, Image, Button, Modal, Label, Checkbox, List } from 'semantic-ui-react'
 import '../App.css'
 import { updatingReminder } from '../redux/actions/actions'
+import Logo from './Logo'
+import RemindersList from './RemindersList'
 
 class Feature extends React.Component {
   constructor(){
     super()
     this.state = {
-      toggleReminders: false,
+      toggleReminders: true,
       openSnooze: false,
       featuredReminder: {},
       sortByPriority: false
@@ -64,19 +66,19 @@ class Feature extends React.Component {
     )
   }
 
-  styleSplash = () => {
-    const { splash_image } = this.props.user
-    // debugger
-    return({
-      backgroundImage: `url(${ splash_image === null ? 'https://cdn2.vectorstock.com/i/1000x1000/19/21/cartoon-clouds-isolated-on-blue-sky-panorama-vector-16631921.jpg' : splash_image })`,
-      backgroundSize: 'cover',
-      width: '100%,',
-      height: '200px',
-      display: 'flex',
-      justifyContent: 'flex-end',
-      flexDirection: 'column'
-    })
-  }
+  // styleSplash = () => {
+  //   const { splash_image } = this.props.user
+  //   // debugger
+  //   return({
+  //     backgroundImage: `url(${ splash_image === null ? 'https://cdn2.vectorstock.com/i/1000x1000/19/21/cartoon-clouds-isolated-on-blue-sky-panorama-vector-16631921.jpg' : splash_image })`,
+  //     backgroundSize: 'cover',
+  //     width: '100%,',
+  //     height: '200px',
+  //     display: 'flex',
+  //     justifyContent: 'flex-end',
+  //     flexDirection: 'column'
+  //   })
+  // }
 
   todaysReminders = () => {
     if (this.state.sortByPriority) {
@@ -106,34 +108,33 @@ class Feature extends React.Component {
     return (
       <Grid celled='internally' stackable columns='equal'>
         <Grid.Column>
-          <Segment raised>
-            {this.todaysReminders().length === 0 ?
+            {this.todaysReminders().length === 0 || this.state.toggleReminders ?
             null
             :
+            
             <Label as='a' color='red' ribbon='right' onClick={this.toggleReminders}>
               {this.todaysReminders().length} Reminder(s)
             </Label> }
-          <div style={this.styleSplash()}>
-            <Image 
-              size='tiny'
-              circular
-              src={this.props.user.avatar}
-              alt="avatar"
-              spaced
-              bordered
-            />
-          </div>
-          </Segment>
+            <Logo />
         </Grid.Column>
         {this.state.toggleReminders ? 
-        <Grid.Column width={5}>
+        <Grid.Column width={6}>
           <div className='reminders-container'>
-            <h4>Current Reminders for: { moment().format('dddd, MMMM Do, YYYY') }</h4>
+            <RemindersList />
+            {/* <h4>Current Reminders for: { moment().format('dddd, MMMM Do, YYYY') }</h4>
             <div className='reminders'>
-              <Segment.Group>
-                {this.todaysReminders().map(r => <Segment inverted={r.priority === 5} color={this.displayPriorityColor(r)} key={r.id} onClick={() => this.show(r)}>{r.msg} {this.handleReminderSnooze(r)}</Segment>)}
-              </Segment.Group>
-            </div>
+              <List bulleted>
+                {this.todaysReminders().map(r => (
+                  <List.Item 
+                    // inverted={r.priority === 5} 
+                    color={this.displayPriorityColor(r)} 
+                    key={r.id} 
+                    onClick={() => this.show(r)}
+                  >
+                    {r.msg} {this.handleReminderSnooze(r)}
+                  </List.Item>))}
+              </List>
+            </div> */}
             <div>
             {/* <Button onClick={this.toggleReminders} content='Close Reminders'/> */}
             <Checkbox 

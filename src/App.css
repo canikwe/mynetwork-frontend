@@ -80,11 +80,10 @@
 
  .wrapper {
   /* text-align: center; */
-  padding-right: 15%;
-  padding-left: 15%;
-  display: block;
+  padding: 0 5%;
+  /* display: block;
   justify-content: center;
-  flex-direction: center; 
+  flex-direction: center;  */
 }
 
 .loading {
@@ -141,14 +140,15 @@
  } */
 
  .reminders-container {
-    height: 200px;
-
- }
-
- .reminders {
-    height: 95%;
-    overflow-y: auto;
-    overflow-x:hidden;
+    height: 75vh;
+    
+  }
+  
+  .reminders {
+    height: 100%;
+    overflow: auto;
+    /* overflow-y: auto; */
+    /* overflow-x:hidden; */
  }
 
  .homepage-container {
@@ -184,3 +184,4 @@
     overflow-y: auto;
     overflow-x:hidden;
  } */
+

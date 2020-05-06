@@ -15,7 +15,7 @@ const EditReminder = (props) => {
         >
 
         <ReminderForm 
-          contact={null} 
+          contact={props.contact} 
           title={'Update reminder!'} 
           reminder={props.reminder} 
           handleClose={ props.modalClose }

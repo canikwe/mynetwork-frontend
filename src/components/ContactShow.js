@@ -79,7 +79,7 @@ class ConactCardShow extends React.PureComponent {
                         { r.msg }
                       </List.Content>
                     </List.Item>
-                    <EditReminder modalOpen={this.state.editModal} reminder={r} modalClose={this.toggleEditModal}/>
+                    <EditReminder modalOpen={this.state.editModal} reminder={r} modalClose={this.toggleEditModal} contact={this.props.contact}/>
                 </React.Fragment>
                 )
               })}
