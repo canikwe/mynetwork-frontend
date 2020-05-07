@@ -3,6 +3,8 @@ import { Image, Header, Container, List, Icon, Divider } from 'semantic-ui-react
 import { connect } from 'react-redux'
 import EditReminder from './EditReminder'
 import moment from 'moment';
+import { formatReminder } from '../helper/functions'
+
 
 // const displayPriorityColor = (r) => {
 //   switch (r.priority){
@@ -76,7 +78,7 @@ class ConactCardShow extends React.PureComponent {
                       </List.Content> */}
                       <List.Content>
                         <Icon name='bell outline' color={this.displayPriorityColor(r)}/>
-                        { r.msg }
+                        { formatReminder(r, null, name) }
                       </List.Content>
                     </List.Item>
                     <EditReminder modalOpen={this.state.editModal} reminder={r} modalClose={this.toggleEditModal} contact={this.props.contact}/>
