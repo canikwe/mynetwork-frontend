@@ -11,8 +11,8 @@ class ReminderForm extends React.Component {
     this.state = {
       id: props.reminder ? props.reminder.id : null,
       msg: props.reminder ? props.reminder.msg : '',
-      start_date: props.reminder ? new Date(props.reminder.start_date) : moment().format('YYYY-MM-DD'),
-      end_date: props.reminder ? new Date(props.reminder.end_date) : '',
+      start_date: props.reminder ? moment(props.reminder.start_date).format('YYYY-MM-DD') : moment().format('YYYY-MM-DD'),
+      end_date: props.reminder ? moment(props.reminder.end_date).format('YYYY-MM-DD') : '',
       interval: props.reminder ? props.reminder.interval : 1,
       period: props.reminder ? props.reminder.period : 'daily',
       recurring: props.reminder ? props.reminder.recurring : false,
