@@ -2,16 +2,9 @@ import React from 'react'
 import { connect } from 'react-redux'
 import moment from 'moment'
 import { Loader, Segment, Dimmer, List, Divider } from 'semantic-ui-react'
+import { formatReminder } from '../helper/functions'
 
 const RemindersList = props => {
-
-  const formatReminder = r => {
-    const date = moment(r.start).format('MMMM Do, YYYY')
-    const text = r.msg[0].toUpperCase() + r.msg.slice(1, r.msg.length)
-    const contact = props.contacts.find(c => c.id == r.contact_id).first_name
-
-    return date + ' - ' + text + ' ' + contact
-  }
 
   if (!props.todaysReminders) {
     return (
@@ -31,7 +24,7 @@ const RemindersList = props => {
           ) : (
             props.todaysReminders.map((r, key) => (
               <List.Item key={key}>
-                {formatReminder(r)} 
+                {formatReminder(r, props.contacts)} 
               </List.Item>)
             )
           )}
@@ -46,7 +39,7 @@ const RemindersList = props => {
           ) : (
             props.thisWeeksReminders.map((r, key) => (
               <List.Item key={key}>
-                {formatReminder(r)} 
+                {formatReminder(r, props.contacts)} 
               </List.Item>)
             )
           )}
@@ -61,7 +54,7 @@ const RemindersList = props => {
           ) : (
             props.upComingReminders.map((r, key) => (
             <List.Item key={key}>
-              {formatReminder(r)} 
+              {formatReminder(r, props.contacts)} 
             </List.Item>))
           )}
         </List>

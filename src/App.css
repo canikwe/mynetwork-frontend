@@ -160,7 +160,7 @@
    height: 800px
  }
 
- /* .date-picker {
+  .date-picker {
    margin: 0;
    max-width: 100%;
    -webkit-box-flex: 1;
@@ -173,11 +173,17 @@
    font-family: Lato, 'Helvetica Neue', Arial, Helvetica, sans-serif;
    padding: .67857143em 1em;
    background: #fff;
-   border: 1px solid rgba(34, 36, 38, .15);
+   /* border: 1px solid rgba(34, 36, 38, .15); */
+   border: 0;
    color: rgba(0, 0, 0, .87);
    border-radius: .28571429rem;
   transition: box-shadow .1s ease,border-color .1s ease,-webkit-box-shadow .1s ease;
- } */
+ }
+
+ .ui.transparent.input>input {
+   text-align: center;
+   font-weight: bold;
+ }
 
  /* .scrolled {
     height: 75px;

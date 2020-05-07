@@ -120,7 +120,8 @@ const mapStateToProps = state => {
     reminders: state.reminders,
     loading: state.loading,
     recurringReminders: state.recurringReminders,
-    calendarFilter: state.calendarFilter
+    calendarFilter: state.calendarFilter,
+    contacts: state.contacts
   }
 }
 

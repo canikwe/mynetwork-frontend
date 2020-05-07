@@ -16,6 +16,7 @@ import { Image } from 'semantic-ui-react'
 import 'toasted-notes/src/styles.css'
 
 import Home from './containers/Home'
+import { formatReminderToast } from './helper/functions';
 
 class App extends Component {
   // constructor(){
@@ -47,7 +48,7 @@ class App extends Component {
   }
 
   alerts = reminder => {
-    return reminder.match ? toast.notify(reminder.msg, {position: 'bottom-left', duration: null}) : null
+    return reminder.match ? toast.notify(formatReminderToast(reminder, this.props.contacts), {position: 'bottom-left', duration: null}) : null
   }
 
   render() {
@@ -120,7 +121,8 @@ const mapStateToProps = state => {
     user: state.user,
     loading: state.loading,
     reminders: state.reminders,
-    notifications: state.notifications
+    notifications: state.notifications,
+    contacts: state.contacts
   }
 }
 

@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { addingReminder, updatingReminder } from '../redux/actions/actions'
 import { Header, Segment, Grid, Icon, Transition, Dropdown, Checkbox, Input } from 'semantic-ui-react'
 import DateTimePicker from 'react-datetime-picker';
+import moment from 'moment'
 
 class ReminderForm extends React.Component {
   constructor(props){
@@ -10,14 +11,14 @@ class ReminderForm extends React.Component {
     this.state = {
       id: props.reminder ? props.reminder.id : null,
       msg: props.reminder ? props.reminder.msg : '',
-      start_date: props.reminder ? new Date(props.reminder.start_date) : '',
+      start_date: props.reminder ? new Date(props.reminder.start_date) : moment().format('YYYY-MM-DD'),
       end_date: props.reminder ? new Date(props.reminder.end_date) : '',
       interval: props.reminder ? props.reminder.interval : 1,
       period: props.reminder ? props.reminder.period : 'daily',
       recurring: props.reminder ? props.reminder.recurring : false,
       // snoozed: props.reminder ? props.reminder.snoozed : false,
       // current: props.reminder ? props.reminder.current : new Date(),
-      priority: props.reminder ? props.reminder.priority : 'none',
+      priority: props.reminder ? props.reminder.priority : 1,
       contact_id: props.reminder ? props.reminder.contact_id : props.contact.id
     }
   }
@@ -40,8 +41,10 @@ class ReminderForm extends React.Component {
 
   handlePeriodChange = (e, { value }) => this.setState({period: value})
   handlePriorityChange = (e, { value }) => this.setState({priority: parseInt(value)})
-  handleStartDateChange = date => this.state.end_date === '' ? this.setState({start_date: date, end_date: date}) : this.setState({start_date: date})
-  handleEndDateChange = date => this.setState({end_date: date})
+  handleStartDateChange = e => {
+    this.state.end_date === '' ? this.setState({start_date: e.target.value, end_date: e.target.value}) : this.setState({start_date: e.target.value})
+  }
+  handleEndDateChange = e => this.setState({end_date: e.target.value})
   toggleRecurring = () => this.setState({ recurring: !this.state.recurring })
 
   handleSubmit =(e) => {
@@ -100,7 +103,9 @@ class ReminderForm extends React.Component {
   }
 
   render() {
-    console.log(this.state.priority)
+    console.log(this.state.start_date)
+    // const hello = this.state
+    // debugger
     console.log(this.props)
     if (this.props.loading) {
       return <h2>Loading...</h2>
@@ -153,13 +158,14 @@ class ReminderForm extends React.Component {
                   </>
                 ) : null
               }
-                <DateTimePicker
+                <input
+                  type='date'
                   className='date-picker'
                   name='start_date'
                   value={this.state.start_date}
                   onChange={this.handleStartDateChange}
-                  calendarIcon={<Icon name='calendar alternate outline' />}
-                  clearIcon={<Icon name='delete' />}
+                  // calendarIcon={<Icon name='calendar alternate outline' />}
+                  // clearIcon={<Icon name='delete' />}
                 />
               <span>
                 {
@@ -167,7 +173,6 @@ class ReminderForm extends React.Component {
                 }
                 This is <Dropdown
                   name='priority'
-                  placeholder="Select and option"
                   options={this.priorityDropdown()}
                   onChange={this.handlePriorityChange}
                   value={this.state.priority}
@@ -176,17 +181,18 @@ class ReminderForm extends React.Component {
               </span>
               {
                 this.state.recurring ? (
-                  <div className='ui input'>
+                  <>
                     and should end on
-                    <DateTimePicker
+                    <input
+                      type='date'
                       className='date-picker'
                       name='end_date'
                       value={this.state.end_date}
                       onChange={this.handleEndDateChange}
-                      calendarIcon={<Icon name='calendar alternate outline' />}
-                      clearIcon={<Icon name='delete' />}
+                      // calendarIcon={<Icon name='calendar alternate outline' />}
+                      // clearIcon={<Icon name='delete' />}
                     />
-                  </div>
+                  </>
                 ) : null
               }
             </span>
