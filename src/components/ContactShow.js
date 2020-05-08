@@ -53,8 +53,7 @@ class ConactCardShow extends React.PureComponent {
   }
 
   render(){
-    const {contact: {avatar, name, created_at, details}, reminders} = this.props
-
+    const {contact: {avatar, name, created_at, details, encounters}, reminders} = this.props
     return(
       <React.Fragment>
         <Header as='h2' dividing>
@@ -85,6 +84,16 @@ class ConactCardShow extends React.PureComponent {
                 </React.Fragment>
                 )
               })}
+            </List>
+          </Container>
+          <Divider />
+          <Container>
+            <List>
+              {encounters.map(e => (
+                <List.Item key={e.id}>
+                  {`${e.verb} ${name} on ${moment(e.date).format('MMMM DD YY')}`}
+                </List.Item>)
+              )}
             </List>
           </Container>
           <Divider />

@@ -207,6 +207,8 @@ class ContactCard extends React.Component {
           <Card.Content extra>
             <Icon name='user' />
             {this.contactReminders().length} Reminder(s)
+            <br />
+            {this.props.contact.encounters.length} Encounter(s)
           </Card.Content>
         </Card>
             {this.displayContact()}
