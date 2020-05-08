@@ -11,7 +11,7 @@ const EditReminder = (props) => {
             // this.toggleEditForm()
             // this.handleClose()
           }} 
-          size='small'
+          size='tiny'
         >
 
         <ReminderForm 

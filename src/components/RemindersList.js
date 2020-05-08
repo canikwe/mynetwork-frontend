@@ -1,10 +1,33 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import moment from 'moment'
-import { Loader, Segment, Dimmer, List, Divider } from 'semantic-ui-react'
+import { Loader, Segment, Dimmer, List, Divider, Icon, Checkbox } from 'semantic-ui-react'
 import { formatReminder } from '../helper/functions'
 
 const RemindersList = props => {
+  const [prioritySort, updatePrioritySort] = useState(false)
+
+  const displayPriorityColor = (r) => {
+    switch (r.priority) {
+      case 1:
+        return 'red'
+      case 2:
+        return 'yellow'
+      case 3:
+        return 'blue'
+      case 4:
+        return 'grey'
+      default:
+        return 'blue'
+    }
+  }
+
+  const renderReminders = reminders => {
+    if (prioritySort) {
+      return [...reminders].sort((a, b) => a.priority - b.priority)
+    }
+    return reminders
+  }
 
   if (!props.todaysReminders) {
     return (
@@ -16,15 +39,19 @@ const RemindersList = props => {
     )
   } else {
     return (
+      <>
       <div className='reminders'>
         <h4>Today's Reminders:</h4>
-        <List bulleted>
+        <List>
           {props.todaysReminders.length === 0 ? (
             'No reminders today'
           ) : (
-            props.todaysReminders.map((r, key) => (
+            renderReminders(props.todaysReminders).map((r, key) => (
               <List.Item key={key}>
-                {formatReminder(r, props.contacts)} 
+                <Icon name='bell outline' color={displayPriorityColor(r)} />
+                <List.Content>
+                  {formatReminder(r, props.contacts)} 
+                </List.Content>
               </List.Item>)
             )
           )}
@@ -33,12 +60,13 @@ const RemindersList = props => {
         <Divider />
 
         <h4>This Week's Reminders:</h4>
-        <List bulleted>
+        <List>
           {props.thisWeeksReminders.length === 0 ? (
             'No upcoming reminders for this week!'
           ) : (
-            props.thisWeeksReminders.map((r, key) => (
+            renderReminders(props.thisWeeksReminders).map((r, key) => (
               <List.Item key={key}>
+                <Icon name='bell outline' color={displayPriorityColor(r)} />
                 {formatReminder(r, props.contacts)} 
               </List.Item>)
             )
@@ -48,17 +76,25 @@ const RemindersList = props => {
         <Divider />
 
         <h4>Upcoming Reminders:</h4>
-        <List bulleted>
+        <List>
           {props.upComingReminders.length === 0 ? (
             'No Upcoming Reminders'
           ) : (
-            props.upComingReminders.map((r, key) => (
+            renderReminders(props.upComingReminders).map((r, key) => (
             <List.Item key={key}>
+              <Icon name='bell outline' color={displayPriorityColor(r)} />
               {formatReminder(r, props.contacts)} 
             </List.Item>))
           )}
         </List>
       </div>
+      <Checkbox
+        slider
+        label='Sort By Priority'
+        checked={prioritySort}
+        onChange={() => updatePrioritySort(!prioritySort)}
+      />
+      </>
     )
   }
 }

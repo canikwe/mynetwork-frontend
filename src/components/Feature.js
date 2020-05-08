@@ -137,12 +137,12 @@ class Feature extends React.Component {
             </div> */}
             <div>
             {/* <Button onClick={this.toggleReminders} content='Close Reminders'/> */}
-            <Checkbox 
+            {/* <Checkbox 
               slider
               label='Sort By Priority'
               checked={this.state.sortByPriority}
               onChange={this.togglePrioritySort}
-            />
+            /> */}
             </div>
           </div>
         </Grid.Column>
