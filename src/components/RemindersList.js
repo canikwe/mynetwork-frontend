@@ -79,7 +79,12 @@ const RemindersList = props => {
           <RemindersSubList reminders={renderReminders(props.todaysReminders)} contacts={props.contacts} title="Today's Reminders:" handleSnooze={handleSnooze}/>
 
           <Divider />
-            <RemindersSubList reminders={renderReminders(props.thisWeeksReminders)} contacts={props.contacts} title="This Week's Reminders:" />
+          {
+            props.thisWeeksReminders.length ?
+              <RemindersSubList reminders={renderReminders(props.thisWeeksReminders)} contacts={props.contacts} title="This Week's Reminders:" />
+              :
+              <RemindersSubList reminders={renderReminders(props.nextWeeksReminders)} contacts={props.contacts} title="Next Week's Reminders:" />
+          }
 
           <Divider />
 
@@ -103,8 +108,10 @@ const RemindersList = props => {
 const mapStateToProps = state => {
   const todaysReminders = []
   const thisWeeksReminders = []
+  const nextWeeksReminders = []
   const upComingReminders = []
   const today = moment()
+  const weekFromToday = moment(new Date()).add(1, 'weeks')
   const monthFromToday = moment(new Date()).add(1, 'months')
 
   state.recurringReminders.forEach(r => {
@@ -115,12 +122,14 @@ const mapStateToProps = state => {
       todaysReminders.push(r)
     } else if (reminderDate.isAfter(today, 'day') && today.isSame(reminderDate, 'week')) {
       thisWeeksReminders.push(r)
+    } else if (reminderDate.isAfter(today, 'week') && reminderDate.isSame(weekFromToday, 'week')) {
+      nextWeeksReminders.push(r)
     } else if (reminderDate.isAfter(today, 'week') && reminderDate.isBefore(monthFromToday)) {
       upComingReminders.push(r)
     }
   })
 
-  return ({ todaysReminders, thisWeeksReminders, upComingReminders, contacts: state.contacts })
+  return ({ todaysReminders, thisWeeksReminders, nextWeeksReminders, upComingReminders, contacts: state.contacts })
 }
 
 const mapDispatchToProps = dispatch => {

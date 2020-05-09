@@ -24,7 +24,7 @@ const RemindersSubList = ({ reminders, contacts, title, handleSnooze }) => {
       <h4>{title}</h4>
       <List>
         {reminders.length === 0 ? (
-          'No reminders today'
+          'None'
         ) : (
             reminders.map((r, key) => (
               <List.Item key={key} disabled={r.snoozed ? true : false}>
