@@ -3,7 +3,7 @@ import moment from 'moment'
 import { List, Button } from 'semantic-ui-react'
 import { formatReminderToast } from '../helper/functions'
 
-const RemindersSubList = ({ reminders, contacts, title }) => {
+const RemindersSubList = ({ reminders, contacts, title, handleSnooze }) => {
   const displayPriorityColor = (r) => {
     switch (r.priority) {
       case 1:
@@ -27,17 +27,19 @@ const RemindersSubList = ({ reminders, contacts, title }) => {
           'No reminders today'
         ) : (
             reminders.map((r, key) => (
-              <List.Item key={key}>
+              <List.Item key={key} disabled={r.snoozed ? true : false}>
                 {
                   title.includes('Today') ?
                     <List.Content floated='right'>
-                      <Button>Snooze</Button>
+                      <Button onClick={() => handleSnooze(r)} primary={!r.snoozed}>
+                        {r.snoozed ? 'Snoozed' : 'Snooze'}
+                      </Button>
                     </List.Content> 
                     : null
                 }
-                <List.Icon name='bell outline' color={displayPriorityColor(r)} />
+                <List.Icon name={r.snoozed ? 'bell slash outline' : 'bell outline'} color={displayPriorityColor(r)} />
                 <List.Content>
-                  <List.Header as='a'>{formatReminderToast(r, contacts)} </List.Header>
+                  <List.Header>{formatReminderToast(r, contacts)} </List.Header>
                   <List.Description as='a'>{moment(r.start).format('MMMM Do, YYYY')}</List.Description>
                 </List.Content>
               </List.Item>)

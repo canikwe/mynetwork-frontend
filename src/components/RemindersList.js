@@ -1,17 +1,67 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import moment from 'moment'
-import { Loader, Segment, Dimmer, Divider, Checkbox } from 'semantic-ui-react'
+import { Loader, Segment, Dimmer, Divider, Checkbox, Modal, Button } from 'semantic-ui-react'
 import RemindersSubList from './RemindersSubList'
+import { updatingReminder } from '../redux/actions/actions'
+
 
 const RemindersList = props => {
   const [prioritySort, updatePrioritySort] = useState(false)
+  const [snooze, updateSnooze] = useState(false)
+  const [featuredReminder, updateFeaturedReminder] = useState({})
 
   const renderReminders = reminders => {
     if (prioritySort) {
       return [...reminders].sort((a, b) => a.priority - b.priority || a.start - b.start)
     }
     return [...reminders].sort((a, b) => a.start - b.start)
+  }
+
+  const handleSnooze = (reminder) => {
+    updateFeaturedReminder(reminder)
+    updateSnooze(true)
+  }
+
+  const renderReminderSnooze = () => {
+    const snoozedReminder = { id: featuredReminder.id, snoozed: true, current: new Date() }
+    return (
+      <Modal size='tiny' open={snooze} onClose={() => updateSnooze(false)} >
+        <Modal.Header>Snooze</Modal.Header>
+        <Modal.Content>
+          {featuredReminder.snoozed ?
+            <p>This reminder has been snoozed for today!</p> :
+            <p>Would you like to snooze this notification? {featuredReminder.msg}</p>
+          }
+        </Modal.Content>
+        <Modal.Actions>
+          {featuredReminder.snoozed ?
+            <Button basic onClick={(e) => {
+              e.stopPropagation()
+              updateSnooze(false)
+            }} >Back </Button>
+            :
+            <React.Fragment>
+              <Button negative onClick={(e) => {
+                e.stopPropagation()
+                updateSnooze(false)
+              }}> No</Button>
+              <Button
+                positive
+                icon='checkmark'
+                labelPosition='right'
+                content='Yes'
+                onClick={(e) => {
+                  e.stopPropagation()
+                  updateSnooze(false)
+                  props.updatingReminder(snoozedReminder)
+                }}
+              />
+            </React.Fragment>
+          }
+        </Modal.Actions>
+      </Modal>
+    )
   }
 
   if (!props.todaysReminders) {
@@ -24,9 +74,9 @@ const RemindersList = props => {
     )
   } else {
     return (
-      <>
+      <div className='reminders-container'>
         <div className='reminders'>
-          <RemindersSubList reminders={renderReminders(props.todaysReminders)} contacts={props.contacts} title="Today's Reminders:" />
+          <RemindersSubList reminders={renderReminders(props.todaysReminders)} contacts={props.contacts} title="Today's Reminders:" handleSnooze={handleSnooze}/>
 
           <Divider />
             <RemindersSubList reminders={renderReminders(props.thisWeeksReminders)} contacts={props.contacts} title="This Week's Reminders:" />
@@ -36,13 +86,16 @@ const RemindersList = props => {
           <RemindersSubList reminders={renderReminders(props.upComingReminders)} contacts={props.contacts} title="Upcoming Reminders:" />
 
         </div>
+        {
+          snooze ? renderReminderSnooze() : null
+        }
         <Checkbox
           slider
           label='Sort By Priority'
           checked={prioritySort}
           onChange={() => updatePrioritySort(!prioritySort)}
         />
-      </>
+      </div>
     )
   }
 }
@@ -70,4 +123,10 @@ const mapStateToProps = state => {
   return ({ todaysReminders, thisWeeksReminders, upComingReminders, contacts: state.contacts })
 }
 
-export default connect(mapStateToProps)(RemindersList)
+const mapDispatchToProps = dispatch => {
+  return {
+    updatingReminder: reminder => dispatch(updatingReminder(reminder))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(RemindersList)
