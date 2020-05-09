@@ -13,9 +13,9 @@ const RemindersList = props => {
 
   const renderReminders = reminders => {
     if (prioritySort) {
-      return [...reminders].sort((a, b) => a.priority - b.priority || a.start - b.start)
+      return [...reminders].sort((a, b) => Number(a.snoozed) - Number(b.snoozed) || a.priority - b.priority || a.start - b.start)
     }
-    return [...reminders].sort((a, b) => a.start - b.start)
+    return [...reminders].sort((a, b) => Number(a.snoozed) - Number(b.snoozed) || a.start - b.start)
   }
 
   const handleSnooze = (reminder) => {

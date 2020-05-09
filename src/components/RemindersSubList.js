@@ -29,11 +29,9 @@ const RemindersSubList = ({ reminders, contacts, title, handleSnooze }) => {
             reminders.map((r, key) => (
               <List.Item key={key} disabled={r.snoozed ? true : false}>
                 {
-                  title.includes('Today') ?
+                  !r.snoozed && title.includes('Today') ?
                     <List.Content floated='right'>
-                      <Button onClick={() => handleSnooze(r)} primary={!r.snoozed}>
-                        {r.snoozed ? 'Snoozed' : 'Snooze'}
-                      </Button>
+                      <Button onClick={() => handleSnooze(r)} primary>Snooze</Button>
                     </List.Content> 
                     : null
                 }
