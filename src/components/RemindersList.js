@@ -26,11 +26,13 @@ const RemindersList = props => {
 
   const renderReminderSnooze = () => {
     const snoozedReminder = { id: featuredReminder.id, snoozed: true, current: new Date() }
+    const reminderAction = formatReminderToast(featuredReminder, props.contacts)
+
     return (
       <Modal basic size='small' open={snooze} onClose={() => updateSnooze(false)} >
         <Header icon='bell slash' content='Snooze Reminder' />
         <Modal.Content>
-          <p>Did you remember to {formatReminderToast(featuredReminder, props.contacts)}</p>
+          <p>Did you remember to {reminderAction[0].toLowerCase() + reminderAction.slice(1)}?</p>
         </Modal.Content>
         <Modal.Actions>
           <Button
