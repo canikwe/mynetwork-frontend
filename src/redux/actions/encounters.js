@@ -9,8 +9,12 @@ const creatingEncounter = encounter => {
       body: JSON.stringify({ encounter })
     })
       .then(res => res.json())
-      .then(console.log)
+      .then(encounter => dispatch(createEncounter(encounter)))
   }
+}
+
+const createEncounter = encounter => {
+  return {type: CREATE_ENCOUNTER, encounter}
 }
 
 export { creatingEncounter }
