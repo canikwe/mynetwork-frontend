@@ -2,26 +2,16 @@ import {
   TESTING_REDUCER, 
   FETCHED_USER, 
   LOADING_USER, 
-  ADD_REMINDER, 
-  UPDATE_REMINDER, 
-  DELETE_REMINDER, 
   UPDATING_USER, 
   THROW_ERROR,
   CLEAR_ERROR,
   LOGOUT_USER,
-  NOTIFY_REMINDERS,
   CLEAR_LOADING,
   SET_PRIORITY_FILTER,
   ADD_ENCOUNTER
 } from '../types'
-import {
-  addingContact,
-  deletingContact,
-  updatingContact,
-  updateSearchTerm
-} from './contacts_actions'
-
-
+import { addingContact, deletingContact, updatingContact, updateSearchTerm } from './contacts_actions'
+import { addingReminder, notifyReminders, updatingReminder, deletingReminder } from './reminders_actions'
 
 const URL = () =>{
   return `http://localhost:3000/api/v1`
@@ -151,65 +141,6 @@ const updatingUser = (user, id) => {
 
 const logoutUser = () => {
   return {type: LOGOUT_USER}
-}
-
-//Reminders Actions
-function addingReminder(newReminderData) {
-  return (dispatch) => {
-    
-    fetch(`${URL()}/reminders`, {
-      method: 'POST',
-      headers: headers(),
-      body: JSON.stringify(newReminderData)
-    })
-    .then(res => res.json())
-    .then(newReminderObject => dispatch(addReminder(newReminderObject)))
-  }
-}
-
-const notifyReminders = (reminder) => {
-  return {type: NOTIFY_REMINDERS, reminder}
-}
-
-const addReminder = (newReminderObj) => {
-  return {type: ADD_REMINDER, reminder: newReminderObj}
-}
-
-const updateReminder = (reminderObj) => {
-  return {type: UPDATE_REMINDER, reminder: reminderObj}
-}
-
-const updatingReminder = reminder => {
-  return (dispatch) => {
-    fetch(`${URL()}/reminders/${reminder.id}`, {
-      method: 'PATCH',
-      headers: headers(),
-      body: JSON.stringify(reminder)
-    })
-    .then(res => res.json())
-    .then(reminderObj => {
-      console.log(reminderObj)
-      dispatch(updateReminder(reminderObj))
-    })
-  }
-}
-
-const deleteReminder = reminderObj => {
-  return {type: DELETE_REMINDER, reminder: reminderObj}
-}
-
-const deletingReminder = reminder => {
-  return (dispatch) => {
-    fetch(`${URL()}/reminders/${reminder.id}`, {
-      method: "DELETE",
-      headers: headers()
-    })
-    .then(res => res.json())
-    .then(reminderObj => {
-      console.log(reminderObj)
-      dispatch(deleteReminder(reminderObj))
-    })
-  }
 }
 
 const addingEncounter = encounter => {
