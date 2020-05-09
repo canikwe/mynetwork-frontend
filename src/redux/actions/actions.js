@@ -15,7 +15,8 @@ import {
   LOGOUT_USER,
   NOTIFY_REMINDERS,
   CLEAR_LOADING,
-  SET_PRIORITY_FILTER
+  SET_PRIORITY_FILTER,
+  ADD_ENCOUNTER
 } from '../types'
 
 
@@ -261,6 +262,18 @@ const deletingReminder = reminder => {
   }
 }
 
+const addingEncounter = encounter => {
+  return (dispatch) => {
+    fetch(`${URL()}/encounters`, {
+      method: 'POST',
+      headers: headers(),
+      body: JSON.stringify({ encounter })
+    })
+    .then(res => res.json())
+    .then(console.log)
+  }
+}
+
 const updateSearchTerm = searchTerm => {
   return { type: UPDATE_SEARCH_TERM, searchTerm }
 }
@@ -290,5 +303,6 @@ export {
   notifyReminders,
   addingUser,
   clearLoading,
-  filterCalendar
+  filterCalendar,
+  addingEncounter
 }

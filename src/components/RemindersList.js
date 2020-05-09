@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import moment from 'moment'
-import { Loader, Segment, Dimmer, Divider, Checkbox, Modal, Button } from 'semantic-ui-react'
+import { Loader, Segment, Dimmer, Divider, Checkbox, Modal, Button, Header, Icon } from 'semantic-ui-react'
 import RemindersSubList from './RemindersSubList'
-import { updatingReminder } from '../redux/actions/actions'
+import { updatingReminder, addingEncounter } from '../redux/actions/actions'
+import { formatReminderToast } from '../helper/functions'
 
 
 const RemindersList = props => {
@@ -26,39 +27,39 @@ const RemindersList = props => {
   const renderReminderSnooze = () => {
     const snoozedReminder = { id: featuredReminder.id, snoozed: true, current: new Date() }
     return (
-      <Modal size='tiny' open={snooze} onClose={() => updateSnooze(false)} >
-        <Modal.Header>Snooze</Modal.Header>
+      <Modal basic size='small' open={snooze} onClose={() => updateSnooze(false)} >
+        <Header icon='bell slash' content='Snooze Reminder' />
         <Modal.Content>
-          {featuredReminder.snoozed ?
-            <p>This reminder has been snoozed for today!</p> :
-            <p>Would you like to snooze this notification? {featuredReminder.msg}</p>
-          }
+          <p>Did you remember to {formatReminderToast(featuredReminder, props.contacts)}</p>
         </Modal.Content>
         <Modal.Actions>
-          {featuredReminder.snoozed ?
-            <Button basic onClick={(e) => {
+          <Button
+            primary 
+            inverted 
+            icon='checkmark'
+            labelPosition='left'
+            content='Yes, log it!'
+            onClick={(e) => {
+            e.stopPropagation()
+            props.addingEncounter({ contact_id: featuredReminder.contact_id, reminder_id: featuredReminder.id, verb: featuredReminder.msg, date: new Date() })
+            props.updatingReminder(snoozedReminder)
+            updateSnooze(false)
+            }}
+          />
+
+          <Button
+            color='grey'
+            icon='checkmark'
+            labelPosition='left'
+            content='No, snooze anyway.'
+            inverted
+            onClick={(e) => {
               e.stopPropagation()
               updateSnooze(false)
-            }} >Back </Button>
-            :
-            <React.Fragment>
-              <Button negative onClick={(e) => {
-                e.stopPropagation()
-                updateSnooze(false)
-              }}> No</Button>
-              <Button
-                positive
-                icon='checkmark'
-                labelPosition='right'
-                content='Yes'
-                onClick={(e) => {
-                  e.stopPropagation()
-                  updateSnooze(false)
-                  props.updatingReminder(snoozedReminder)
-                }}
-              />
-            </React.Fragment>
-          }
+              props.updatingReminder(snoozedReminder)
+            }}
+          />
+          
         </Modal.Actions>
       </Modal>
     )
@@ -134,7 +135,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    updatingReminder: reminder => dispatch(updatingReminder(reminder))
+    updatingReminder: reminder => dispatch(updatingReminder(reminder)),
+    addingEncounter: encounter => dispatch(addingEncounter(encounter))
   }
 }
 
