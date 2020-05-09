@@ -1,73 +1,21 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import moment from 'moment'
-import { Loader, Segment, Dimmer, Divider, Checkbox, Modal, Button, Header, Icon } from 'semantic-ui-react'
+import { Loader, Segment, Dimmer, Divider, Checkbox } from 'semantic-ui-react'
 import RemindersSubList from './RemindersSubList'
 import { updatingReminder, creatingEncounter } from '../redux/actions'
-import { formatReminderToast } from '../helper/functions'
 import ReminderSnooze from './ReminderSnooze'
 
 
 const RemindersList = props => {
   const [prioritySort, updatePrioritySort] = useState(false)
-  const [snooze, updateSnooze] = useState(false)
-  const [featuredReminder, updateFeaturedReminder] = useState({})
+  const { featuredReminder } = props
 
   const renderReminders = reminders => {
     if (prioritySort) {
       return [...reminders].sort((a, b) => Number(a.snoozed) - Number(b.snoozed) || a.priority - b.priority || a.start - b.start)
     }
     return [...reminders].sort((a, b) => Number(a.snoozed) - Number(b.snoozed) || a.start - b.start)
-  }
-
-  const handleSnooze = (reminder) => {
-    updateFeaturedReminder(reminder)
-    updateSnooze(true)
-  }
-
-  const renderReminderSnooze = () => {
-    const snoozedReminder = { id: featuredReminder.id, snoozed: true, current: new Date() }
-    const reminderAction = formatReminderToast(featuredReminder, props.contacts)
-
-    return (
-      <Modal basic size='small' open={snooze} onClose={() => updateSnooze(false)} >
-        <Header icon='bell slash' content='Snooze Reminder' />
-        <Modal.Content>
-          <p>Did you remember to {reminderAction[0].toLowerCase() + reminderAction.slice(1)}?</p>
-        </Modal.Content>
-        <Modal.Actions>
-          <Button
-            primary 
-            inverted 
-            icon='checkmark'
-            labelPosition='left'
-            content='Yes, log it!'
-            onClick={(e) => {
-            e.stopPropagation()
-            // props.creatingEncounter({ contact_id: featuredReminder.contact_id, reminder_id: featuredReminder.id, verb: featuredReminder.msg, date: new Date() })
-            // props.updatingReminder(snoozedReminder)
-            // updateSnooze(false)
-            //updateFeaturedReminder({})
-            }}
-          />
-
-          <Button
-            color='grey'
-            icon='checkmark'
-            labelPosition='left'
-            content='No, snooze anyway.'
-            inverted
-            onClick={(e) => {
-              e.stopPropagation()
-              updateSnooze(false)
-              updateFeaturedReminder({})
-              props.updatingReminder(snoozedReminder)
-            }}
-          />
-          
-        </Modal.Actions>
-      </Modal>
-    )
   }
 
   if (!props.todaysReminders) {
@@ -82,7 +30,7 @@ const RemindersList = props => {
     return (
       <div className='reminders-container'>
         <div className='reminders'>
-          <RemindersSubList reminders={renderReminders(props.todaysReminders)} contacts={props.contacts} title="Today's Reminders:" handleSnooze={handleSnooze}/>
+          <RemindersSubList reminders={renderReminders(props.todaysReminders)} contacts={props.contacts} title="Today's Reminders:" />
 
           <Divider />
           {
@@ -97,11 +45,9 @@ const RemindersList = props => {
           <RemindersSubList reminders={renderReminders(props.upComingReminders)} contacts={props.contacts} title="Upcoming Reminders:" />
 
         </div>
-        {/* {
-          snooze ? renderReminderSnooze() : null
-        } */}
+
         {
-          snooze ? <ReminderSnooze featuredReminder={featuredReminder} snooze={snooze} updateSnooze={updateSnooze} updateFeaturedReminder={updateFeaturedReminder} /> : null
+          !!featuredReminder.id ? <ReminderSnooze /> : null
         }
         <Checkbox
           slider
@@ -138,13 +84,13 @@ const mapStateToProps = state => {
     }
   })
 
-  return ({ todaysReminders, thisWeeksReminders, nextWeeksReminders, upComingReminders, contacts: state.contacts })
+  return ({ todaysReminders, thisWeeksReminders, nextWeeksReminders, upComingReminders, contacts: state.contacts, featuredReminder: state.featuredReminder })
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     updatingReminder: reminder => dispatch(updatingReminder(reminder)),
-    creatingEncounter: encounter => dispatch(creatingEncounter(encounter))
+    creatingEncounter: encounter => dispatch(creatingEncounter(encounter)),
   }
 }
 

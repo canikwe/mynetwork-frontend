@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { Loader, Segment, Dimmer, Divider, Checkbox, Modal, Button, Header, Icon } from 'semantic-ui-react'
 import { formatReminderToast } from '../helper/functions'
-import { updatingReminder, creatingEncounter } from '../redux/actions'
+import { updatingReminder, creatingEncounter, setFeaturedReminder } from '../redux/actions'
 
 
-const ReminderSnooze = ({ featuredReminder, snooze, updateSnooze, updateFeaturedReminder, updatingReminder, contacts }) => {
+const ReminderSnooze = ({ featuredReminder, updateFeaturedReminder, updatingReminder, contacts }) => {
   const [encounterModal, updateEncounterModal] = useState(false)
   const snoozedReminder = { id: featuredReminder.id, snoozed: true, current: new Date() }
   const reminderAction = formatReminderToast(featuredReminder, contacts)
@@ -40,7 +40,6 @@ const ReminderSnooze = ({ featuredReminder, snooze, updateSnooze, updateFeatured
 
   const handleSnooze = e => {
     e.stopPropagation()
-    updateSnooze(false)
     updateFeaturedReminder({})
     updatingReminder(snoozedReminder)
   }
@@ -56,7 +55,7 @@ const ReminderSnooze = ({ featuredReminder, snooze, updateSnooze, updateFeatured
   }
 
   return (
-    <Modal basic size='small' open={snooze} onClose={() => updateSnooze(false)} >
+    <Modal basic size='small' open={!!featuredReminder.id} onClose={() => updateFeaturedReminder({})} >
       <Header icon='bell slash' content='Snooze Reminder' />
       <Modal.Content>
         <p>Did you remember to {reminderAction[0].toLowerCase() + reminderAction.slice(1)}?</p>
@@ -92,12 +91,14 @@ const ReminderSnooze = ({ featuredReminder, snooze, updateSnooze, updateFeatured
   )
 }
 
-const mapStateToProps = state => ({ contacts: state.contacts })
+const mapStateToProps = state => ({ contacts: state.contacts, featuredReminder: state.featuredReminder })
 
 const mapDispatchToProps = dispatch => {
   return {
     updatingReminder: reminder => dispatch(updatingReminder(reminder)),
-    creatingEncounter: encounter => dispatch(creatingEncounter(encounter))
+    creatingEncounter: encounter => dispatch(creatingEncounter(encounter)),
+    updateFeaturedReminder: reminder => dispatch(setFeaturedReminder(reminder))
+
   }
 }
 

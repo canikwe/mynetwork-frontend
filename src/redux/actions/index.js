@@ -1,6 +1,6 @@
 import { TESTING_REDUCER } from '../types'
 import { addingContact, deletingContact, updatingContact, updateSearchTerm } from './contacts'
-import { addingReminder, notifyReminders, updatingReminder, deletingReminder, filterCalendar } from './reminders'
+import { addingReminder, notifyReminders, updatingReminder, deletingReminder, filterCalendar, setFeaturedReminder } from './reminders'
 import { logoutUser, updatingUser, clearError, authenticatingUser, addingUser, fetchingUser, clearLoading } from './users'
 import { creatingEncounter } from './encounters'
 
@@ -26,5 +26,6 @@ export {
   addingUser,
   clearLoading,
   filterCalendar,
-  creatingEncounter
+  creatingEncounter,
+  setFeaturedReminder
 }

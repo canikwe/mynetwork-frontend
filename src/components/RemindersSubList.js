@@ -1,9 +1,12 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import moment from 'moment'
 import { List, Button } from 'semantic-ui-react'
 import { formatReminderToast } from '../helper/functions'
+import { setFeaturedReminder } from '../redux/actions'
 
-const RemindersSubList = ({ reminders, contacts, title, handleSnooze }) => {
+
+const RemindersSubList = ({ reminders, contacts, title, setFeaturedReminder }) => {
   const displayPriorityColor = (r) => {
     switch (r.priority) {
       case 1:
@@ -31,7 +34,7 @@ const RemindersSubList = ({ reminders, contacts, title, handleSnooze }) => {
                 {
                   !r.snoozed && title.includes('Today') ?
                     <List.Content floated='right'>
-                      <Button onClick={() => handleSnooze(r)} primary>Snooze</Button>
+                      <Button onClick={() => setFeaturedReminder(r)} primary>Snooze</Button>
                     </List.Content> 
                     : null
                 }
@@ -48,4 +51,10 @@ const RemindersSubList = ({ reminders, contacts, title, handleSnooze }) => {
   )
 }
 
-export default RemindersSubList
+const mapDispatchToProps = dispatch => {
+  return {
+    setFeaturedReminder: reminder => dispatch(setFeaturedReminder(reminder))
+  }
+}
+
+export default connect(null, mapDispatchToProps)(RemindersSubList)
