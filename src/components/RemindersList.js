@@ -5,6 +5,7 @@ import { Loader, Segment, Dimmer, Divider, Checkbox, Modal, Button, Header, Icon
 import RemindersSubList from './RemindersSubList'
 import { updatingReminder, addingEncounter } from '../redux/actions/actions'
 import { formatReminderToast } from '../helper/functions'
+import ReminderSnooze from './ReminderSnooze'
 
 
 const RemindersList = props => {
@@ -43,9 +44,10 @@ const RemindersList = props => {
             content='Yes, log it!'
             onClick={(e) => {
             e.stopPropagation()
-            props.addingEncounter({ contact_id: featuredReminder.contact_id, reminder_id: featuredReminder.id, verb: featuredReminder.msg, date: new Date() })
-            props.updatingReminder(snoozedReminder)
-            updateSnooze(false)
+            // props.addingEncounter({ contact_id: featuredReminder.contact_id, reminder_id: featuredReminder.id, verb: featuredReminder.msg, date: new Date() })
+            // props.updatingReminder(snoozedReminder)
+            // updateSnooze(false)
+            //updateFeaturedReminder({})
             }}
           />
 
@@ -58,6 +60,7 @@ const RemindersList = props => {
             onClick={(e) => {
               e.stopPropagation()
               updateSnooze(false)
+              updateFeaturedReminder({})
               props.updatingReminder(snoozedReminder)
             }}
           />
@@ -94,8 +97,11 @@ const RemindersList = props => {
           <RemindersSubList reminders={renderReminders(props.upComingReminders)} contacts={props.contacts} title="Upcoming Reminders:" />
 
         </div>
-        {
+        {/* {
           snooze ? renderReminderSnooze() : null
+        } */}
+        {
+          snooze ? <ReminderSnooze featuredReminder={featuredReminder} snooze={snooze} updateSnooze={updateSnooze} updateFeaturedReminder={updateFeaturedReminder} /> : null
         }
         <Checkbox
           slider
