@@ -1,3 +1,15 @@
+export const URL = () => {
+  return `http://localhost:3000/api/v1`
+}
+
+export const authHeaders = () => {
+  const token = localStorage.getItem('token')
+  return {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${token}`
+  }
+}
+
 export const FETCHED_USER = 'FETCHED_USER'
 
 export const TESTING_REDUCER = 'TESTING_REDUCER'

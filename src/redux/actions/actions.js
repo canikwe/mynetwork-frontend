@@ -3,13 +3,9 @@ import {
   FETCHED_USER, 
   LOADING_USER, 
   ADD_REMINDER, 
-  ADD_CONTACT, 
   UPDATE_REMINDER, 
   DELETE_REMINDER, 
-  DELETE_CONTACT, 
   UPDATING_USER, 
-  UPDATE_CONTACT, 
-  UPDATE_SEARCH_TERM, 
   THROW_ERROR,
   CLEAR_ERROR,
   LOGOUT_USER,
@@ -18,6 +14,12 @@ import {
   SET_PRIORITY_FILTER,
   ADD_ENCOUNTER
 } from '../types'
+import {
+  addingContact,
+  deletingContact,
+  updatingContact,
+  updateSearchTerm
+} from './contacts_actions'
 
 
 
@@ -151,58 +153,6 @@ const logoutUser = () => {
   return {type: LOGOUT_USER}
 }
 
-//Contacts Actions
-const addContact = (newContactObj) => {
-  return {type: ADD_CONTACT, contact: newContactObj}
-}
-
-const addingContact = (contact) => {
-  return (dispatch) => {
-    fetch(`${URL()}/contacts`, {
-      method: 'POST',
-      headers: headers(),
-      body: JSON.stringify(contact)
-    })
-    .then(res => res.json())
-    .then(newContactObj => dispatch(addContact(newContactObj)))
-  }
-}
-
-const updateContact = contact => {
-  return {type: UPDATE_CONTACT, contact: contact}
-}
-
-const updatingContact = (id, contact) => {
-  // debugger
-  return (dispatch) => {
-    fetch(`${URL()}/contacts/${id}`, {
-      method: 'PATCH',
-      headers: headers(),
-      body: JSON.stringify(contact)
-    })
-    .then(res => res.json())
-    .then(updatedContact => dispatch(updateContact(updatedContact)))
-  }
-}
-
-const deleteContact = contact => {
-  return {type: DELETE_CONTACT, contact: contact}
-}
-
-const deletingContact = contact => {
-  return dispatch => {
-    fetch(`${URL()}/contacts/${contact.id}`, {
-      method: 'DELETE',
-      headers: headers()
-    })
-    .then(res => res.json())
-    .then(contactObj => {
-      console.log(contactObj)
-      dispatch(deleteContact(contactObj))
-    })
-  }
-}
-
 //Reminders Actions
 function addingReminder(newReminderData) {
   return (dispatch) => {
@@ -272,10 +222,6 @@ const addingEncounter = encounter => {
     .then(res => res.json())
     .then(console.log)
   }
-}
-
-const updateSearchTerm = searchTerm => {
-  return { type: UPDATE_SEARCH_TERM, searchTerm }
 }
 
 const filterCalendar = term => {
