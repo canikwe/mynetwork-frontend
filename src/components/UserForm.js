@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { addingUser, updatingUser, clearError } from '../redux/actions/actions'
+import { addingUser, updatingUser, clearError } from '../redux/actions'
 import { Segment, Grid, Button } from 'semantic-ui-react'
 import { isEmpty } from 'lodash'
 import toast from 'toasted-notes'

@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import moment from 'moment'
 import { Loader, Segment, Dimmer, Divider, Checkbox, Modal, Button, Header, Icon } from 'semantic-ui-react'
 import RemindersSubList from './RemindersSubList'
-import { updatingReminder, addingEncounter } from '../redux/actions/actions'
+import { updatingReminder, creatingEncounter } from '../redux/actions'
 import { formatReminderToast } from '../helper/functions'
 import ReminderSnooze from './ReminderSnooze'
 
@@ -44,7 +44,7 @@ const RemindersList = props => {
             content='Yes, log it!'
             onClick={(e) => {
             e.stopPropagation()
-            // props.addingEncounter({ contact_id: featuredReminder.contact_id, reminder_id: featuredReminder.id, verb: featuredReminder.msg, date: new Date() })
+            // props.creatingEncounter({ contact_id: featuredReminder.contact_id, reminder_id: featuredReminder.id, verb: featuredReminder.msg, date: new Date() })
             // props.updatingReminder(snoozedReminder)
             // updateSnooze(false)
             //updateFeaturedReminder({})
@@ -144,7 +144,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     updatingReminder: reminder => dispatch(updatingReminder(reminder)),
-    addingEncounter: encounter => dispatch(addingEncounter(encounter))
+    creatingEncounter: encounter => dispatch(creatingEncounter(encounter))
   }
 }
 

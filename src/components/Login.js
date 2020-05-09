@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { authenticatingUser, clearError } from '../redux/actions/actions'
+import { authenticatingUser, clearError } from '../redux/actions'
 import { Link } from 'react-router-dom'
 import { Segment, Button, Divider, Grid } from 'semantic-ui-react'
 import { isEmpty } from 'lodash'

@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import ReminderForm from '../components/ReminderForm'
 import ReminderShow from '../components/ReminderShow'
 import { Modal, Button, Segment } from 'semantic-ui-react'
-import { deletingReminder } from '../redux/actions/actions'
+import { deletingReminder } from '../redux/actions'
 import DeleteConfirmation from './DeleteConfirmation';
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import Filter from './Filter'

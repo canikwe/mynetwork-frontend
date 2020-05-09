@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { filterCalendar } from '../redux/actions/actions'
+import { filterCalendar } from '../redux/actions'
 import { Dropdown } from 'semantic-ui-react'
 import { withRouter } from 'react-router-dom'
 

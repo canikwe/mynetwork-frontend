@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import ContactCard from '../components/ContactCard'
 import { Checkbox, Input } from 'semantic-ui-react'
-import { updateSearchTerm } from '../redux/actions/actions'
+import { updateSearchTerm } from '../redux/actions'
 
 
 class ContactCardContainer extends React.PureComponent {

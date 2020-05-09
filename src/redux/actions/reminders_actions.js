@@ -1,4 +1,4 @@
-import { ADD_REMINDER, UPDATE_REMINDER, DELETE_REMINDER, NOTIFY_REMINDERS } from '../types'
+import { ADD_REMINDER, UPDATE_REMINDER, DELETE_REMINDER, NOTIFY_REMINDERS, SET_PRIORITY_FILTER } from '../types'
 import { authHeaders, URL } from '../types'
 
 const addingReminder = newReminderData => {
@@ -59,9 +59,14 @@ const deletingReminder = reminder => {
   }
 }
 
+const filterCalendar = term => {
+  return { type: SET_PRIORITY_FILTER, term }
+}
+
 export {
   addingReminder,
   notifyReminders,
   updatingReminder,
-  deletingReminder
+  deletingReminder,
+  filterCalendar
 }
