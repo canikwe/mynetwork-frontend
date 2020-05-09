@@ -2,60 +2,22 @@ import moment from 'moment'
 // eslint-disable-next-line
 import recur from 'moment-recur'
 import { combineReducers } from 'redux'
+import { remindersReducer, recurringRemindersReducer, calendarFilterReducer } from './reminders'
 import {
   TESTING_REDUCER,
   FETCHED_USER,
   LOADING_USER,
   UPDATING_USER,
-  ADD_REMINDER,
   ADD_CONTACT,
-  UPDATE_REMINDER,
-  DELETE_REMINDER,
   DELETE_CONTACT,
   UPDATE_CONTACT,
   UPDATE_SEARCH_TERM,
   THROW_ERROR,
   CLEAR_ERROR,
   LOGOUT_USER,
-  NOTIFY_REMINDERS,
   CLEAR_LOADING,
-  SET_PRIORITY_FILTER
 } from '../types'
 
-const getRecurringEvents = (reminder) => {
-
-  let recurrence = {}
-  const start = moment(reminder.start_date)
-  const end = moment(reminder.end_date)
-  // debugger
-  switch(reminder.period){
-    case 'daily':
-      recurrence = start.recur(end).every(reminder.interval).day()
-      
-      // console.log(recurrence.all('L'))
-      return recurrence.all("L").map(r => {return {...reminder, start: new Date(r), all_day: true}})
-
-    case 'weekly':
-      recurrence = start.recur(end).every(reminder.interval).weeks()
-      
-      // console.log(recurrence.all('L'))
-      return recurrence.all("L").map(r => {return {...reminder, start: new Date(r), all_day: true}})
-    case 'monthly':
-      recurrence = start.recur(end).every(reminder.interval).months()
-      
-      // console.log(recurrence.all('L'))
-      return recurrence.all("L").map(r => {return {...reminder, start: new Date(r), all_day: true}})
-      
-    case 'yearly':
-      recurrence = start.recur(end).every(reminder.interval).years()
-      
-      // console.log(recurrence.all('L'))
-      return recurrence.all("L").map(r => {return {...reminder, start: new Date(r), all_day: true}})
-      
-    default: 
-      return [recurrence]
-  }
-}
 
 
 const reduxConnection = (state='connected', action) => {
@@ -75,28 +37,6 @@ const userReducer = (state={}, action) => {
       return action.user.user
     case LOGOUT_USER:
       return {}
-    default:
-      return state
-  }
-}
-
-const remindersReducer = (state=[], action) => {
-  
-  switch(action.type){
-    case FETCHED_USER:
-      return action.payload.reminders
-    case ADD_REMINDER:
-      return [...state, action.reminder]
-    case UPDATE_REMINDER:
-      return state.map(r => r.id === action.reminder.id ? action.reminder : r )
-    case NOTIFY_REMINDERS:
-      return state.map(r => r.id === action.reminder.id ? {...r, notified: true} : r)
-    case DELETE_REMINDER:
-      return state.filter(r => r.id !== action.reminder.id)
-    case DELETE_CONTACT:
-      return state.filter(r => r.contact_id !== action.contact.id)
-    case LOGOUT_USER:
-      return []
     default:
       return state
   }
@@ -154,37 +94,6 @@ const notificationReducer = (state=[], action) => {
     case CLEAR_ERROR:
       return []
     default: return state
-  }
-}
-
-const recurringRemindersReducer = (state = [], action) => {
-  switch(action.type){
-    case FETCHED_USER:
-      const rec = []
-      action.payload.reminders.forEach(r => {
-        rec.push(...getRecurringEvents(r))
-      })
-      return rec
-    case ADD_REMINDER:
-      return [...state, ...getRecurringEvents(action.reminder)]
-    case UPDATE_REMINDER:
-      return [...state.filter(r => r.id !== action.reminder.id), ...getRecurringEvents(action.reminder)]
-    case DELETE_REMINDER:
-      return state.filter(r => r.id !== action.reminder.id)
-    case DELETE_CONTACT:
-      return state.filter(r => r.contact_id !== action.contact.id)
-    case LOGOUT_USER:
-      return []
-    default: return state
-  }
-}
-
-const calendarFilterReducer = (state = '', action) => {
-  switch(action.type){
-    case SET_PRIORITY_FILTER:
-      return action.term
-    default:
-    return state
   }
 }
 
