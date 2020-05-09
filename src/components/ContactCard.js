@@ -34,6 +34,7 @@ class ContactCard extends React.Component {
   createReminderBtn = () => {
     return (
       <Modal
+        size='tiny'
         trigger={<Button
           onClick={() => this.handleOpen('newReminderModal')}
           icon ='calendar plus outline'
@@ -68,6 +69,7 @@ class ContactCard extends React.Component {
     //edit modal goes here
     return (
       <Modal
+        size='tiny'
         trigger={<Button 
           onClick={() => this.handleOpen('editContactModal')}
           icon='edit outline' 
@@ -75,7 +77,6 @@ class ContactCard extends React.Component {
         />}
         open={this.state.editContactModal}
         onClose={() => this.handleClose('editContactModal')} 
-        size='tiny'
       >
         <ContactForm contact={this.props.contact} handleClose={this.handleClose}/>
       </Modal>

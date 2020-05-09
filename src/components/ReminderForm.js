@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { addingReminder, updatingReminder } from '../redux/actions/actions'
-import { Header, Segment, Grid, Icon, Transition, Dropdown, Checkbox, Input } from 'semantic-ui-react'
+import { Header, Segment, Grid, Icon, Transition, Dropdown, Checkbox, Input, Button, Modal } from 'semantic-ui-react'
 import DateTimePicker from 'react-datetime-picker';
 import moment from 'moment'
 
@@ -24,7 +24,7 @@ class ReminderForm extends React.Component {
   }
 
   componentDidMount(){
-    console.log(this.state, this.props)
+    // console.log(this.state, this.props)
 
   }
 
@@ -49,8 +49,8 @@ class ReminderForm extends React.Component {
 
   handleSubmit =(e) => {
     e.stopPropagation()
-    console.log(this.state)
-    console.log(this.props)
+    // console.log(this.state)
+    // console.log(this.props)
     const newReminder = {...this.state}
     if (!this.state.recurring) {
       newReminder.end_date = newReminder.start_date
@@ -106,15 +106,15 @@ class ReminderForm extends React.Component {
     console.log(this.state.start_date)
     // const hello = this.state
     // debugger
-    console.log(this.props)
+    // console.log(this.props)
     if (this.props.loading) {
       return <h2>Loading...</h2>
     } else {
       return(
-        <div>
-          <Header as='h2' attached='top'>{this.props.title}</Header>
+        <>
+          <Modal.Header as='h2' attached='top'>{this.props.title}</Modal.Header>
 
-          <Segment attached>
+          <Modal.Content>
             <span>
               I want to  <Input
                   placeholder='call, text, etc...'
@@ -196,16 +196,17 @@ class ReminderForm extends React.Component {
                 ) : null
               }
             </span>
-            <div>
-              <button className='ui button' onClick={this.handleSubmit}>Remind Me!</button>
-              <button className='ui button' onClick={(e) => {
-                e.stopPropagation()
-                this.props.handleClose('newReminderModal')
-              }
-              }>Nevermind</button>
-            </div>
-          </Segment>
-        </div>
+          </Modal.Content>
+          <Modal.Actions>
+            <Button onClick={this.handleSubmit}>Remind Me!</Button>
+            <Button onClick={(e) => {
+              e.stopPropagation()
+              this.props.handleClose('newReminderModal')
+            }}>
+              Nevermind
+            </Button>
+          </Modal.Actions>
+        </>
       )}
   }
 }

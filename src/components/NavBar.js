@@ -32,13 +32,14 @@ class NavBar extends Component {
 
   render() {
     return (
-      <Segment inverted>
+      <>
         <Menu 
           pointing 
           secondary 
-          inverted 
+          // inverted 
           fluid
           stackable
+
         >
         { !isEmpty(this.props.user) ?
 
@@ -63,7 +64,7 @@ class NavBar extends Component {
 
           <Menu.Menu position='right'>
 
-          <Filter />
+          {/* <Filter /> */}
 
             <Dropdown
               trigger={<Label
@@ -94,7 +95,7 @@ class NavBar extends Component {
           }
         </Menu>
         {this.newContactForm()}
-      </Segment>
+      </>
     )
   }
 }

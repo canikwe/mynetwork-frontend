@@ -32,10 +32,11 @@ import { formatReminder } from '../helper/functions'
 
 class ConactCardShow extends React.PureComponent {
   state = {
-    editModal: false
+    editModal: false,
+    editedReminder: {}
   }
 
-  toggleEditModal = () => this.setState({editModal: !this.state.editModal})
+  toggleEditModal = r => this.setState({editModal: !this.state.editModal, editingReminder: r})
 
   displayPriorityColor = (r) => {
     switch (r.priority){
@@ -71,7 +72,7 @@ class ConactCardShow extends React.PureComponent {
               {reminders.map(r => {
                 return (
                   <React.Fragment key={r.id}>
-                    <List.Item active={!r.expired} onClick={this.toggleEditModal}>
+                    <List.Item active={!r.expired} onClick={() => this.toggleEditModal(r)}>
                       {/* <List.Content floated='right'>
                         <p>{ moment(r.start_date).format('MMMM Do, YYYY') }</p>
                       </List.Content> */}
@@ -80,10 +81,15 @@ class ConactCardShow extends React.PureComponent {
                         { formatReminder(r, null, name) }
                       </List.Content>
                     </List.Item>
-                    <EditReminder modalOpen={this.state.editModal} reminder={r} modalClose={this.toggleEditModal} contact={this.props.contact}/>
+          
                 </React.Fragment>
                 )
               })}
+            {
+              this.state.editModal ?
+                <EditReminder modalOpen={this.state.editModal} reminder={this.state.editingReminder} modalClose={this.toggleEditModal} contact={this.props.contact} />
+                : null
+            }
             </List>
           </Container>
           <Divider />

@@ -97,6 +97,15 @@
   margin: 10px 10px 0px 10px;
 }
 
+.ui.modal > .actions {
+  background: none;
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+}
+
 /* div .signup {
   height: 70vh;
   display: flex;

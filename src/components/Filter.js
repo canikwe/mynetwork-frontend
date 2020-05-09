@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { updateSearchTerm, filterCalendar } from '../redux/actions/actions'
-import { Input, Transition, Dropdown } from 'semantic-ui-react'
+import { filterCalendar } from '../redux/actions/actions'
+import { Dropdown } from 'semantic-ui-react'
 import { withRouter } from 'react-router-dom'
 
 class Filter extends React.PureComponent {
@@ -51,20 +51,7 @@ class Filter extends React.PureComponent {
   render() {
     return (
       <div className='filter'>
-      {this.props.location.pathname !== '/calendar' ?
-        <Transition animation='jiggle' duration={500} visible={ this.state.visible }>
-          <Input
-            icon='search' 
-            type='text' 
-            size='large' 
-            value={this.props.searchTerm} 
-            onChange={(e) => this.props.updateSearchTerm(e.target.value)}
-            onClick={this.toggleVisibility}
-            name='filter' 
-            placeholder='Search Contacts...'>
-          </Input>
-        </Transition>
-        :
+      {this.props.location.pathname === '/calendar' ?
         <Dropdown text='Filter Reminders' icon='filter' pointing='top right' >
           <Dropdown.Menu>
             {/* <Input icon='search' iconPosition='left' className='search' />
@@ -77,6 +64,7 @@ class Filter extends React.PureComponent {
             </Dropdown.Menu>
           </Dropdown.Menu>
         </Dropdown>
+        : null
      }
       </div>
     )
@@ -90,7 +78,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    updateSearchTerm: (searchTerm) => dispatch(updateSearchTerm(searchTerm)),
     filterCalendar: (value) => dispatch(filterCalendar(value))
   }
 }

@@ -1,7 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import ContactCard from '../components/ContactCard'
-import { Checkbox } from 'semantic-ui-react'
+import { Checkbox, Input } from 'semantic-ui-react'
+import { updateSearchTerm } from '../redux/actions/actions'
+
 
 class ContactCardContainer extends React.PureComponent {
   state = { checked: false }
@@ -21,6 +23,16 @@ class ContactCardContainer extends React.PureComponent {
           checked={this.state.checked}
           onChange={this.toggle}
         />
+        <Input
+          icon='search'
+          type='text'
+          size='large'
+          value={this.props.searchTerm}
+          onChange={(e) => this.props.updateSearchTerm(e.target.value)}
+          onClick={this.toggleVisibility}
+          name='filter'
+          placeholder='Search Contacts...'>
+        </Input>
         <p />
         <div className='ui four stackable cards'>
           {this.state.checked ?
@@ -64,4 +76,11 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(ContactCardContainer)
+const mapDispatchToProps = dispatch => {
+  return {
+    updateSearchTerm: (searchTerm) => dispatch(updateSearchTerm(searchTerm))
+  }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(ContactCardContainer)

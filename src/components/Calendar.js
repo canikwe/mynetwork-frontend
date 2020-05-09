@@ -8,6 +8,7 @@ import { Modal, Button, Segment } from 'semantic-ui-react'
 import { deletingReminder } from '../redux/actions/actions'
 import DeleteConfirmation from './DeleteConfirmation';
 import 'react-big-calendar/lib/css/react-big-calendar.css'
+import Filter from './Filter'
 
 const localizer = BigCalendar.momentLocalizer(moment)
 
@@ -63,21 +64,25 @@ class Calendar extends PureComponent {
     } else {
       return (
         <div className='wrapper calendar'>
-          <h1>Calendar</h1>
-            <BigCalendar
-              localizer={localizer}
-              events={ this.filterReminders() }
-              startAccessor='start'
-              endAccessor='start'
-              titleAccessor='msg'
-              defaultView='month'
-              views={['month', 'day', 'week']}
-              alldayaccessor='all_day'
-              popup
-              selectable
-              onSelectEvent={(event, e) => {this.handleOpen(event)}}
-              eventPropGetter={(this.eventStyleGetter)}
-            />
+          <div className='calendar-header'>
+            <h1>Calendar</h1>
+            <p><Filter /></p>
+          </div>
+
+          <BigCalendar
+            localizer={localizer}
+            events={ this.filterReminders() }
+            startAccessor='start'
+            endAccessor='start'
+            titleAccessor='msg'
+            defaultView='month'
+            views={['month', 'day', 'week']}
+            alldayaccessor='all_day'
+            popup
+            selectable
+            onSelectEvent={(event, e) => {this.handleOpen(event)}}
+            eventPropGetter={(this.eventStyleGetter)}
+          />
 
         <Modal
           open={this.state.modalOpen}
