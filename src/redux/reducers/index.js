@@ -1,6 +1,5 @@
-// eslint-disable-next-line
 import { combineReducers } from 'redux'
-import { remindersReducer, recurringRemindersReducer, calendarFilterReducer } from './reminders'
+import { remindersReducer, recurringRemindersReducer, calendarFilterReducer, featuredReminderReducer } from './reminders'
 import { contactsReducer, searchTermReducer } from './contacts'
 import { userReducer, loadingReducer, notificationReducer } from './users'
 import { TESTING_REDUCER } from '../types'
@@ -25,7 +24,8 @@ const rootReducer = combineReducers({
   searchTerm: searchTermReducer,
   notifications: notificationReducer,
   recurringReminders: recurringRemindersReducer,
-  calendarFilter: calendarFilterReducer
+  calendarFilter: calendarFilterReducer,
+  featuredReminder: featuredReminderReducer
 })
 
 export default rootReducer

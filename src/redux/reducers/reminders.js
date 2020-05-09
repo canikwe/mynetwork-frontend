@@ -9,7 +9,8 @@ import {
   DELETE_CONTACT,
   LOGOUT_USER,
   NOTIFY_REMINDERS,
-  SET_PRIORITY_FILTER
+  SET_PRIORITY_FILTER,
+  SET_FEATURED_REMINDER
 } from '../types'
 
 const getRecurringEvents = reminder => {
@@ -102,4 +103,13 @@ const calendarFilterReducer = (state = '', action) => {
   }
 }
 
-export { remindersReducer, recurringRemindersReducer, calendarFilterReducer }
+const featuredReminderReducer = (state={}, action) => {
+  switch (action.type) {
+    case SET_FEATURED_REMINDER:
+      return action.reminder
+    default:
+      return state
+  }
+}
+
+export { remindersReducer, recurringRemindersReducer, calendarFilterReducer, featuredReminderReducer }
