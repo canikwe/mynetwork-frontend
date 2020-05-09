@@ -1,5 +1,6 @@
 import moment from 'moment'
 // eslint-disable-next-line
+import recur from 'moment-recur'
 import {
   FETCHED_USER,
   ADD_REMINDER,
