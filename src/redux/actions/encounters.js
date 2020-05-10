@@ -1,4 +1,4 @@
-import {  CREATE_ENCOUNTER } from '../types'
+import {  CREATE_ENCOUNTER, DELETE_ENCOUNTER } from '../types'
 import { authHeaders, URL } from '../types'
 
 const creatingEncounter = encounter => {
@@ -17,4 +17,19 @@ const createEncounter = encounter => {
   return {type: CREATE_ENCOUNTER, encounter}
 }
 
-export { creatingEncounter }
+const deletingEncounter = encounter => {
+  return (dispatch) => {
+    fetch(`${URL()}/encounters/${encounter.id}`, {
+      method: 'DELETE',
+      headers: authHeaders()
+    })
+      .then(res => res.json())
+      .then(encounter => dispatch(deleteEncounter(encounter)))
+  }
+}
+
+const deleteEncounter = encounter => {
+  return { type: DELETE_ENCOUNTER, encounter }
+}
+
+export { creatingEncounter, deletingEncounter }

@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { addingContact, updatingContact } from '../redux/actions'
-import { Link } from 'react-router-dom'
 import { Segment, Button, Grid, Dropdown } from 'semantic-ui-react'
 import toast from 'toasted-notes'
 import 'toasted-notes/src/styles.css';
@@ -71,8 +70,8 @@ class ContactForm extends React.Component {
   render(){
     // console.log(this.state)
     return (
-      <Segment padded>
-        <Grid columns={2}>
+      // <Segment padded>
+        <Grid padded columns={2}>
           <Grid.Row>
             {this.props.contact ? <h3>Edit {this.props.contact.name}</h3> : <h3>Add a new Contact!</h3> }
           </Grid.Row>
@@ -107,11 +106,9 @@ class ContactForm extends React.Component {
             </div>
 
           </Grid.Column>
-
-        <Link to='/' onClick={() => this.props.handleClose('editContactModal')}>BACH TO BUSINESS</Link>
         </Grid.Row>
         </Grid>
-      </Segment>
+      // </Segment>
     )
 
   }

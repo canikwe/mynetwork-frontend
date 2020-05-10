@@ -6,7 +6,7 @@ import moment from 'moment';
 import { formatReminder } from '../helper/functions'
 import ReminderForm from './ReminderForm'
 import ContactForm from './ContactForm'
-import { deletingContact, deletingReminder } from '../redux/actions'
+import { deletingContact, deletingReminder, deletingEncounter } from '../redux/actions'
 import EncounterForm from './EncounterForm';
 
 class ConactCardShow extends React.PureComponent {
@@ -48,6 +48,8 @@ class ConactCardShow extends React.PureComponent {
         return r.interval > 1 ? `every ${r.interval} weeks` : 'every week'
       case 'monthly':
         return r.interval > 1 ? `every ${r.interval} months` : 'every month'
+      case 'yearly':
+        return r.interval > 1 ? `every ${r.interval} years` : 'every year'
       default:
         break;
     }
@@ -81,10 +83,11 @@ class ConactCardShow extends React.PureComponent {
           onClick={() => this.handleOpen('editContactModal')}
           content='Edit Friend'
           basic
-          color='red'
+          color='green'
         />}
         open={this.state.editContactModal}
         onClose={() => this.handleClose('editContactModal')}
+        closeIcon
       >
         <ContactForm contact={this.props.contact} handleClose={() => this.handleClose('editContactModal')} />
       </Modal>
@@ -99,7 +102,7 @@ class ConactCardShow extends React.PureComponent {
           onClick={() => this.handleOpen('deleteContactModal')}
           content='Remove Friend'
           basic
-          color='green'
+          color='red'
         />}
         open={this.state.deleteContactModal}
         onClose={() => this.handleClose('deleteContactModal')}
@@ -124,17 +127,17 @@ class ConactCardShow extends React.PureComponent {
   newEncounterBtn = () => <EncounterForm open={this.state.newEncounterModal} handleOpen={this.handleEncounterModal} contact={this.props.contact} />
 
   render(){
-    const {contact: {avatar, name, created_at, details, encounters, kind}, reminders} = this.props
+    const {contact: {name, created_at, details, encounters, kind}, reminders} = this.props
     return(
       <Grid columns='equal' padded stackable>
         <Grid.Row>
           <Grid.Column>
             <Header as='h2' dividing>
-              <Image circular src={ avatar } />{ name }
-                <Header.Content>
-                  <Header.Subheader>Friends since { moment(created_at).format('ll') }</Header.Subheader>
-                </Header.Content>
-              </Header>
+              <Header.Content>
+                { name } 
+                <Header.Subheader>Friends since { moment(created_at).format('ll') }</Header.Subheader>
+              </Header.Content>
+            </Header>
           </Grid.Column>
         </Grid.Row>
 
@@ -173,7 +176,7 @@ class ConactCardShow extends React.PureComponent {
                 return (
                   <List.Item key={r.id}>
                     <List.Content floated='right'>
-                      <Label as='a' basic color='red' horizontal onClick={() => this.props.deletingReminder(r)}>Delete</Label>
+                      <Icon name='trash alternate outline' onClick={() => this.props.deletingReminder(r)} />
                     </List.Content>
                     <List.Icon name='bell outline' color={this.displayPriorityColor(r)}/>
                     <List.Content>
@@ -189,7 +192,7 @@ class ConactCardShow extends React.PureComponent {
                 modalOpen={this.state.editReminderModal} 
                 reminder={this.state.editingReminder} 
                 modalClose={this.toggleEditReminderModal} 
-                contact={this.props.contact} 
+                contact={this.props.contact}
               />
             </List>
           </Grid.Column>
@@ -198,7 +201,13 @@ class ConactCardShow extends React.PureComponent {
             <List>
               {encounters.map(e => (
                 <List.Item key={e.id}>
-                  {`${e.verb} ${name} on ${moment(e.date).format('MMMM DD YY')}`}
+                  <List.Content floated='right'>
+                    <Icon name='trash alternate outline' onClick={() => this.props.deletingEncounter(e)}/>
+                  </List.Content>
+                  {/* <List.Icon name='comment' /> */}
+                  <List.Content>
+                    {`On ${moment(e.date).format('MMMM Do, YY')} you ${e.verb} ${name}`}
+                  </List.Content>
                 </List.Item>)
               )}
             </List>
@@ -216,7 +225,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     deletingContact: contact => dispatch(deletingContact(contact)),
-    deletingReminder: reminder => dispatch(deletingReminder(reminder))
+    deletingReminder: reminder => dispatch(deletingReminder(reminder)),
+    deletingEncounter: encounter => dispatch(deletingEncounter(encounter))
   }
 }
 

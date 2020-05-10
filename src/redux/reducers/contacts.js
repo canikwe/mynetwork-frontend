@@ -5,7 +5,8 @@ import {
   UPDATE_CONTACT,
   UPDATE_SEARCH_TERM,
   LOGOUT_USER,
-  CREATE_ENCOUNTER
+  CREATE_ENCOUNTER,
+  DELETE_ENCOUNTER
 } from '../types'
 
 
@@ -20,6 +21,8 @@ const contactsReducer = (state = [], action) => {
       return state.map(c => c.id === action.contact.id ? action.contact : c)
     case CREATE_ENCOUNTER:
       return state.map(c => c.id === action.encounter.contact_id ? {...c, encounters: [...c.encounters, action.encounter]} : c)
+    case DELETE_ENCOUNTER:
+      return state.map(c => c.id === action.encounter.contact_id ? {...c, encounters: c.encounters.filter(e => e.id !== action.encounter.id) } : c)
     case DELETE_CONTACT:
       return state.filter(c => c.id !== action.contact.id)
     case LOGOUT_USER:
