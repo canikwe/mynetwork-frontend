@@ -118,14 +118,14 @@ class ContactCard extends React.Component {
         open={this.state.contactModal}
         onClose={this.closeContact}
         size='tiny'>
-        <Segment>
+        {/* <Segment> */}
           <ContactShow contact={this.props.contact} reminders={this.contactReminders()}/>
-            <Container textAlign='right'>
+            {/* <Container textAlign='right'>
               {this.createReminderBtn()}
               {this.editContactBtn()}
               {this.deleteContactBtn()}
-            </Container>
-        </Segment>
+            </Container> */}
+        {/* </Segment> */}
       </Modal>
     )
   }

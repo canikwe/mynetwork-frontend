@@ -1,5 +1,5 @@
 import React from 'react'
-import { Image, Header, Container, List, Icon, Divider } from 'semantic-ui-react'
+import { Image, Header, Container, List, Icon, Divider, Modal, Grid, GridRow, Button } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import EditReminder from './EditReminder'
 import moment from 'moment';
@@ -54,20 +54,50 @@ class ConactCardShow extends React.PureComponent {
   }
 
   render(){
-    const {contact: {avatar, name, created_at, details, encounters}, reminders} = this.props
+    const {contact: {avatar, name, created_at, details, encounters, kind}, reminders} = this.props
     return(
-      <React.Fragment>
-        <Header as='h2' dividing>
-          <Image circular src={ avatar } />{ name }
-            <Header.Content>
-              <Header.Subheader>Friends since { moment(created_at).format('ll') }</Header.Subheader>
-            </Header.Content>
-          </Header>
-          <Container>
+      <Grid columns='equal' padded stackable>
+        <Grid.Row>
+          <Grid.Column>
+            <Header as='h2' dividing>
+              <Image circular src={ avatar } />{ name }
+                <Header.Content>
+                  <Header.Subheader>Friends since { moment(created_at).format('ll') }</Header.Subheader>
+                </Header.Content>
+              </Header>
+          </Grid.Column>
+        </Grid.Row>
+
+        <Grid.Row columns={2}>
+          <Grid.Column width={4}>
+            <Button>{kind}</Button>
+          </Grid.Column>
+          <Grid.Column>
             <p>
               {details}
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc maximus, nulla ut commodo sagittis, sapien dui mattis dui, non pulvinar lorem felis nec erat
             </p>
-  
+          </Grid.Column>
+        </Grid.Row>
+
+        <Grid.Row columns={4}>
+          <Grid.Column>
+            <Button>Add Reminder</Button>
+          </Grid.Column>
+          <Grid.Column>
+            <Button>Log Encounter</Button>
+          </Grid.Column>
+          <Grid.Column>
+            <Button>Edit Friend</Button>
+          </Grid.Column>
+          <Grid.Column>
+            <Button>Remove Contact</Button>
+          </Grid.Column>
+        </Grid.Row>
+
+        <Grid.Row columns={2}>
+          <Grid.Column>
+            <Header.Subheader>Current Reminders</Header.Subheader>
             <List animated selection verticalAlign='middle'>
               {reminders.map(r => {
                 return (
@@ -91,9 +121,9 @@ class ConactCardShow extends React.PureComponent {
                 : null
             }
             </List>
-          </Container>
-          <Divider />
-          <Container>
+          </Grid.Column>
+          <Grid.Column>
+            <Header.Subheader>Activity Feed</Header.Subheader>
             <List>
               {encounters.map(e => (
                 <List.Item key={e.id}>
@@ -101,10 +131,17 @@ class ConactCardShow extends React.PureComponent {
                 </List.Item>)
               )}
             </List>
+          </Grid.Column>
+        </Grid.Row>
+          {/* <Container>
+  
           </Container>
           <Divider />
-          <p />
-      </React.Fragment>
+          <Container>
+          </Container>
+          <Divider />
+          <p /> */}
+      </Grid>
     )
   }
 }
