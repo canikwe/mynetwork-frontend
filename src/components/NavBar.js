@@ -2,10 +2,9 @@ import React, { Component } from 'react'
 import { Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { logoutUser } from '../redux/actions'
-import { Menu, Dropdown, Modal, Segment, Label } from 'semantic-ui-react'
+import { Menu, Dropdown, Modal, Segment, Label, Icon } from 'semantic-ui-react'
 import { isEmpty } from 'lodash'
 import ContactForm from './ContactForm'
-import Filter from '../components/Filter'
 
 class NavBar extends Component {
   state = { activeItem: 'home', modalOpen: false }
@@ -25,6 +24,19 @@ class NavBar extends Component {
     )
   }
 
+  avatar = () => {
+    return (
+      <span>
+        <Label
+          // className='filter'
+          size='large'
+          color='blue'
+          circular>{`${this.props.user.first_name.slice(0, 1)}${this.props.user.last_name.slice(0, 1)}`}
+        </Label>
+      </span>
+    )
+  }
+
   logout = () => {
     localStorage.clear('token')
     this.props.logoutUser()
@@ -32,12 +44,12 @@ class NavBar extends Component {
 
   render() {
     return (
-      <>
+      <nav>
         <Menu 
-          pointing 
-          secondary 
-          // inverted 
-          fluid
+          // pointing 
+          // secondary 
+          inverted 
+          // fluid
           stackable
 
         >
@@ -47,42 +59,57 @@ class NavBar extends Component {
             
             <Menu.Item 
               name='home' 
-              active={ this.props.location.pathname === '/' } 
+              // active={ this.props.location.pathname === '/' } 
               as={ Link } to='/'
-            />
-
-            <Menu.Item 
-              name='calendar' 
-              active={ this.props.location.pathname === '/calendar' }
-              as={ Link } to='/calendar'
-            /> 
+            >
+              <Icon name='leaf' size='big' color='teal' />
+            </Menu.Item>
 
             <Menu.Menu  position='right'>
+              <Menu.Item
+                name='home'
+                as={Link} to='/'
+              >
+                <Icon name='group' size='large'/>
+              </Menu.Item>
 
-              <Menu.Item header><h2>myNetwork</h2></Menu.Item>
+              <Menu.Item 
+                name='calendar' 
+                // active={ this.props.location.pathname === '/calendar' }
+                as={ Link } to='/calendar'
+              >
+                <Icon name='calendar' size='large'/>
+              </Menu.Item> 
+
+              <Menu.Item 
+                name='notifications' 
+                // active={ this.props.location.pathname === '/calendar' }
+                as={ Link } to='/'
+              >
+                <span>
+                  <Icon name='bell' size='large'/>
+                  {
+                    this.props.reminders.length ?
+                    <Label color='red' floating circular size='mini'>
+                      {this.props.reminders.length}
+                    </Label>
+                    : null
+                  }
+                </span>
+              </Menu.Item> 
+              <Dropdown
+                trigger={this.avatar()}
+                pointing='top right' 
+                icon={null}             
+                >
+                <Dropdown.Menu>
+                  <Dropdown.Item as={ Link } to='/profile/edit'>Edit Profile</Dropdown.Item>
+                  <Dropdown.Item onClick={this.handleOpen}>New Contact</Dropdown.Item>
+                  <Dropdown.Item onClick={this.logout}>Logout</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
             </Menu.Menu>
-
-          <Menu.Menu position='right'>
-
-          {/* <Filter /> */}
-
-            <Dropdown
-              trigger={<Label
-                // className='filter'
-                size='massive'
-                color='blue'
-                circular>{`${this.props.user.first_name.slice(0, 1)}${this.props.user.last_name.slice(0, 1)}`}
-                </Label>}
-              pointing='top right'              
-            >
-              <Dropdown.Menu>
-                <Dropdown.Item as={ Link } to='/profile/edit'>Edit Profile</Dropdown.Item>
-                <Dropdown.Item onClick={this.handleOpen}>New Contact</Dropdown.Item>
-                <Dropdown.Item onClick={this.logout}>Logout</Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
-          </Menu.Menu>
-        </React.Fragment>
+          </React.Fragment>
           : 
             // <Menu.Item 
             //   name='about' 
@@ -95,13 +122,13 @@ class NavBar extends Component {
           }
         </Menu>
         {this.newContactForm()}
-      </>
+      </nav>
     )
   }
 }
 
 const mapStateToProps = state => {
-  return {user: state.user}
+  return { user: state.user, reminders: state.reminders.filter(r => r.match && !r.snoozed) }
 }
 
 const mapDispatchToProps = dispatch => {

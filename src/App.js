@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
+import './App.scss';
 import { connect } from 'react-redux'
 import { testAction, fetchingUser, notifyReminders, clearLoading } from './redux/actions'
 import { Route, Switch, Redirect } from 'react-router-dom'
@@ -19,12 +19,6 @@ import Home from './containers/Home'
 import { formatReminderToast } from './helper/functions';
 
 class App extends Component {
-  // constructor(){
-  //   super()
-  //   this.state = {
-  //     notified: false
-  //   }
-  // }
 
   componentDidMount(){
     this.props.testAction()
@@ -56,15 +50,10 @@ class App extends Component {
       return (
         <div className="App">
           <NavBar />
-      {/* <Dimmer active>
-        <Loader size='massive'>Loading</Loader>
-      </Dimmer> */}
-      <div className='loading'>
-        <Image
-          centered src='./images/loading_screen.gif' />
-      </div>
-      {/* <Image src='https://react.semantic-ui.com/images/wireframe/short-paragraph.png' />
-      <Image src='https://react.semantic-ui.com/images/wireframe/short-paragraph.png' /> */}
+          <div className='loading'>
+            <Image
+              centered src='./images/loading_screen.gif' />
+          </div>
         </div>
       )
     } else {

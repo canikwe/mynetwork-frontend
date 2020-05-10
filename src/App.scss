@@ -1,82 +1,29 @@
-/* 
+/* https://coolors.co/1b1c1d-2185d0-f3efe0-7fefbd-cba135 */
+$base-dark: #1b1c1d;
+$primary: #2185d0;
+$base-light: #f3efe0;
+$accent1: #7fefbd;
+$accent2: #cba135;
 
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+nav {
+  background-color: $base-dark;
+  -webkit-box-shadow: 0px 3px 20px -5px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 3px 20px -5px rgba(0,0,0,0.75);
+  box-shadow: 0px 3px 20px -5px rgba(0,0,0,0.75);
+  margin-bottom: 10px;
+  
+  .ui.dropdown {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 15px;
   }
-  to {
-    transform: rotate(360deg);
+
+  .ui.floating.label {
+    top: 5px;
+    left: 50px;
   }
 }
-
-.reminder-feature {
-  max-width: 30%;
-  min-width: 300px;
-  height: 300px;
-  border-style: double;
-  background-color: pink;
-  float: left
-}
-
-.reminder-card {
-  border-color: black;
-  border-style: solid;
-  background-color: aquamarine;
-  margin: 10px;
-  width: 300px;
-  height: 300px;
-}
-
-.new-reminder {
-  border-style: dashed;
-
-  background-color: lemonchiffon
-}
-
-.menuLink {
-  background:none!important;
-  color:blue;
-  border:none; 
-  padding:0!important;
-  font: inherit;
-  border-bottom:1px solid #444; 
-  cursor: pointer;
-}
-
-.avatar {
-  width: 100px;
-  height: 100px
-}
- */
-
- /* .App {
-  text-align: center;
-} */
-/* body {
-  position: relative;
-  min-height: 100vh;
-} */
 
  .wrapper {
   /* text-align: center; */
@@ -106,17 +53,6 @@
   justify-content: space-between;
 }
 
-/* div .signup {
-  height: 70vh;
-  display: flex;
-  justify-content: center;
-  align-items: center
-}
-
-.signup-form {
-  width: 100%;
-} */
-
  .img-feature {
   width: 100%;
   height: 200px;
@@ -142,11 +78,6 @@
  #login {
    margin-top: 100px;
  }
-
- /* .landing-image {
-   background-image: url('https://images.unsplash.com/photo-1554004389-abf213c41d0d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1491&q=80') !important;
-   background-size: cover !important;
- } */
 
  .reminders-container {
     height: 75vh;
@@ -194,10 +125,3 @@
    text-align: center;
    font-weight: bold;
  }
-
- /* .scrolled {
-    height: 75px;
-    overflow-y: auto;
-    overflow-x:hidden;
- } */
-

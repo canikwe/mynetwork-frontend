@@ -22,7 +22,7 @@ const ReminderSnooze = ({ featuredReminder, updateFeaturedReminder, updatingRemi
   }
 
   return (
-    <Modal basic size='small' open={!!featuredReminder.id} onClose={() => updateFeaturedReminder({})} >
+    <Modal basic closeIcon size='small' open={!!featuredReminder.id} onClose={() => updateFeaturedReminder({})} >
       <Header icon='bell slash' content='Snooze Reminder' />
       <Modal.Content>
         <p>Did you remember to {reminderAction[0].toLowerCase() + reminderAction.slice(1)}?</p>

@@ -1,6 +1,5 @@
 import React from 'react'
 import { Grid } from 'semantic-ui-react'
-import '../App.css'
 import Logo from './Logo'
 import RemindersList from './RemindersList'
 
