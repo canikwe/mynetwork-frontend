@@ -2,9 +2,10 @@ import React, { Component } from 'react'
 import { Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { logoutUser } from '../redux/actions'
-import { Menu, Dropdown, Modal, Segment, Label, Icon, Popup } from 'semantic-ui-react'
+import { Menu, Dropdown, Modal, Segment, Label, Icon, Popup, Feed } from 'semantic-ui-react'
 import { isEmpty } from 'lodash'
 import ContactForm from './ContactForm'
+import { formatReminderToast } from '../helper/functions'
 
 class NavBar extends Component {
   state = { activeItem: 'home', modalOpen: false }
@@ -90,12 +91,34 @@ class NavBar extends Component {
                   
                   {
                     this.props.reminders.length ?
-                    <>
-                      <Icon name='bell' size='large' />
-                      <Label color='red' floating circular size='mini'>
-                        {this.props.reminders.length}
-                      </Label>
-                    </>
+                    <Popup
+                      header='Notifications'
+                      content='Multiple events can trigger a popup'
+                      on={['hover', 'click']}
+                      trigger={
+                        <div>
+                          <Icon name='bell' size='large' />
+                          <Label color='red' floating circular size='mini'>
+                            {this.props.reminders.length}
+                          </Label>
+                        </div>
+                        } 
+                    >
+                      <Feed>
+                        <h4>Don't forget to</h4>
+                        {this.props.reminders.map(r => (
+                          <Feed.Event>
+                            <Feed.Label icon='bell outline' />
+                            <Feed.Content>
+                              <Feed.Summary
+                                content={formatReminderToast(r, this.props.contacts)}
+                                date='Today'
+                              />
+                            </Feed.Content>
+                          </Feed.Event>
+                        ))}
+                      </Feed>
+                    </Popup>
                     : 
                     <Popup content='All done for today!' trigger={<Icon name='bell' size='large' />} />
                   }
@@ -132,7 +155,7 @@ class NavBar extends Component {
 }
 
 const mapStateToProps = state => {
-  return { user: state.user, reminders: state.reminders.filter(r => r.match && !r.snoozed) }
+  return { user: state.user, contacts: state.contacts, reminders: state.reminders.filter(r => r.match && !r.snoozed) }
 }
 
 const mapDispatchToProps = dispatch => {

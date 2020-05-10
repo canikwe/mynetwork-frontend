@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import ReminderForm from '../components/ReminderForm';
 import ContactForm from './ContactForm'
 import { deletingContact, deletingReminder } from '../redux/actions'
-import { Modal, Button, Header, Card, Icon, Image, Segment, Container } from 'semantic-ui-react'
+import { Modal, Button, Header, Card, Icon, Image, Segment, Container, Label } from 'semantic-ui-react'
 import ContactShow from './ContactShow'
 import moment from 'moment'
 
@@ -182,14 +182,22 @@ class ContactCard extends React.Component {
     // debugger
     return (
       <React.Fragment>
-        <Card onClick={this.openContact} color={this.contactKindColorMapper()}>
+        <Card onClick={this.openContact} >
+          {/* <Label as='a' corner='right' >
+            <Icon name='ellipsis vertical' />
+          </Label> */}
         <Card.Content>
           <Image floated='right' size='mini' src={this.props.contact.avatar} />
           <Card.Header>{this.props.contact.name}</Card.Header>
           <Card.Meta>
             <span className='date'>Connected {moment(this.props.contact.created_at).fromNow()}</span>
           </Card.Meta>
-          <Card.Description>{this.props.contact.kind}</Card.Description>
+          <Card.Description>
+            <Label size='tiny'>
+            {this.props.contact.kind}
+
+            </Label>
+          </Card.Description>
           {/* <Menu fluid text vertical className='scrolled'>
             {this.props.reminders.filter(r => r.contact_id === this.props.contact.id).map(r => {
               return (
@@ -206,10 +214,11 @@ class ContactCard extends React.Component {
         </Card.Content>
 
           <Card.Content extra>
-            <Icon name='user' />
+            <Icon name='bell' />
             {this.contactReminders().length} Reminder(s)
             <br />
-            {this.props.contact.encounters.length} Encounter(s)
+            <Icon name='comments outline' />
+            {this.props.contact.encounters.length} Meetings(s)
           </Card.Content>
         </Card>
             {this.displayContact()}

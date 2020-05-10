@@ -1,11 +1,12 @@
-import React from 'react'
+import React, { PureComponent, createRef } from 'react'
 import { connect } from 'react-redux'
 import ContactCard from '../components/ContactCard'
-import { Checkbox, Input } from 'semantic-ui-react'
+import { Checkbox, Input, Grid, Sticky, Ref } from 'semantic-ui-react'
 import { updateSearchTerm } from '../redux/actions'
 
 
-class ContactCardContainer extends React.PureComponent {
+class ContactCardContainer extends PureComponent {
+  contextRef = createRef()
   state = { checked: false }
   toggle = () => this.setState({ checked: !this.state.checked })
 
@@ -16,6 +17,26 @@ class ContactCardContainer extends React.PureComponent {
   render() {
     
     return(
+      <>
+      <h2>
+        Contact Cards
+      </h2>
+        <Grid stackable>
+        <Grid.Row>
+              <Ref innerRef={this.contextRef}>
+          <Grid.Column width={8}>
+
+            <Sticky context={this.contextRef}>
+            <img class='full-width' src={require('../helper/images/undraw_pleasant_surprise_5sjy.svg')} alt='pleasant surprise' />
+            </Sticky>
+          </Grid.Column>
+            </Ref>
+
+        
+          <Grid.Column width={8}>
+
+          
+      
       <div>
         <Checkbox 
           slider
@@ -34,7 +55,7 @@ class ContactCardContainer extends React.PureComponent {
           placeholder='Search Contacts...'>
         </Input>
         <p />
-        <div className='ui four stackable cards'>
+        <div className='ui two stackable cards'>
           {this.state.checked ?
             this.filteredContacts().sort((a, b) => {
               const nameA = a.name
@@ -65,6 +86,10 @@ class ContactCardContainer extends React.PureComponent {
           }
         </div>
       </div>
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
+      </>
     )
   }
 }

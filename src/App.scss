@@ -25,6 +25,13 @@ nav {
   }
 }
 
+.ui.sticky {
+  z-index: 0;
+}
+.full-width {
+  width: 100%
+}
+
 main {
   padding: 0 5%;
 }
