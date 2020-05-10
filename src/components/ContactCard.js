@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import ReminderForm from '../components/ReminderForm';
-import ContactForm from './ContactForm'
+// import ReminderForm from '../components/ReminderForm';
+// import ContactForm from './ContactForm'
 import { deletingContact, deletingReminder } from '../redux/actions'
 import { Modal, Button, Header, Card, Icon, Image, Segment, Container, Label } from 'semantic-ui-react'
 import ContactShow from './ContactShow'
@@ -12,11 +12,11 @@ class ContactCard extends React.Component {
     super()
     this.state = {
       newReminderModal: false,
-      editReminderModal: false,
+      // editReminderModal: false,
       // deleteReminderModal: false,
-      editContactModal: false,
-      deleteContactModal: false,
-      featuredReminder: {},
+      // editContactModal: false,
+      // deleteContactModal: false,
+      // featuredReminder: {},
       contactModal: false
     }
   }
@@ -31,101 +31,95 @@ class ContactCard extends React.Component {
   closeContact = () => this.setState({contactModal: false})
   
   //Methods for Reminder CRUD actions
-  createReminderBtn = () => {
-    return (
-      <Modal
-        size='tiny'
-        trigger={<Button
-          onClick={() => this.handleOpen('newReminderModal')}
-          icon ='calendar plus outline'
-          primary 
-        />}
-        open={this.state.newReminderModal}
-        onClose={() => this.handleClose('newReminderModal')}
-      >
-        <ReminderForm contact={this.props.contact} title={'Create a new reminder!'} handleClose={this.handleClose}/>
-        <p />
-      </Modal>
-      )
-    }
+  // createReminderBtn = () => {
+  //   return (
+  //     <Modal
+  //       size='tiny'
+  //       trigger={<Button
+  //         onClick={() => this.handleOpen('newReminderModal')}
+  //         icon ='calendar plus outline'
+  //         primary 
+  //       />}
+  //       open={this.state.newReminderModal}
+  //       onClose={() => this.handleClose('newReminderModal')}
+  //     >
+  //       <ReminderForm contact={this.props.contact} title={'Create a new reminder!'} handleClose={this.handleClose}/>
+  //       <p />
+  //     </Modal>
+  //     )
+  //   }
 
-  editReminder = () => {
-    return (
-      <Modal
-        open={this.state.editReminderModal}
-        onClose={() => this.handleClose('editReminderModal')}
-      >
-        <ReminderForm 
-          contact={this.props.contact} 
-          title={'Update reminder!'} 
-          reminder={this.state.featuredReminder} 
-          handleClose={this.handleClose}
-        />
-      </Modal>
-    )
-  }
+  // editReminder = () => {
+  //   return (
+  //     <Modal
+  //       open={this.state.editReminderModal}
+  //       onClose={() => this.handleClose('editReminderModal')}
+  //     >
+  //       <ReminderForm 
+  //         contact={this.props.contact} 
+  //         title={'Update reminder!'} 
+  //         reminder={this.state.featuredReminder} 
+  //         handleClose={this.handleClose}
+  //       />
+  //     </Modal>
+  //   )
+  // }
 
-  editContactBtn = () => {
-    //edit modal goes here
-    return (
-      <Modal
-        size='tiny'
-        trigger={<Button 
-          onClick={() => this.handleOpen('editContactModal')}
-          icon='edit outline' 
-          basic color='grey'
-        />}
-        open={this.state.editContactModal}
-        onClose={() => this.handleClose('editContactModal')} 
-      >
-        <ContactForm contact={this.props.contact} handleClose={this.handleClose}/>
-      </Modal>
-    )
-  }
+  // editContactBtn = () => {
+  //   //edit modal goes here
+  //   return (
+  //     <Modal
+  //       size='tiny'
+  //       trigger={<Button 
+  //         onClick={() => this.handleOpen('editContactModal')}
+  //         icon='edit outline' 
+  //         basic color='grey'
+  //       />}
+  //       open={this.state.editContactModal}
+  //       onClose={() => this.handleClose('editContactModal')} 
+  //     >
+  //       <ContactForm contact={this.props.contact} handleClose={this.handleClose}/>
+  //     </Modal>
+  //   )
+  // }
 
-  deleteContactBtn = () => {
-    return (
-      <Modal
-      size='mini'
-      trigger={<Button 
-        onClick={() => this.handleOpen('deleteContactModal')}
-        icon='trash alternate' 
-        basic 
-        color='grey' 
-        />}
-      open={this.state.deleteContactModal}
-      onClose={() => this.handleClose('deleteContactModal')}
-      >
-      <Header icon='trash' content='Delete this contact?' />
-      <Modal.Content>
-        <p>This is an irreversible action. Are you sure you want to proceed?</p>
-      </Modal.Content>
-      <Modal.Actions>
-        <Button negative content='No' onClick={() => this.handleClose('deleteContactModal')} />
-        <Button positive icon='checkmark' labelPosition='right' content='Yes' onClick={() => {
-          this.props.deletingContact(this.props.contact)
-          this.handleClose('deleteContactModal')
-          }
-        } />
-      </Modal.Actions>
-    </Modal>
-    )
-  }
+  // deleteContactBtn = () => {
+  //   return (
+  //     <Modal
+  //     size='mini'
+  //     trigger={<Button 
+  //       onClick={() => this.handleOpen('deleteContactModal')}
+  //       icon='trash alternate' 
+  //       basic 
+  //       color='grey' 
+  //       />}
+  //     open={this.state.deleteContactModal}
+  //     onClose={() => this.handleClose('deleteContactModal')}
+  //     >
+  //     <Header icon='trash' content='Delete this contact?' />
+  //     <Modal.Content>
+  //       <p>This is an irreversible action. Are you sure you want to proceed?</p>
+  //     </Modal.Content>
+  //     <Modal.Actions>
+  //       <Button negative content='No' onClick={() => this.handleClose('deleteContactModal')} />
+  //       <Button positive icon='checkmark' labelPosition='right' content='Yes' onClick={() => {
+  //         this.props.deletingContact(this.props.contact)
+  //         this.handleClose('deleteContactModal')
+  //         }
+  //       } />
+  //     </Modal.Actions>
+  //   </Modal>
+  //   )
+  // }
 
   displayContact = () => {
     return (
       <Modal
         open={this.state.contactModal}
         onClose={this.closeContact}
-        size='tiny'>
-        {/* <Segment> */}
-          <ContactShow contact={this.props.contact} reminders={this.contactReminders()}/>
-            {/* <Container textAlign='right'>
-              {this.createReminderBtn()}
-              {this.editContactBtn()}
-              {this.deleteContactBtn()}
-            </Container> */}
-        {/* </Segment> */}
+        size='tiny'
+      >
+        <ContactShow contact={this.props.contact} reminders={this.contactReminders()}/>
       </Modal>
     )
   }

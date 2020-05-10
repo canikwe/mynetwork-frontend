@@ -18,6 +18,7 @@ import 'toasted-notes/src/styles.css'
 import Home from './containers/Home'
 import { formatReminderToast } from './helper/functions';
 import Footer from './components/Footer';
+import ContactShow from './components/ContactShow';
 
 class App extends Component {
 
@@ -96,6 +97,19 @@ class App extends Component {
 
               <Route exact path='/friends' render={() => {
                 return !isEmpty(this.props.user) ? <ContactCardContainer /> : <Redirect to='/login' />
+              }}
+              />
+
+              <Route exact path='/friends/:id' render={props => {
+                const friendId = parseInt(props.match.params.id)
+                const friend = this.props.contacts.find(c => c.id === friendId)
+                const reminders = this.props.reminders.filter(r => r.contact_id === friendId)
+
+                return !isEmpty(this.props.user) && friend ? (
+                  <div className='contact-details'>
+                    <ContactShow contact={friend} reminders={reminders}/> 
+                  </div>
+                ) : <Redirect to='/login' />
               }}
               />
 

@@ -6,6 +6,7 @@ import moment from 'moment'
 
 
 const EncounterForm = ({ open, handleOpen, contact, handleSnooze, featuredReminder, setFeaturedReminder, creatingEncounter }) => {
+
   const [encounter, updateEncounter] = useState({ verb: featuredReminder ? featuredReminder.msg : '', details: '', rating: 3, date: moment().format('YYYY-MM-DD') })
 
   const handleAddEncounter = (e) => {
@@ -19,6 +20,11 @@ const EncounterForm = ({ open, handleOpen, contact, handleSnooze, featuredRemind
       encounterObj.reminder_id = featuredReminder.id
     }
     creatingEncounter({ ...encounterObj, contact_id: contact.id })
+    handleOpen(false)
+
+    if (!handleSnooze){
+      updateEncounter({ verb: featuredReminder ? featuredReminder.msg : '', details: '', rating: 3, date: moment().format('YYYY-MM-DD') })
+    }
   }
 
   const handleEncounterChange = (e, { name, value }) => {
@@ -36,12 +42,17 @@ const EncounterForm = ({ open, handleOpen, contact, handleSnooze, featuredRemind
       onClose={() => handleOpen(false)}
       size='tiny'
       trigger={
+        handleSnooze ?
         <Button
           primary
           inverted
           icon='checkmark'
           labelPosition='left'
           content='Yes, log it!'
+        />
+        :
+        <Button
+          content='Log New Meeting'
         />
       }
     >
