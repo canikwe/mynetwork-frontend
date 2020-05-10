@@ -2,30 +2,24 @@ import React from 'react'
 import { connect } from 'react-redux'
 import Feature from '../components/Feature'
 import ContactPlaceholder from '../components/ContactPlaceholder'
-import ContactCardContainer from './ContactCardContainer'
 import { Grid } from 'semantic-ui-react'
-// import toast from 'toasted-notes'
 import 'toasted-notes/src/styles.css';
-
-// const alerts = reminder => {
-
-//   return reminder.match ? toast.notify(reminder.msg, {position: 'bottom-left', duration: null}) : null
-//   // reminder.day.forEach(d => {
-//   //   if (d === todayWeekday()){
-//   //     console.log(`${reminder.msg} today!`, d)
-//   //   } else if (d === (todayWeekday() + 1)){
-//   //     console.log(`Remember to ${reminder.msg} tomorrow`, d)
-//   //   }
-//   //   else if (d < todayWeekday() && d !== (todayWeekday() - 1)){
-//   //     console.log(`${reminder.msg} next ${week()[d]}`)
-//   //   }
-//   // })
-
-  
-// }
-
+import FeaturedContactCardContainer from '../components/FeaturedContactCardContainer'
 
 const Homepage =  props => {
+  const thrivingContacts = () => {
+    const filterdByEncounter = props.contacts.filter(c => c.encounters.length)
+    return filterdByEncounter.sort((a, b) => b.encounters.length - a.encounters.length)
+  }
+
+  const wiltingContacts = () => {
+    const thrivingContactsCount = thrivingContacts().length
+    const averageEncounterNum = thrivingContacts().reduce((acc, curr) => acc + curr.encounters.length, 0) / thrivingContactsCount
+
+    // debugger
+    return props.contacts.filter(c => c.encounters <= averageEncounterNum)
+  }
+
   if (props.loading) {
     return <h1>Loading, please wait... </h1>
   } else {
@@ -55,7 +49,10 @@ const Homepage =  props => {
             {props.contacts.length === 0 ?
             <ContactPlaceholder />
             :
-            <ContactCardContainer />
+            <>
+              <FeaturedContactCardContainer title='Flourishing Friends' description='Thriving from all the love and attentions these days' contacts={thrivingContacts().slice(0, 4)}/>
+              <FeaturedContactCardContainer title='Water Me Please' description='We could use some TLC. Why not try reaching out?' contacts={wiltingContacts().slice(0, 4)}/>
+            </>
             }
           </Grid.Column>
         </Grid.Row>

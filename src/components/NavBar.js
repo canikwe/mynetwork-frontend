@@ -84,7 +84,7 @@ class NavBar extends Component {
               <Menu.Item 
                 name='notifications' 
                 // active={ this.props.location.pathname === '/calendar' }
-                as={ Link } to='/'
+                // as={ Link } to='/'
               >
                 <span>
                   
