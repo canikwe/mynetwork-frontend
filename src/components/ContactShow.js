@@ -1,5 +1,5 @@
 import React from 'react'
-import { Image, Header, Container, List, Icon, Divider, Modal, Grid, GridRow, Button } from 'semantic-ui-react'
+import { Image, Header, Container, List, Icon, Divider, Modal, Grid, Button, Label } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import EditReminder from './EditReminder'
 import moment from 'moment';
@@ -8,33 +8,6 @@ import ReminderForm from './ReminderForm'
 import ContactForm from './ContactForm'
 import { deletingContact, deletingReminder } from '../redux/actions'
 import EncounterForm from './EncounterForm';
-
-
-// const displayPriorityColor = (r) => {
-//   switch (r.priority){
-//     case 1:
-//       return 'red'
-//     case 2:
-//       return 'yellow'
-//     case 3:
-//       return 'blue'
-//     case 4: 
-//       return 'grey'
-//     default:
-//       return 'blue'
-//   }
-// }
-
-//Display the next recurrance or the date it ended
-// const displayNextRecurrance = (r) => {
-//   if (r.recurring) {
-//     props.recurring.find(rec => {
-//       return r.id === rec.id && moment(rec.start) <= moment()
-//     }).start
-//   }
-// }
-
-
 
 class ConactCardShow extends React.PureComponent {
   state = {
@@ -45,6 +18,7 @@ class ConactCardShow extends React.PureComponent {
     deleteContactModal: false,
     newEncounterModal: false,
   }
+
   handleOpen = (modal) => this.setState({ [modal]: true })
   handleClose = (modal) => this.setState({ [modal]: false })
   handleEncounterModal = () => this.setState({ newEncounterModal: !this.state.newEncounterModal })
@@ -63,6 +37,19 @@ class ConactCardShow extends React.PureComponent {
         return 'grey'
       default:
         return 'blue'
+    }
+  }
+
+  displayPeriod = (r) => {
+    switch (r.period) {
+      case 'daily':
+        return r.interval > 1 ? `every ${r.interval} days` : 'every day'
+      case 'weekly':
+        return r.interval > 1 ? `every ${r.interval} weeks` : 'every week'
+      case 'monthly':
+        return r.interval > 1 ? `every ${r.interval} months` : 'every month'
+      default:
+        break;
     }
   }
 
@@ -181,28 +168,29 @@ class ConactCardShow extends React.PureComponent {
         <Grid.Row columns={2}>
           <Grid.Column>
             <Header.Subheader>Current Reminders</Header.Subheader>
-            <List animated selection verticalAlign='middle'>
-              {reminders.map(r => {
+            <List verticalAlign='middle' divided>
+              {reminders.filter(r => !r.expired).map(r => {
                 return (
-                  <React.Fragment key={r.id}>
-                    <List.Item active={!r.expired} onClick={() => this.toggleEditReminderModal(r)}>
-                      {/* <List.Content floated='right'>
-                        <p>{ moment(r.start_date).format('MMMM Do, YYYY') }</p>
-                      </List.Content> */}
-                      <List.Content>
-                        <Icon name='bell outline' color={this.displayPriorityColor(r)}/>
+                  <List.Item key={r.id}>
+                    <List.Content floated='right'>
+                      <Label as='a' basic color='red' horizontal onClick={() => this.props.deletingReminder(r)}>Delete</Label>
+                    </List.Content>
+                    <List.Icon name='bell outline' color={this.displayPriorityColor(r)}/>
+                    <List.Content>
+                      <List.Header as='a' onClick={() => this.toggleEditReminderModal(r)}>
                         { formatReminder(r, null, name) }
-                      </List.Content>
-                    </List.Item>
-          
-                </React.Fragment>
-                )
-              })}
-            {
-              this.state.editReminderModal ?
-                <EditReminder modalOpen={this.state.editReminderModal} reminder={this.state.editingReminder} modalClose={this.toggleEditReminderModal} contact={this.props.contact} />
-                : null
-            }
+                      </List.Header>
+                      <List.Description>{r.recurring ? `${this.displayPeriod(r)}` : `on ${ moment(r.start_date).format('MMMM Do, YYYY')}`}</List.Description>
+                    </List.Content>
+                  </List.Item>          
+                )}
+              )}
+              <EditReminder 
+                modalOpen={this.state.editReminderModal} 
+                reminder={this.state.editingReminder} 
+                modalClose={this.toggleEditReminderModal} 
+                contact={this.props.contact} 
+              />
             </List>
           </Grid.Column>
           <Grid.Column>
@@ -216,14 +204,6 @@ class ConactCardShow extends React.PureComponent {
             </List>
           </Grid.Column>
         </Grid.Row>
-          {/* <Container>
-  
-          </Container>
-          <Divider />
-          <Container>
-          </Container>
-          <Divider />
-          <p /> */}
       </Grid>
     )
   }
@@ -235,8 +215,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    deletingContact: (contact) => dispatch(deletingContact(contact)),
-    deletingReminder: (reminder) => dispatch(deletingReminder(reminder))
+    deletingContact: contact => dispatch(deletingContact(contact)),
+    deletingReminder: reminder => dispatch(deletingReminder(reminder))
   }
 }
 
