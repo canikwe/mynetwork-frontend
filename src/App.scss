@@ -11,7 +11,7 @@ nav {
   -moz-box-shadow: 0px 3px 20px -5px rgba(0,0,0,0.75);
   box-shadow: 0px 3px 20px -5px rgba(0,0,0,0.75);
   margin-bottom: 10px;
-  
+
   .ui.dropdown {
     display: flex;
     justify-content: center;
@@ -25,13 +25,17 @@ nav {
   }
 }
 
- .wrapper {
-  /* text-align: center; */
+main {
   padding: 0 5%;
-  /* display: block;
-  justify-content: center;
-  flex-direction: center;  */
 }
+
+//  .wrapper {
+//   /* text-align: center; */
+//   // padding: 0 5%;
+//   /* display: block;
+//   justify-content: center;
+//   flex-direction: center;  */
+// }
 
 .loading {
   /* margin: 10%; */

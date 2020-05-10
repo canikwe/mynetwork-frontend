@@ -10,11 +10,11 @@ import NewUserContainer from './containers/NewUserContainer'
 import EditUserContainer from './containers/EditUserContainer'
 import NavBar from './components/NavBar'
 import Calendar from './components/Calendar'
+import ContactCardContainer from './containers/ContactCardContainer'
 import { isEmpty } from 'lodash'
 import toast from 'toasted-notes'
 import { Image } from 'semantic-ui-react'
 import 'toasted-notes/src/styles.css'
-
 import Home from './containers/Home'
 import { formatReminderToast } from './helper/functions';
 
@@ -60,43 +60,50 @@ class App extends Component {
       return (
         <div className="App">
           <NavBar />
-          <Switch>
+          <main>
+            <Switch>
 
-            <Route exact path='/' render={() => {
-              return isEmpty(this.props.user) ? <Redirect to='/login' /> : <Homepage />
-            }}
-            />
+              <Route exact path='/' render={() => {
+                return isEmpty(this.props.user) ? <Redirect to='/login' /> : <Homepage />
+              }}
+              />
 
-            <Route exact path='/login' render={() => {
-              return isEmpty(this.props.user) ? <Login /> : <Redirect to='/' />
-            }}
-            />
+              <Route exact path='/login' render={() => {
+                return isEmpty(this.props.user) ? <Login /> : <Redirect to='/' />
+              }}
+              />
 
-            <Route exact path='/contacts/new' render={() => {
-              return !isEmpty(this.props.user) ? <ContactForm /> : <Redirect to='/login' />
-            }}
-            />
+              <Route exact path='/contacts/new' render={() => {
+                return !isEmpty(this.props.user) ? <ContactForm /> : <Redirect to='/login' />
+              }}
+              />
 
-            <Route exact path='/signup' render={() => {
-              return isEmpty(this.props.user) ? <NewUserContainer /> : <Redirect to='/' />
-            }}
-            />
+              <Route exact path='/signup' render={() => {
+                return isEmpty(this.props.user) ? <NewUserContainer /> : <Redirect to='/' />
+              }}
+              />
 
-            <Route exact path='/profile/edit' render={() => {
-              return !isEmpty(this.props.user) ? <EditUserContainer /> : <Redirect to='/login' />
-            }} 
-            />
+              <Route exact path='/profile/edit' render={() => {
+                return !isEmpty(this.props.user) ? <EditUserContainer /> : <Redirect to='/login' />
+              }} 
+              />
 
-            <Route exact path='/calendar' render={() => {
-              return !isEmpty(this.props.user) ? <Calendar /> : <Redirect to='/login' />
-            }}
-            />
+              <Route exact path='/calendar' render={() => {
+                return !isEmpty(this.props.user) ? <Calendar /> : <Redirect to='/login' />
+              }}
+              />
 
-            <Route exact path='/home' component={Home}/>
+              <Route exact path='/friends' render={() => {
+                return !isEmpty(this.props.user) ? <ContactCardContainer /> : <Redirect to='/login' />
+              }}
+              />
 
-            <Redirect from='*' to='/' />
+              <Route exact path='/home' component={Home}/>
 
-          </Switch>
+              <Redirect from='*' to='/' />
+
+            </Switch>
+          </main>
           {/* {this.props.reminders.map(r => this.alerts(r))} */}
 
         </div>

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { logoutUser } from '../redux/actions'
-import { Menu, Dropdown, Modal, Segment, Label, Icon } from 'semantic-ui-react'
+import { Menu, Dropdown, Modal, Segment, Label, Icon, Popup } from 'semantic-ui-react'
 import { isEmpty } from 'lodash'
 import ContactForm from './ContactForm'
 
@@ -68,7 +68,7 @@ class NavBar extends Component {
             <Menu.Menu  position='right'>
               <Menu.Item
                 name='home'
-                as={Link} to='/'
+                as={Link} to='/friends'
               >
                 <Icon name='group' size='large'/>
               </Menu.Item>
@@ -87,13 +87,17 @@ class NavBar extends Component {
                 as={ Link } to='/'
               >
                 <span>
-                  <Icon name='bell' size='large'/>
+                  
                   {
                     this.props.reminders.length ?
-                    <Label color='red' floating circular size='mini'>
-                      {this.props.reminders.length}
-                    </Label>
-                    : null
+                    <>
+                      <Icon name='bell' size='large' />
+                      <Label color='red' floating circular size='mini'>
+                        {this.props.reminders.length}
+                      </Label>
+                    </>
+                    : 
+                    <Popup content='All done for today!' trigger={<Icon name='bell' size='large' />} />
                   }
                 </span>
               </Menu.Item> 

@@ -38,7 +38,7 @@ const RemindersSubList = ({ reminders, contacts, title, setFeaturedReminder }) =
                     </List.Content> 
                     : null
                 }
-                <List.Icon name={r.snoozed ? 'bell slash outline' : 'bell outline'} color={displayPriorityColor(r)} />
+                <List.Icon name={r.snoozed && title.includes('Today') ? 'bell slash outline' : 'bell outline'} color={displayPriorityColor(r)} />
                 <List.Content>
                   <List.Header>{formatReminderToast(r, contacts)} </List.Header>
                   <List.Description as='a'>{moment(r.start).format('MMMM Do, YYYY')}</List.Description>
