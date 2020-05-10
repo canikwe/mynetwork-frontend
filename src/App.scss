@@ -40,6 +40,19 @@ main {
   }
 }
 
+footer {
+  margin-top: 20px;
+  padding: 15px 0;
+  background-color: $primary;
+  text-align: center;
+
+  div.ui.bulleted.horizontal.link.list {
+    a {
+      color: $base-light;
+    }
+  }
+}
+
 //  .wrapper {
 //   /* text-align: center; */
 //   // padding: 0 5%;

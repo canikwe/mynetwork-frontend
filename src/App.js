@@ -17,6 +17,7 @@ import { Image } from 'semantic-ui-react'
 import 'toasted-notes/src/styles.css'
 import Home from './containers/Home'
 import { formatReminderToast } from './helper/functions';
+import Footer from './components/Footer';
 
 class App extends Component {
 
@@ -104,6 +105,7 @@ class App extends Component {
 
             </Switch>
           </main>
+          <Footer />
           {/* {this.props.reminders.map(r => this.alerts(r))} */}
 
         </div>

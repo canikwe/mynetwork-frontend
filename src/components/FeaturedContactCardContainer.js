@@ -7,7 +7,7 @@ const FeaturedContactCardContainer = ({contacts, title, description}) => {
     <div className='featured-contacts'>
       <h3>{title}</h3>
       <p className='contact-container-desc'>{description}</p>
-      <Card.Group itemsPerRow={4}>
+      <Card.Group itemsPerRow={4} stackable>
         {contacts.map(c => <ContactCard key={c.id} contact={c} />)}
       </Card.Group>
     </div>
